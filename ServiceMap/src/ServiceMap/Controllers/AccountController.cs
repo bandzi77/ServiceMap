@@ -26,7 +26,11 @@ namespace ServiceMap.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginModel details, string returnUrl)
         {
-            return View(details);
+            if (ModelState.IsValid)
+            {
+            }
+                return View(details);
+
         }
     }
 }
