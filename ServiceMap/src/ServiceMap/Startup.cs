@@ -9,7 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using ServiceMap.Models.apiModels;
 
 namespace ServiceMap
 {
@@ -32,7 +33,12 @@ namespace ServiceMap
         public void ConfigureServices(IServiceCollection services)
         {
             // TODO str 214
-            //services.AddDbContext<Applica>
+            services.AddDbContext<AppIdentityDbContext>(options =>
+            options.UseSqlServer(Configuration["Data:ConnectionStrings:DbServiceMapIndentity"]));
+            services.AddIdentity<AppUser, IdentityRole>()
+                // W przypadku innej ścieżki niż domyślna
+                //(opt=>opt.Cookies.ApplicationCookie.LoginPath="/")
+                .AddEntityFrameworkStores<AppIdentityDbContext>();
             services.AddMvc();
         }
 
@@ -55,15 +61,15 @@ namespace ServiceMap
             app.UseBrowserLink();
             app.UseStatusCodePages();
             app.UseStaticFiles();
-
-            app.UseMvcWithDefaultRoute();
+            //app.UseMvcWithDefaultRoute();
+            app.UseIdentity();
 
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
-                name: "Error", 
+                name: "Error",
                 template: "Error",
-                defaults : new { controller = "Error", action = "Error" });
+                defaults: new { controller = "Error", action = "Error" });
 
                 routes.MapRoute(
                     name: "default",
@@ -73,12 +79,6 @@ namespace ServiceMap
                     name: "spa-fallback",
                     defaults: new { controller = "Home", action = "Index" });
             });
-            //app.UseIdentity();
-
-            //app.Run(async (context) =>
-            //{
-            //    await context.Response.WriteAsync("Hello World!");
-            //});
         }
     }
 }
