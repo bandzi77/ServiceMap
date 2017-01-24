@@ -35,7 +35,20 @@ namespace ServiceMap
             // TODO str 214
             services.AddDbContext<AppIdentityDbContext>(options =>
             options.UseSqlServer(Configuration["Data:ConnectionStrings:DbServiceMapIndentity"]));
-            services.AddIdentity<AppUser, IdentityRole>()
+            services.AddIdentity<AppUser, IdentityRole>(opts=>
+            {
+                opts.User.RequireUniqueEmail = true;
+                //opts.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyz";
+                opts.Password.RequiredLength = 8;
+                opts.Password.RequireNonAlphanumeric = true;
+                opts.Password.RequireLowercase = false;
+                opts.Password.RequireUppercase = false;
+                opts.Password.RequireDigit = true;
+                opts.Lockout.MaxFailedAccessAttempts = 5;
+
+                opts.Cookies.ApplicationCookie.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+
+            } )
                 // W przypadku innej ścieżki niż domyślna
                 //(opt=>opt.Cookies.ApplicationCookie.LoginPath="/")
                 .AddEntityFrameworkStores<AppIdentityDbContext>();
@@ -61,8 +74,9 @@ namespace ServiceMap
             app.UseBrowserLink();
             app.UseStatusCodePages();
             app.UseStaticFiles();
-            //app.UseMvcWithDefaultRoute();
             app.UseIdentity();
+            AppIdentityDbContext.CreateAdminAccount(app.ApplicationServices,
+            Configuration).Wait();
 
             app.UseMvc(routes =>
             {

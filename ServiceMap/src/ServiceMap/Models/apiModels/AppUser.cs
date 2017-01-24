@@ -8,5 +8,6 @@ namespace ServiceMap.Models.apiModels
 {
     public class AppUser: IdentityUser
     {
+      public  int? NumberOfRequestsPerMonth { get; set; }
     }
 }
