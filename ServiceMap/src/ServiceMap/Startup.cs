@@ -45,8 +45,16 @@ namespace ServiceMap
                 opts.Password.RequireUppercase = false;
                 opts.Password.RequireDigit = true;
                 opts.Lockout.MaxFailedAccessAttempts = 5;
+                opts.Lockout.DefaultLockoutTimeSpan = TimeSpan.MaxValue;
 
-                opts.Cookies.ApplicationCookie.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+                // Cookie settings
+                opts.Cookies.ApplicationCookie.ExpireTimeSpan = TimeSpan.FromSeconds(30);
+                opts.Cookies.ApplicationCookie.CookieName = "MyTCookie";
+                opts.Cookies.ApplicationCookie.CookieHttpOnly = true;
+                opts.Cookies.ApplicationCookie.SlidingExpiration = true;
+                //opts.Cookies.ApplicationCookie.AutomaticAuthenticate = true;
+                //opts.Cookies.ApplicationCookie.AuthenticationScheme = Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationDefaults.AuthenticationScheme;
+                //opts.Cookies.ApplicationCookie.ReturnUrlParameter = Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationDefaults.ReturnUrlParameter;
 
             } )
                 // W przypadku innej ścieżki niż domyślna
