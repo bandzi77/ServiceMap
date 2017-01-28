@@ -12,6 +12,7 @@ namespace ServiceMap.Models
         [UIHint("email")]
         [EmailAddress(ErrorMessage = "Niepoprawny format adresu email")]
         public string Email { get; set; }
+
         [Required(ErrorMessage ="Hasło jest wymagane")]
         [UIHint("password")]
         [Display(Name ="Hasło")]
