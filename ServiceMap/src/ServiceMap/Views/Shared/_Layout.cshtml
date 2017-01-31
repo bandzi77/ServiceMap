@@ -1,21 +1,27 @@
 ﻿<!DOCTYPE html>
-
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TNT Polska | Mapa Serwisowa</title>
+    <base href="/" />
     <link rel="stylesheet" asp-href-include="lib/bootstrap/dist/css/*min.css" />
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <link href="~/app/app.component.css" rel="stylesheet" />
+    <!-- Polyfill(s) for older browsers -->
+    <script src="node_modules/core-js/client/shim.min.js"></script>
+    <script src="node_modules/zone.js/dist/zone.js"></script>
+    @*<script src="node_modules/reflect-metadata/Reflect.js"></script>*@
+    <script src="node_modules/systemjs/dist/system.src.js"></script>
+    <!-- Configure SystemJS -->
+    <script src="systemjs.config.js"></script>
+    <script>
+        System.import('app').catch(function (err) { console.error(err); });
+    </script>
 </head>
 <body>
     <div>
         @RenderBody()
+        @RenderSection("scripts", required: false)
     </div>
-    <environment names="Development">
-        @* TODO *@
-    </environment>
 </body>
 </html>
-

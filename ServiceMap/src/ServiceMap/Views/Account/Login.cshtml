@@ -1,26 +1,30 @@
-﻿@model LoginModel
+﻿@{
+    Layout= "_LoginLayout";
+ }
 
-<div class="panel panel-default">
-    <div class="panel-heading">
+@model LoginModel
+
+
+<div class="panel panel" style="background-color:white; border-bottom-color:darkorange;">
+    <div class="panel-heading" style="margin-left:15px; vertical-align:middle;">
         <div class="row">
             <h3 class="panel-title">
                 <a href="http://www.tnt.com/express/pl_pl/site/home.html">
                     <img src="~/app/assets/images/logo.svg" alt="TNT" style="width: 98px; height: 35px;" />
-                </a>
-                Logowanie do Mapy Serwisowej
+                </a> Logowanie do Mapy Serwisowej
             </h3>
         </div>
     </div>
 </div>
-<div class="panel-body">
 
+<div class="panel-body">
     <div class="container">
         <div class="col-md-4 col-md-offset-4">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     Logowanie
                 </div>
-                <div class="panel-body center-block">
+                <div class="panel-body center-block" >
                     <form asp-action="Login" method="post">
                         <div class="text-danger" asp-validation-summary="All"></div>
                         <input type="hidden" name="returnUrl" value="@ViewBag.returnUrl" />
