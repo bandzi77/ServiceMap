@@ -48,7 +48,7 @@ namespace ServiceMap
                 opts.Lockout.DefaultLockoutTimeSpan = TimeSpan.MaxValue;
 
                 // Cookie settings
-                opts.Cookies.ApplicationCookie.ExpireTimeSpan = TimeSpan.FromSeconds(30);
+                opts.Cookies.ApplicationCookie.ExpireTimeSpan = TimeSpan.FromDays(1);
                 opts.Cookies.ApplicationCookie.CookieName = "MyTCookie";
                 opts.Cookies.ApplicationCookie.CookieHttpOnly = true;
                 opts.Cookies.ApplicationCookie.SlidingExpiration = true;
@@ -60,6 +60,7 @@ namespace ServiceMap
                 // W przypadku innej ścieżki niż domyślna
                 //(opt=>opt.Cookies.ApplicationCookie.LoginPath="/")
                 .AddEntityFrameworkStores<AppIdentityDbContext>();
+            //services.AddScoped<IAuthorizationService, AuthorizationService>();
             services.AddMvc();
         }
 
@@ -100,6 +101,10 @@ namespace ServiceMap
                 routes.MapSpaFallbackRoute(
                     name: "spa-fallback",
                     defaults: new { controller = "Home", action = "Index" });
+
+                //routes.MapWebApiRoute("defaultApi",
+                //                    "api/{controller}/{id?}");
+
             });
         }
     }

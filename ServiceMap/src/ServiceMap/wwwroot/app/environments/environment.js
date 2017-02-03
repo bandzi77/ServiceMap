@@ -6,4 +6,7 @@
 exports.environment = {
     production: false
 };
+exports.apiUrl = {
+    getpermissions: 'api/Permissions'
+};
 //# sourceMappingURL=environment.js.map
