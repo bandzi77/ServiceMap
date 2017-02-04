@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 
 @Injectable()
-export class ProductDetailGuard implements CanActivate {
+export class ServiceTntDetailGuard implements CanActivate {
 
     constructor(private _router: Router) {
 
@@ -11,8 +11,8 @@ export class ProductDetailGuard implements CanActivate {
     canActivate(route: ActivatedRouteSnapshot): boolean {
         let id = +route.url[1].path;
         if (isNaN(id) || id < 1){
-            alert('Niepoprawny product id');
-            this._router.navigate(['/products']);
+            alert('Niepoprawne id serwisu');
+            this._router.navigate(['/servicesTnt']);
             return false;
         }
         return true;

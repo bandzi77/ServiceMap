@@ -7,7 +7,7 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 
 import { WelcomeComponent } from './home/welcome.component';
-import { ProductModule } from './products/product.module';
+import { ProductModule } from './servicesTnt/serviceTnt.module';
 
 
 @NgModule({

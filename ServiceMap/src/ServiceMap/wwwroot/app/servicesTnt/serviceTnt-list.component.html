@@ -15,7 +15,7 @@
             </div>
         </div>
         <div class="table-responsive">
-            <table class="table" *ngIf="products && products.length">
+            <table class="table" *ngIf="servicesTnt && servicesTnt.length">
                 <thead>
                     <tr>
                         <th>
@@ -31,18 +31,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let product of products | productFilter : listFilter">
+                    <tr *ngFor="let serviceTnt of servicesTnt | productFilter : listFilter">
                         <td>
                   
                         </td>
                         <td>
-                            <a [routerLink]="['/product',product.productId]">
-                                {{product.productName}}
+                            <a [routerLink]="['/serviceTnt',serviceTnt.productId]">
+                                {{serviceTnt.productName}}
                             </a>
                         </td>
-                        <td>{{product.productCode | lowercase}}</td>
-                        <td>{{product.releaseDate}}</td>
-                        <td>{{product.price | currency: 'PLN':true:'1.2-2' }}</td>
+                        <td>{{serviceTnt.productCode | lowercase}}</td>
+                        <td>{{serviceTnt.releaseDate}}</td>
+                        <td>{{serviceTnt.price | currency: 'PLN':true:'1.2-2' }}</td>
                         <td>
                          
                         </td>
