@@ -1,4 +1,3 @@
-
 import { Component, OnInit } from '@angular/core';
 import { apiUrl } from './environments/environment';
 import { Http, Response } from '@angular/http';
@@ -22,16 +21,21 @@ export class AppComponent implements OnInit {
     };
 
     ngOnInit() {
-        console.log('Czy jest super userem: ' + this.isSuperusers);
-        this.getProducts()
+        this.checkPermissions()
             .subscribe(
             data => this.isSuperusers = data,
-            error => console.log( <any>error));
+            error => console.error(<any>error));
+    }
+
+    private checkPermissions(): Observable<boolean> {
+        return this._http.get(apiUrl.getpermissions)
+            .map(this.extractData)
+            .do(this.logData)
+            .catch(this.handleError);
     }
 
     private handleError(error: Response | any) {
-        /* In a real world app, we might use a remote logging infrastructure
-        /sdfgsdf*/
+        // In a real world app, we might use a remote logging infrastructure
         let errMsg: string;
         if (error instanceof Response) {
             const body = error.json() || '';
@@ -40,18 +44,15 @@ export class AppComponent implements OnInit {
         } else {
             errMsg = error.message ? error.message : error.toString();
         }
-        console.error(errMsg);
         return Observable.throw(errMsg);
     }
 
-    private getProducts(): Observable<any> {
-        return this._http.get(apiUrl.getpermissions)
-            .map(
-            (response: Response) => <boolean>response.json())
-            .do
-            (data => console.log('All: ' + JSON.stringify(data))
-            )
-            .catch(this.handleError);
+    private extractData(res: Response) {
+        let body = res.json();
+        return body.data || {};
     }
 
+    private logData(data: any) {
+        console.log('All: ' + JSON.stringify(data));
+    }
 }

@@ -36,8 +36,8 @@ namespace ServiceMap.Models.apiModels
             {
                 if (await roleManager.FindByNameAsync(roleSuperUser) == null)
                 {
-                        await roleManager.CreateAsync(new IdentityRole(roleSuperUser));
-             
+                    await roleManager.CreateAsync(new IdentityRole(roleSuperUser));
+
                 }
 
                 if (await roleManager.FindByNameAsync(roleUser) == null)

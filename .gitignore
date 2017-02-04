@@ -3,6 +3,8 @@
 Thumbs.db
 #Ignore files built by Visual Studio
 node_modules/
+*.js
+*.js.map
 *.obj
 *.exe
 *.pdb

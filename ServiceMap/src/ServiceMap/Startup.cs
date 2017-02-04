@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using ServiceMap.Models.apiModels;
+using ServiceMap.Models;
 
 namespace ServiceMap
 {
@@ -61,6 +62,8 @@ namespace ServiceMap
                 //(opt=>opt.Cookies.ApplicationCookie.LoginPath="/")
                 .AddEntityFrameworkStores<AppIdentityDbContext>();
             //services.AddScoped<IAuthorizationService, AuthorizationService>();
+
+            services.AddSingleton<IEnvironments>(new Environments_(Configuration));
             services.AddMvc();
         }
 

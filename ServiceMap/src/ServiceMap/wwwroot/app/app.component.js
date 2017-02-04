@@ -23,13 +23,17 @@ var AppComponent = (function () {
     ;
     AppComponent.prototype.ngOnInit = function () {
         var _this = this;
-        console.log('Czy jest super userem: ' + this.isSuperusers);
-        this.getProducts()
-            .subscribe(function (data) { return _this.isSuperusers = data; }, function (error) { return console.log(error); });
+        this.checkPermissions()
+            .subscribe(function (data) { return _this.isSuperusers = data; }, function (error) { return console.error(error); });
+    };
+    AppComponent.prototype.checkPermissions = function () {
+        return this._http.get(environment_1.apiUrl.getpermissions)
+            .map(this.extractData)
+            .do(this.logData)
+            .catch(this.handleError);
     };
     AppComponent.prototype.handleError = function (error) {
-        /* In a real world app, we might use a remote logging infrastructure
-        /sdfgsdf*/
+        // In a real world app, we might use a remote logging infrastructure
         var errMsg;
         if (error instanceof http_1.Response) {
             var body = error.json() || '';
@@ -39,14 +43,14 @@ var AppComponent = (function () {
         else {
             errMsg = error.message ? error.message : error.toString();
         }
-        console.error(errMsg);
         return Observable_1.Observable.throw(errMsg);
     };
-    AppComponent.prototype.getProducts = function () {
-        return this._http.get(environment_1.apiUrl.getpermissions)
-            .map(function (response) { return response.json(); })
-            .do(function (data) { return console.log('All: ' + JSON.stringify(data)); })
-            .catch(this.handleError);
+    AppComponent.prototype.extractData = function (res) {
+        var body = res.json();
+        return body.data || {};
+    };
+    AppComponent.prototype.logData = function (data) {
+        console.log('All: ' + JSON.stringify(data));
     };
     return AppComponent;
 }());
