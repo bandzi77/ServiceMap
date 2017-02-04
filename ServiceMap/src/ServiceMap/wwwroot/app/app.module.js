@@ -9,6 +9,7 @@ var core_1 = require("@angular/core");
 var platform_browser_1 = require("@angular/platform-browser");
 var router_1 = require("@angular/router");
 var http_1 = require("@angular/http");
+var page_module_1 = require("./pagination/page.module");
 var app_component_1 = require("./app.component");
 var welcome_component_1 = require("./home/welcome.component");
 var serviceTnt_module_1 = require("./servicesTnt/serviceTnt.module");
@@ -22,6 +23,7 @@ AppModule = __decorate([
         imports: [
             platform_browser_1.BrowserModule,
             http_1.HttpModule,
+            page_module_1.PageModule,
             router_1.RouterModule.forRoot([
                 { path: 'welcome', component: welcome_component_1.WelcomeComponent },
                 { path: '', redirectTo: 'welcome', pathMatch: 'full' },
