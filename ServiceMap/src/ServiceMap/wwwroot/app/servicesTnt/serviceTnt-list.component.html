@@ -51,5 +51,10 @@
             </table>
         </div>
     </div>
-    <page-app [allItems]='servicesTnt' *ngIf="servicesTnt && servicesTnt.length"></page-app>
+    <page-app  *ngIf='servicesTnt && servicesTnt.length'
+               [totalCount]='servicesTnt.totalCount' 
+               [pageSize]='servicesTnt.pageSize' 
+               (pageClicked)='onPageClicked($event)'>
+
+    </page-app>
 </div>

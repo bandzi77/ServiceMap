@@ -15,13 +15,14 @@ export class ServiceTntListComponent implements OnInit {
     listFilter: string;
     servicesTnt: IServiceTnt[];
     errorMessage: string;
+    currentPage: number = 1;
 
     constructor(private _serviceTntService: ServicesTntService) {
 
     }
 
     searchServicesTnt(): void {
-       
+
     }
 
     ngOnInit(): void {
@@ -31,8 +32,10 @@ export class ServiceTntListComponent implements OnInit {
             error => this.errorMessage = <any>error);
     }
 
-    //onRatingClicked(message: string): void {
-    //    this.pageTitle = 'Product List: ' + message;
-    //}
 
+    onPageClicked(page: number) {
+        this.currentPage = page;
+        alert("Kliknąłeś stronkę: " + page);
+
+    }
 }

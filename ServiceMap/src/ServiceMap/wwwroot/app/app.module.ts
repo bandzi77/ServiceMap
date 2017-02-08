@@ -2,8 +2,6 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
-import { PageModule } from './pagination/page.module';
-
 import { AppComponent } from './app.component';
 
 import { WelcomeComponent } from './home/welcome.component';
@@ -14,7 +12,6 @@ import { ProductModule } from './servicesTnt/serviceTnt.module';
     imports: [
         BrowserModule,
         HttpModule,
-        PageModule,
         RouterModule.forRoot([
             { path: 'welcome', component: WelcomeComponent },
             { path: '', redirectTo: 'welcome', pathMatch: 'full' },

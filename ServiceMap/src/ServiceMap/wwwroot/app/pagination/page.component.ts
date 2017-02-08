@@ -1,4 +1,4 @@
-﻿import { Component, Input, OnInit } from '@angular/core';
+﻿import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { PageService } from './page.service'
 
 @Component({
@@ -8,28 +8,28 @@ import { PageService } from './page.service'
 
 export class PageComponent implements OnInit {
     // array of all items to be paged
-    @Input() allItems: any[];
+    @Input() totalCount: number;
+    @Input() pageSize: number;
+
+    @Output() pageClicked: EventEmitter<number> =
+    new EventEmitter<number>();
+
     // pager object
     pager: any = {};
-    // paged items
-    pagedItems: any[];
 
     constructor(private _pageservice: PageService) { }
 
     ngOnInit() {
-                // initialize to page 1
-                this.setPage(1);
-            };
-    
+        this.pager = this._pageservice.getPager(this.totalCount, 1);
+    };
 
-    setPage(page: number) {
+
+    onSetPage(page: number) {
         if (page < 1 || page > this.pager.totalPages) {
             return;
         }
+        this.pageClicked.emit(page);
         // get pager object from service
-        this.pager = this._pageservice.getPager(this.allItems.length, page);
-
-        // get current page of items
-        this.pagedItems = this.allItems.slice(this.pager.startIndex, this.pager.endIndex + 1);
-    }
+        this.pager = this._pageservice.getPager(this.totalCount, page);
+    };
 }
