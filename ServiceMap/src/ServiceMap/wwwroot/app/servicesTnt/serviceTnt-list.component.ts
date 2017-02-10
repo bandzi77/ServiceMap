@@ -1,5 +1,7 @@
 ﻿import { Component, OnInit } from '@angular/core';
-import { IServiceTnt } from './serviceTnt';
+import { IServiceTnt, IServiceFilter } from './serviceTnt';
+import { IPage } from '../pagination/page';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ServicesTntService } from './serviceTnt.service';
 
 @Component({
@@ -13,11 +15,17 @@ export class ServiceTntListComponent implements OnInit {
     imageWidth: number = 50;
     imageMargin: number = 2;
     listFilter: string;
+    postCode: string;
+    cityName: string;
     servicesTnt: IServiceTnt[];
+    paging: IPage[];
     errorMessage: string;
-    currentPage: number = 1;
+    //currentPage: number = 1;
 
-    constructor(private _serviceTntService: ServicesTntService) {
+    private serviceFilter: IServiceFilter;
+
+    constructor(private _serviceTntService: ServicesTntService, private _route: ActivatedRoute,
+) {
 
     }
 
@@ -26,16 +34,55 @@ export class ServiceTntListComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        console.log('testowanie init');
-        this._serviceTntService.getServicesTnt()
-            .subscribe(servicesTnt => this.servicesTnt = servicesTnt,
-            error => this.errorMessage = <any>error);
+
+        let id = +this._route.snapshot.params['currentPage'];
+
+        //searchParams.set('postCode', serviceFilter.postCode);
+        //searchParams.set('cityName', serviceFilter.cityName);
+        //searchParams.set('currentPage', currentPage);
+
+        //this.pageTitle += `:${id}`;
+
+        //console.log('testowanie init');
+        //this._serviceTntService.getServicesTnt()
+        //    .subscribe(servicesTnt =>
+        //        this.servicesTnt =
+        //        servicesTnt,
+        //    error => this.errorMessage = <any>error);
     }
 
 
-    onPageClicked(page: number) {
-        this.currentPage = page;
-        alert("Kliknąłeś stronkę: " + page);
+    _createServiceFilter(page?: number): IServiceFilter {
+        let _serviceFilter: IServiceFilter =
+            {
+                postCode: this.postCode,
+                cityName: this.cityName,
+                currentPage: page
+            };
 
+        return _serviceFilter;
+    }
+
+    private _getData(filtr: IServiceFilter) {
+        this._serviceTntService.searchServicesTnt(filtr)
+            .subscribe(result => {
+                this.servicesTnt = result.serviceTnt;
+                this.paging = result.paging;
+            },
+            error => this.errorMessage = <any>error);
+    }
+
+    onSearchService() {
+        console.log('testowanie init');
+        let filtr = this._createServiceFilter();
+
+        this._getData(filtr);
+    }
+
+    onPageClicked(page: number) {
+        //this.currentPage = page;
+        let filtr = this._createServiceFilter(page);
+        this._getData(filtr);
+        //alert("Kliknąłeś stronkę: " + page);
     }
 }

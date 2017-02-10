@@ -20,7 +20,7 @@ export class PageComponent implements OnInit {
     constructor(private _pageservice: PageService) { }
 
     ngOnInit() {
-        this.pager = this._pageservice.getPager(this.totalCount, 1);
+        this.pager = this._pageservice.getPager(this.totalCount, 1, this.pageSize );
     };
 
 
@@ -30,6 +30,6 @@ export class PageComponent implements OnInit {
         }
         this.pageClicked.emit(page);
         // get pager object from service
-        this.pager = this._pageservice.getPager(this.totalCount, page);
+        this.pager = this._pageservice.getPager(this.totalCount, page, this.pageSize);
     };
 }

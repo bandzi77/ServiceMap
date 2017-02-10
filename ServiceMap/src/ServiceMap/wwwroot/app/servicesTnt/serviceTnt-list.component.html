@@ -4,9 +4,17 @@
     </div>
     <div class="panel-body">
         <div class="row">
-            <div class="col-md-2">Filter by:</div>
-            <div class="col-md-4">
-                <input type="text" [(ngModel)]="listFilter" />
+            <div class="col-md-1">Filter by:</div>
+            <div class="col-md-2">
+                <input type="text" [(ngModel)]="postCode" />
+            </div>
+            <div class="col-md-2">
+                <input type="text" [(ngModel)]="cityName" />
+            </div>
+            <div class="col-md-1">
+                <button class="btn btn-primary " (click)='onSearchService()'>
+                    Szukaj
+                </button>
             </div>
         </div>
         <div class="row">
@@ -52,8 +60,8 @@
         </div>
     </div>
     <page-app  *ngIf='servicesTnt && servicesTnt.length'
-               [totalCount]='servicesTnt.totalCount' 
-               [pageSize]='servicesTnt.pageSize' 
+               [totalCount]='paging.totalCount' 
+               [pageSize]='paging.pageSize' 
                (pageClicked)='onPageClicked($event)'>
 
     </page-app>

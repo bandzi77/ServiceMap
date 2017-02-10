@@ -2,6 +2,7 @@
 import { PageComponent } from './page.component';
 import { CommonModule } from '@angular/common';
 import { PageService } from './page.service'
+import { IPage } from './page'
 
 @NgModule({
     declarations: [

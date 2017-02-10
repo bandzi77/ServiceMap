@@ -1,5 +1,5 @@
 ﻿import { Injectable } from '@angular/core';
-import { IServiceTnt } from './serviceTnt';
+import { IServiceTnt, IServiceFilter, IServiceTntResult } from './serviceTnt';
 import { Http, Response, RequestOptions, URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
@@ -10,6 +10,7 @@ import 'rxjs/add/observable/throw';
 @Injectable()
 export class ServicesTntService {
     private _productUrl = 'api/servicesTnt/servicesTnt.json';
+    private _serchServicesUrl = 'api/servicesTnt';
     constructor(private _http: Http) {
 
     };
@@ -22,19 +23,25 @@ export class ServicesTntService {
     }
 
 
-    searchServicesTnt(serviceFilter:any): Observable<IServiceTnt[]> {
-
+    searchServicesTnt(serviceFilter: IServiceFilter): Observable<IServiceTntResult> {
         let searchParams = new URLSearchParams();
-        for (let param in serviceFilter) {
-            searchParams.set(param, serviceFilter[param]);
+        let currentPage;
+        if (serviceFilter.currentPage === null || serviceFilter.currentPage === undefined ) {
+            currentPage = null;
+        }
+        else
+        {
+            currentPage = serviceFilter.currentPage.toString();
         }
 
-        let options = new RequestOptions({
-            search: searchParams
-        });
 
-        return this._http.get(this._productUrl, options )
-            .map((response: Response) => <IServiceTnt[]>response.json())
+       
+        searchParams.set('postCode', serviceFilter.postCode);
+        searchParams.set('cityName', serviceFilter.cityName);
+        searchParams.set('currentPage', currentPage);
+       
+        return this._http.get(this._serchServicesUrl, { search: searchParams })
+            .map((response: Response) => <IServiceTntResult>response.json())
             .do(data => console.log('All' + JSON.stringify(data)))
             .catch(this.handleError);
     }
