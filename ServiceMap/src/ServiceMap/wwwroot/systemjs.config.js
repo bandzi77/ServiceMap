@@ -24,7 +24,16 @@
             '@angular/forms': 'npm:@angular/forms/bundles/forms.umd.js',
 
             // other libraries
-            'rxjs': 'npm:rxjs'
+            'rxjs': 'npm:rxjs',
+            'moment': 'npm:moment/bundles/moment.umd.js',
+            'ng2-bootstrap': 'npm:ng2-bootstrap/bundles/ng2-bootstrap.umd.js',
+
+            // Busy Indicator
+            'ts-metadata-helper': 'npm:angular2-busy/node_modules/ts-metadata-helper',
+            'angular2-dynamic-component': 'npm:angular2-busy/node_modules/angular2-dynamic-component',
+            'angular2-busy': 'npm:angular2-busy',
+            'core-js': 'npm:core-js'
+
         },
         // packages tells the System loader how to load when no filename and/or no extension
         packages: {
@@ -34,7 +43,27 @@
             },
             rxjs: {
                 defaultExtension: 'js'
+            },
+            'ng2-bootstrap':
+            {
+                defaultExtension: 'js'
+            },
+            // Busy Indicator
+            'ts-metadata-helper': {
+                defaultExtension: 'js'
+            },
+            'angular2-dynamic-component': {
+                defaultExtension: 'js'
+            },
+            'angular2-busy': {
+                main: './index.js',
+                defaultExtension: 'js'
+            },
+            'core-js': {
+                main: 'index.js',
+                defaultExtension: 'js'
             }
+
         }
     });
 })(this);

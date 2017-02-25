@@ -10,6 +10,7 @@ var platform_browser_1 = require("@angular/platform-browser");
 var router_1 = require("@angular/router");
 var http_1 = require("@angular/http");
 var app_component_1 = require("./app.component");
+var shared_module_1 = require("./shared/shared.module");
 var welcome_component_1 = require("./home/welcome.component");
 var serviceTnt_module_1 = require("./servicesTnt/serviceTnt.module");
 var AppModule = (function () {
@@ -27,7 +28,8 @@ AppModule = __decorate([
                 { path: '', redirectTo: 'welcome', pathMatch: 'full' },
                 { path: '**', redirectTo: 'welcome', pathMatch: 'full' }
             ]),
-            serviceTnt_module_1.ProductModule
+            serviceTnt_module_1.ProductModule,
+            shared_module_1.SheredModule
         ],
         declarations: [
             app_component_1.AppComponent,

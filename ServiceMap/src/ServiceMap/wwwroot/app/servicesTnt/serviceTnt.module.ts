@@ -11,6 +11,9 @@ import { ServicesTntService } from './serviceTnt.service';
 import { SheredModule } from '../shared/shared.module';
 import { PageModule } from '../pagination/page.module';
 
+
+
+
 @NgModule({
     declarations: [
         ServiceTntListComponent,
@@ -27,7 +30,8 @@ import { PageModule } from '../pagination/page.module';
                 canActivate: [ServiceTntDetailGuard],
                 component: ServiceTntDetailComponent
             },
-        ])
+        ]),
+
     ],
     providers: [
         ServicesTntService,

@@ -1,4 +1,5 @@
-﻿<div class="panel panel-primary">
+﻿<div [ngBusy]="{busy: busy}"></div>
+<div class="panel panel-primary">
     <div class="panel-heading">
         {{pageTitle}}
     </div>
@@ -28,7 +29,7 @@
                     <tr>
                         <th>
                             <button class="btn btn-primary" (click)='toggleImage()'>
-                           Image
+                                Image
                             </button>
                         </th>
                         <th>Product</th>
@@ -40,9 +41,7 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let serviceTnt of servicesTnt | productFilter : listFilter">
-                        <td>
-                  
-                        </td>
+                        <td></td>
                         <td>
                             <a [routerLink]="['/serviceTnt',serviceTnt.productId]">
                                 {{serviceTnt.productName}}
@@ -51,18 +50,15 @@
                         <td>{{serviceTnt.productCode | lowercase}}</td>
                         <td>{{serviceTnt.releaseDate}}</td>
                         <td>{{serviceTnt.price | currency: 'PLN':true:'1.2-2' }}</td>
-                        <td>
-                         
-                        </td>
+                        <td></td>
                     </tr>
                 </tbody>
             </table>
         </div>
+        <page-app *ngIf='servicesTnt && servicesTnt.length'
+                  [totalCount]='paging.totalCount'
+                  [pageSize]='paging.pageSize'
+                  (pageClicked)='onPageClicked($event)'>
+        </page-app>
     </div>
-    <page-app  *ngIf='servicesTnt && servicesTnt.length'
-               [totalCount]='paging.totalCount' 
-               [pageSize]='paging.pageSize' 
-               (pageClicked)='onPageClicked($event)'>
-
-    </page-app>
 </div>

@@ -3,9 +3,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
-
+import { SheredModule } from './shared/shared.module';
 import { WelcomeComponent } from './home/welcome.component';
 import { ProductModule } from './servicesTnt/serviceTnt.module';
+
 
 
 @NgModule({
@@ -17,13 +18,14 @@ import { ProductModule } from './servicesTnt/serviceTnt.module';
             { path: '', redirectTo: 'welcome', pathMatch: 'full' },
             { path: '**', redirectTo: 'welcome', pathMatch: 'full' }
         ]),
-      
-        ProductModule
+        ProductModule,
+        SheredModule
     ],
     declarations: [
         AppComponent,
         WelcomeComponent
     ],
+
     bootstrap: [AppComponent]
 })
 

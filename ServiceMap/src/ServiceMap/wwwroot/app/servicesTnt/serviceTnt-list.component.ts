@@ -3,6 +3,7 @@ import { IServiceTnt, IServiceFilter } from './serviceTnt';
 import { IPage } from '../pagination/page';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ServicesTntService } from './serviceTnt.service';
+import { Subscription } from 'rxjs'
 
 @Component({
     templateUrl: 'app/servicesTnt/serviceTnt-list.component.html?v=${new Date().getTime()',
@@ -10,7 +11,7 @@ import { ServicesTntService } from './serviceTnt.service';
 })
 
 export class ServiceTntListComponent implements OnInit {
-
+    busy: Subscription;
     pageTitle: string = "Lista Serwisów TNT !";
     imageWidth: number = 50;
     imageMargin: number = 2;
@@ -25,7 +26,7 @@ export class ServiceTntListComponent implements OnInit {
     private serviceFilter: IServiceFilter;
 
     constructor(private _serviceTntService: ServicesTntService, private _route: ActivatedRoute,
-) {
+    ) {
 
     }
 
@@ -64,7 +65,7 @@ export class ServiceTntListComponent implements OnInit {
     }
 
     private _getData(filtr: IServiceFilter) {
-        this._serviceTntService.searchServicesTnt(filtr)
+        this.busy = this._serviceTntService.searchServicesTnt(filtr)
             .subscribe(result => {
                 this.servicesTnt = result.serviceTnt;
                 this.paging = result.paging;
