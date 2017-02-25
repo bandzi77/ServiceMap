@@ -1,61 +1,74 @@
 ﻿<div [ngBusy]="{busy: busy}"></div>
-<div class="panel panel-primary">
+<div class="panel panel-primary map" > <!--style="background-color: #f3f3f3"-->
     <div class="panel-heading">
         {{pageTitle}}
     </div>
-    <div class="panel-body">
-        <div class="row">
-            <div class="col-md-1">Filter by:</div>
-            <div class="col-md-2">
-                <input type="text" [(ngModel)]="postCode" />
-            </div>
-            <div class="col-md-2">
-                <input type="text" [(ngModel)]="cityName" />
-            </div>
-            <div class="col-md-1">
-                <button class="btn btn-primary " (click)='onSearchService()'>
-                    Szukaj
+    <div class="panel-body map">
+        <div class="form-inline">
+            <div class="container container-in-form-psz col-md-12">
+                <div class="form-group" haspermission="PersonalDataVisibilityPerm">
+                    <div>
+                        <label for="pesel">Podaj </label>
+                        <input class="form-control"
+                               type="text"
+                               autocomplete="off"
+                               focus="true"
+                               placeholder="Kod pocztowy"
+                               [(ngModel)]="postCode" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div>
+                        <label for="cardNumber">lub</label>
+                        <input class="form-control"
+                               type="text"
+                               autocomplete="off"
+                               placeholder="Nazwa miasta"
+                               [(ngModel)]="cityName" />
+                    </div>
+                </div>
+                <button name="searchBtn"
+                        class="btn btn-psz-gray"
+                        (click)='onSearchService()'>
+                    <i class="fa fa-search fa-1x"></i> &nbsp;&nbsp;Szukaj
                 </button>
             </div>
         </div>
+
         <div class="row">
             <div class="col-md-6">
-                <h3>Filtered by:{{listFilter}}</h3>
+           {{listFilter}}
             </div>
         </div>
-        <div class="table-responsive">
-            <table class="table" *ngIf="servicesTnt && servicesTnt.length">
-                <thead>
-                    <tr>
-                        <th>
-                            <button class="btn btn-primary" (click)='toggleImage()'>
-                                Image
-                            </button>
-                        </th>
-                        <th>Product</th>
-                        <th>Code</th>
-                        <th>Available</th>
-                        <th>Price</th>
-                        <th>5 Star Rating</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let serviceTnt of servicesTnt | productFilter : listFilter">
-                        <td></td>
-                        <td>
-                            <a [routerLink]="['/serviceTnt',serviceTnt.productId]">
-                                {{serviceTnt.productName}}
-                            </a>
-                        </td>
-                        <td>{{serviceTnt.productCode | lowercase}}</td>
-                        <td>{{serviceTnt.releaseDate}}</td>
-                        <td>{{serviceTnt.price | currency: 'PLN':true:'1.2-2' }}</td>
-                        <td></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <page-app *ngIf='servicesTnt && servicesTnt.length'
+            <div class="table-responsive">
+                <table class="table table-fixed" *ngIf="servicesTnt && servicesTnt.length">
+                    <thead>
+                        <tr>
+                            <th class="col-lg-2">Product</th>
+                            <th class="col-lg-2">Code</th>
+                            <th class="col-lg-2">Available</th>
+                            <th class="col-lg-2">Price</th>
+                            <th class="col-lg-4">5 Star Rating</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let serviceTnt of servicesTnt | productFilter : listFilter">
+                            <td class="col-md-2">
+                                <a [routerLink]="['/serviceTnt',serviceTnt.productId]">
+                                    {{serviceTnt.productName}}
+                                </a>
+                            </td>
+                            <td class="col-md-2">{{serviceTnt.productCode | lowercase}}</td>
+                            <td class="col-md-2">{{serviceTnt.releaseDate}}</td>
+                            <td class="col-md-2">{{serviceTnt.price | currency: 'PLN':true:'1.2-2' }}</td>
+                            <td class="col-md-4">cvxz</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+    </div>
+    <div class="panel-footer" *ngIf='servicesTnt && servicesTnt.length'>
+        <page-app
                   [totalCount]='paging.totalCount'
                   [pageSize]='paging.pageSize'
                   (pageClicked)='onPageClicked($event)'>

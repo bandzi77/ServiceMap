@@ -23,8 +23,8 @@ namespace ServiceMap.Controllers.apiControllers
         [HttpGet]
         public IActionResult Get(string postCode, string cityName, Int16? currentPage)
         {
-            var paging = new { totalCount = 3, pageSize = 1 };
-            var serviceTnt = getMockData().Where(x=>x.productId==(currentPage??1)).ToList();
+            var paging = new { totalCount = 3, pageSize = 3 };
+            var serviceTnt = getMockData().Where(x=>x.productId>=(currentPage??1)).ToList();
 
             var result = new { serviceTnt = serviceTnt , paging = paging };
             return Ok(result );

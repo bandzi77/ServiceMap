@@ -16,7 +16,7 @@ import { ModalModule } from 'ng2-bootstrap';
             new BusyConfig({
                 backdrop: true,
                 delay: 0,
-                minDuration: 600
+                minDuration: 0
             })
         ),
         ModalModule.forRoot()

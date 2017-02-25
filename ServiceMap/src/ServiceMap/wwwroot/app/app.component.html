@@ -1,14 +1,13 @@
-﻿<div>
+﻿
     <nav class="navbar navbar-default">
         <div class="container-fluid">
-            <a class="navbar-brand">title</a>
+            <a class="navbar-brand"></a>
             <ul class="nav navbar-nav">
                 <li *ngIf="isSuperusers"><a [routerLink]="['/welcome']">Konta Użytkowników</a></li>
                 <li><a [routerLink]="['/serviceTnt']">Mapa Serwisowa</a></li>
             </ul>
         </div>
     </nav>
-    <div class="container">
+    <div class="container fill">
         <router-outlet></router-outlet>
     </div>
-</div>
