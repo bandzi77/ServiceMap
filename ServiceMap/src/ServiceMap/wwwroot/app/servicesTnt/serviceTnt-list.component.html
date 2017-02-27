@@ -1,38 +1,39 @@
 ﻿<div [ngBusy]="{busy: busy}"></div>
 <div class="panel panel-primary map">
-    <!--style="background-color: #f3f3f3"-->
     <div class="panel-heading">
         {{pageTitle}}
     </div>
-    <div class="panel-body map">
+    <div class="panel-body">
         <div class="form-inline">
-            <div class="container container-in-form-psz col-md-12">
-                <div class="form-group" haspermission="PersonalDataVisibilityPerm">
-                    <div>
-                        <label for="pesel">Podaj </label>
-                        <input class="form-control"
-                               type="text"
-                               autocomplete="off"
-                               focus="true"
-                               placeholder="Kod pocztowy"
-                               [(ngModel)]="postCode" />
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <div class="form-group">
+                        <div>
+                            <label for="pesel" style="font-size:medium;">Podaj </label>
+                            <input class="form-control"
+                                   type="text"
+                                   autocomplete="off"
+                                   focus="true"
+                                   placeholder="Kod pocztowy"
+                                   [(ngModel)]="postCode" />
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div>
-                        <label for="cardNumber">lub</label>
-                        <input class="form-control"
-                               type="text"
-                               autocomplete="off"
-                               placeholder="Nazwa miasta"
-                               [(ngModel)]="cityName" />
+                    <div class="form-group">
+                        <div>
+                            <label for="cardNumber" style="font-size:medium">lub</label>
+                            <input class="form-control"
+                                   type="text"
+                                   autocomplete="off"
+                                   placeholder="Nazwa miasta"
+                                   [(ngModel)]="cityName" />
+                        </div>
                     </div>
+                    <button name="searchBtn"
+                            class="btn btn-psz-gray"
+                            (click)='onSearchService()'>
+                        <i class="fa fa-search fa-1x"></i> &nbsp;&nbsp;Szukaj
+                    </button>
                 </div>
-                <button name="searchBtn"
-                        class="btn btn-psz-gray"
-                        (click)='onSearchService()'>
-                    <i class="fa fa-search fa-1x"></i> &nbsp;&nbsp;Szukaj
-                </button>
             </div>
         </div>
 
@@ -44,7 +45,7 @@
         <div class="tablecontainer">
             <div class="table-responsive ">
 
-                <table class="table table-bordered table-striped table-condensed table-fixed " *ngIf="servicesTnt && servicesTnt.length" >
+                <table class="table table-bordered table-striped table-condensed table-fixed " *ngIf="servicesTnt && servicesTnt.length">
                     <thead>
                         <tr>
                             <th>Depot code 1a</th>
@@ -75,10 +76,14 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let serviceTnt of servicesTnt | productFilter : listFilter">
-                            <td >
-                                <a [routerLink]="['/serviceTnt',serviceTnt.productId]">
+                            <td>
+                               
+                                <a  (click)="onClick(serviceTnt.depot_code_1a, lgModal)">
                                     {{serviceTnt.depot_code_1a}}
                                 </a>
+                                <!--<a [routerLink]="['/serviceTnt',serviceTnt.productId]">
+                                    {{serviceTnt.depot_code_1a}}
+                                </a>-->
                             </td>
                             <td style="min-width:350px;max-width:350px;">{{serviceTnt.town}}</td>
                             <td>{{serviceTnt.from_postcode | lowercase}}</td>
@@ -89,27 +94,22 @@
                             <td><input type="checkbox" [checked]="serviceTnt.ex10" /></td>
                             <td><input type="checkbox" [checked]="serviceTnt.ex12" /></td>
                             <td>{{serviceTnt.priority}}</td>
-                            <td><input type="checkbox" [checked]="serviceTnt.wieczorne_dostarczenie" disabled/></td>
+                            <td><input type="checkbox" [checked]="serviceTnt.wieczorne_dostarczenie" disabled /></td>
 
                             <td>{{serviceTnt.standard_selivery_od}}</td>
                             <td>{{serviceTnt.standard_delivery_do}}</td>
                             <td>{{serviceTnt.sick_up_domestic_zgl}}</td>
                             <td style="min-width:200px;">{{serviceTnt.datetimepick_up_eksport_sm_zgl}}</td>
-                            <td style="min-width:200px;"><input type="checkbox" [checked]="serviceTnt.samochod_z_winda_dostepny_w_standardzie" disabled/></td>
+                            <td style="min-width:200px;"><input type="checkbox" [checked]="serviceTnt.samochod_z_winda_dostepny_w_standardzie" disabled /></td>
 
                             <td>{{serviceTnt.diplomat_next_day}}</td>
-                            <td><input type="checkbox" [checked]="serviceTnt.serwis_podmiejski" disabled/></td>
+                            <td><input type="checkbox" [checked]="serviceTnt.serwis_podmiejski" disabled /></td>
                             <td>{{serviceTnt.pick_up_domestic_zgl}}</td>
                             <td>{{serviceTnt.pick_up_eksport_sm_czas}}</td>
                             <td><input type="checkbox" [checked]="serviceTnt.serwis_miejski" disabled /></td>
-
-
-
                         </tr>
                     </tbody>
-
                 </table>
-
             </div>
         </div>
         <page-app *ngIf='servicesTnt && servicesTnt.length && paging.pageSize>1'
@@ -118,6 +118,24 @@
                   (pageClicked)='onPageClicked($event)'>
         </page-app>
     </div>
-    <!--<div class="panel-footer" style="max-height:0px;">-->
-
 </div>
+
+
+
+<div bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title pull-left">Large modal</h4>
+                <button type="button" class="close pull-right" (click)="lgModal.hide()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">{{selecteditem}} </div>
+        </div>
+    </div>
+</div>
+

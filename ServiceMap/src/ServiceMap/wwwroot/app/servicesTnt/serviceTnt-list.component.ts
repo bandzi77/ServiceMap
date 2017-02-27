@@ -21,6 +21,7 @@ export class ServiceTntListComponent implements OnInit {
     servicesTnt: IServiceTnt[];
     paging: IPage[];
     errorMessage: string;
+    selecteditem: number;
     //currentPage: number = 1;
 
     private serviceFilter: IServiceFilter;
@@ -85,5 +86,9 @@ export class ServiceTntListComponent implements OnInit {
         let filtr = this._createServiceFilter(page);
         this._getData(filtr);
         //alert("Kliknąłeś stronkę: " + page);
+    }
+    onClick(item: any, lgModal: any) {
+        this.selecteditem = item;
+        lgModal.show()
     }
 }
