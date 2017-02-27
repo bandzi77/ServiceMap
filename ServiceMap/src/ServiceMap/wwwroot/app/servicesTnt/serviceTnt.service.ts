@@ -41,7 +41,10 @@ export class ServicesTntService {
         searchParams.set('currentPage', currentPage);
        
         return this._http.get(this._serchServicesUrl, { search: searchParams })
-            .map((response: Response) => <IServiceTntResult>response.json())
+            .map(
+            (response: Response) =>
+                <IServiceTntResult>
+                response.json())
             .do(data => console.log('All' + JSON.stringify(data)))
             .catch(this.handleError);
     }

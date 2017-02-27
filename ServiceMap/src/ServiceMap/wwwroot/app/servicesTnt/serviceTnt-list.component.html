@@ -1,5 +1,6 @@
 ﻿<div [ngBusy]="{busy: busy}"></div>
-<div class="panel panel-primary map" > <!--style="background-color: #f3f3f3"-->
+<div class="panel panel-primary map">
+    <!--style="background-color: #f3f3f3"-->
     <div class="panel-heading">
         {{pageTitle}}
     </div>
@@ -37,41 +38,86 @@
 
         <div class="row">
             <div class="col-md-6">
-           {{listFilter}}
+                {{listFilter}}
             </div>
         </div>
-            <div class="table-responsive">
-                <table class="table table-fixed" *ngIf="servicesTnt && servicesTnt.length">
+        <div class="tablecontainer">
+            <div class="table-responsive ">
+
+                <table class="table table-bordered table-striped table-condensed table-fixed " *ngIf="servicesTnt && servicesTnt.length" >
                     <thead>
                         <tr>
-                            <th class="col-lg-2">Product</th>
-                            <th class="col-lg-2">Code</th>
-                            <th class="col-lg-2">Available</th>
-                            <th class="col-lg-2">Price</th>
-                            <th class="col-lg-4">5 Star Rating</th>
+                            <th>Depot code 1a</th>
+                            <th style="min-width:350px;">Town</th>
+                            <th>From Postcode</th>
+                            <th>To Postcode</th>
+                            <th>Sobota</th>
+
+                            <th>EX9</th>
+                            <th>EX10</th>
+                            <th>EX12</th>
+                            <th>Priority</th>
+                            <th>Wieczorne dostarczenie</th>
+
+                            <th>Standard Delivery OD</th>
+                            <th>Standard Delivery DO</th>
+                            <th>Pick up domestic zgl</th>
+                            <th style="min-width:200px;">DateTimePick up eksport sm zgl</th>
+                            <th style="min-width:200px;">Samochod z winda dostepny w standardzie</th>
+
+                            <th>Diplomat next day</th>
+                            <th>Serwis podmiejski</th>
+                            <th>Pick up domestic czas</th>
+                            <th>Pick up eksport sm czas</th>
+                            <th>Serwis miejski</th>
+
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngFor="let serviceTnt of servicesTnt | productFilter : listFilter">
-                            <td class="col-md-2">
+                            <td >
                                 <a [routerLink]="['/serviceTnt',serviceTnt.productId]">
-                                    {{serviceTnt.productName}}
+                                    {{serviceTnt.depot_code_1a}}
                                 </a>
                             </td>
-                            <td class="col-md-2">{{serviceTnt.productCode | lowercase}}</td>
-                            <td class="col-md-2">{{serviceTnt.releaseDate}}</td>
-                            <td class="col-md-2">{{serviceTnt.price | currency: 'PLN':true:'1.2-2' }}</td>
-                            <td class="col-md-4">cvxz</td>
+                            <td style="min-width:350px;max-width:350px;">{{serviceTnt.town}}</td>
+                            <td>{{serviceTnt.from_postcode | lowercase}}</td>
+                            <td>{{serviceTnt.to_postcode}}</td>
+                            <td><input type="checkbox" [checked]="serviceTnt.sobota" disabled /></td>
+
+                            <td><input type="checkbox" [checked]="serviceTnt.ex9" /></td>
+                            <td><input type="checkbox" [checked]="serviceTnt.ex10" /></td>
+                            <td><input type="checkbox" [checked]="serviceTnt.ex12" /></td>
+                            <td>{{serviceTnt.priority}}</td>
+                            <td><input type="checkbox" [checked]="serviceTnt.wieczorne_dostarczenie" disabled/></td>
+
+                            <td>{{serviceTnt.standard_selivery_od}}</td>
+                            <td>{{serviceTnt.standard_delivery_do}}</td>
+                            <td>{{serviceTnt.sick_up_domestic_zgl}}</td>
+                            <td style="min-width:200px;">{{serviceTnt.datetimepick_up_eksport_sm_zgl}}</td>
+                            <td style="min-width:200px;"><input type="checkbox" [checked]="serviceTnt.samochod_z_winda_dostepny_w_standardzie" disabled/></td>
+
+                            <td>{{serviceTnt.diplomat_next_day}}</td>
+                            <td><input type="checkbox" [checked]="serviceTnt.serwis_podmiejski" disabled/></td>
+                            <td>{{serviceTnt.pick_up_domestic_zgl}}</td>
+                            <td>{{serviceTnt.pick_up_eksport_sm_czas}}</td>
+                            <td><input type="checkbox" [checked]="serviceTnt.serwis_miejski" disabled /></td>
+
+
+
                         </tr>
                     </tbody>
+
                 </table>
+
             </div>
-    </div>
-    <div class="panel-footer" *ngIf='servicesTnt && servicesTnt.length'>
-        <page-app
+        </div>
+        <page-app *ngIf='servicesTnt && servicesTnt.length && paging.pageSize>1'
                   [totalCount]='paging.totalCount'
                   [pageSize]='paging.pageSize'
                   (pageClicked)='onPageClicked($event)'>
         </page-app>
     </div>
+    <!--<div class="panel-footer" style="max-height:0px;">-->
+
 </div>

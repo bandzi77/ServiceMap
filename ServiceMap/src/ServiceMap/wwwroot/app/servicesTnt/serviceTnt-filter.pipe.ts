@@ -9,6 +9,6 @@ export class ServicesTntFilterPipe implements PipeTransform {
     transform(value: IServiceTnt[], filterBy: string): IServiceTnt[] {
         filterBy = filterBy ? filterBy.toLocaleLowerCase() : null;
         return filterBy ? value.filter((serviceTnt: IServiceTnt) =>
-            serviceTnt.productName.toLocaleLowerCase().indexOf(filterBy) !== -1) : value;
+            serviceTnt.town.toLocaleLowerCase().indexOf(filterBy) !== -1) : value;
     }
 }
