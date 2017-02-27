@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs'
 
 export class ServiceTntListComponent implements OnInit {
     busy: Subscription;
-    pageTitle: string = "Lista Serwisów TNT !";
+    pageTitle: string = "Lista Serwisów TNT";
     imageWidth: number = 50;
     imageMargin: number = 2;
     listFilter: string;
