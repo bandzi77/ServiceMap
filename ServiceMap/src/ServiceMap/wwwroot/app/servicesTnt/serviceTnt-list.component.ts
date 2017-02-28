@@ -1,9 +1,10 @@
-﻿import { Component, OnInit } from '@angular/core';
+﻿import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { IServiceTnt, IServiceFilter } from './serviceTnt';
 import { IPage } from '../pagination/page';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ServicesTntService } from './serviceTnt.service';
-import { Subscription } from 'rxjs'
+import { Subscription } from 'rxjs';
+import { LgModalComponent } from '../shared/lgModal.component';
 
 @Component({
     templateUrl: 'app/servicesTnt/serviceTnt-list.component.html?v=${new Date().getTime()',
@@ -22,14 +23,13 @@ export class ServiceTntListComponent implements OnInit {
     paging: IPage[];
     errorMessage: string;
     selecteditem: number;
-    //currentPage: number = 1;
-
     private serviceFilter: IServiceFilter;
+    @ViewChild('lgModal') lgModalRef: LgModalComponent;
 
-    constructor(private _serviceTntService: ServicesTntService, private _route: ActivatedRoute,
-    ) {
-
+    constructor(private _serviceTntService: ServicesTntService, private _route: ActivatedRoute, private viewContainerRef: ViewContainerRef) {
     }
+
+    
 
     searchServicesTnt(): void {
 
@@ -89,6 +89,6 @@ export class ServiceTntListComponent implements OnInit {
     }
     onClick(item: any, lgModal: any) {
         this.selecteditem = item;
-        lgModal.show()
+        this.lgModalRef.show()
     }
 }

@@ -10,7 +10,7 @@ import 'rxjs/add/observable/throw';
 @Injectable()
 export class ServicesTntService {
     private _productUrl = 'api/servicesTnt/servicesTnt.json';
-    private _serchServicesUrl = 'api/servicesTnt';
+    private _serchServicesUrl = 'api/servicesTnt/GetServices';
     constructor(private _http: Http) {
 
     };

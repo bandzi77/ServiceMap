@@ -4,16 +4,22 @@ import { FormsModule } from '@angular/forms';
 import { BusyModule, BusyConfig } from 'angular2-busy';
 import { ModalModule } from 'ng2-bootstrap';
 import { PageModule } from '../pagination/page.module';
+import { LgModalComponent } from './lgModal.component';
 
 @NgModule({
+    declarations: [
+        LgModalComponent
+    ],
     exports: [
         CommonModule,
         FormsModule,
         BusyModule,
         ModalModule,
-        PageModule
+        PageModule,
+        LgModalComponent
     ],
     imports: [
+        CommonModule,
         BusyModule.forRoot(
             new BusyConfig({
                 backdrop: true,

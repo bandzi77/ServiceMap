@@ -21,7 +21,6 @@ import { SheredModule } from '../shared/shared.module';
         ServicesTntFilterPipe
     ],
     imports: [
-      
         SheredModule,
         RouterModule.forChild([
             { path: 'serviceTnt', component: ServiceTntListComponent },

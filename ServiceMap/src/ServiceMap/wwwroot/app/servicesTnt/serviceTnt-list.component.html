@@ -77,36 +77,36 @@
                     <tbody>
                         <tr *ngFor="let serviceTnt of servicesTnt | productFilter : listFilter">
                             <td>
-                               
-                                <a  (click)="onClick(serviceTnt.depot_code_1a, lgModal)">
-                                    {{serviceTnt.depot_code_1a}}
+
+                                <a (click)="onClick(serviceTnt.depotCode1a, lgModal)">
+                                    {{serviceTnt.depotCode1a}}
                                 </a>
                                 <!--<a [routerLink]="['/serviceTnt',serviceTnt.productId]">
-                                    {{serviceTnt.depot_code_1a}}
+                                    {{serviceTnt.depotCode1a}}
                                 </a>-->
                             </td>
                             <td style="min-width:350px;max-width:350px;">{{serviceTnt.town}}</td>
-                            <td>{{serviceTnt.from_postcode | lowercase}}</td>
-                            <td>{{serviceTnt.to_postcode}}</td>
+                            <td>{{serviceTnt.fromPostcode | lowercase}}</td>
+                            <td>{{serviceTnt.toPostcode}}</td>
                             <td><input type="checkbox" [checked]="serviceTnt.sobota" disabled /></td>
 
                             <td><input type="checkbox" [checked]="serviceTnt.ex9" /></td>
                             <td><input type="checkbox" [checked]="serviceTnt.ex10" /></td>
                             <td><input type="checkbox" [checked]="serviceTnt.ex12" /></td>
                             <td>{{serviceTnt.priority}}</td>
-                            <td><input type="checkbox" [checked]="serviceTnt.wieczorne_dostarczenie" disabled /></td>
+                            <td><input type="checkbox" [checked]="serviceTnt.wieczorneDostarczenie" disabled /></td>
 
-                            <td>{{serviceTnt.standard_selivery_od}}</td>
-                            <td>{{serviceTnt.standard_delivery_do}}</td>
-                            <td>{{serviceTnt.sick_up_domestic_zgl}}</td>
-                            <td style="min-width:200px;">{{serviceTnt.datetimepick_up_eksport_sm_zgl}}</td>
-                            <td style="min-width:200px;"><input type="checkbox" [checked]="serviceTnt.samochod_z_winda_dostepny_w_standardzie" disabled /></td>
+                            <td>{{serviceTnt.standardDeliveryOd}}</td>
+                            <td>{{serviceTnt.standardDeliveryDo}}</td>
+                            <td>{{serviceTnt.pickUpDomesticZgl}}</td>
+                            <td style="min-width:200px;">{{serviceTnt.dateTimePickUpEksportSmZgl}}</td>
+                            <td style="min-width:200px;"><input type="checkbox" [checked]="serviceTnt.samochodZwindaDostepnyWstandardzie" disabled /></td>
 
-                            <td>{{serviceTnt.diplomat_next_day}}</td>
-                            <td><input type="checkbox" [checked]="serviceTnt.serwis_podmiejski" disabled /></td>
-                            <td>{{serviceTnt.pick_up_domestic_zgl}}</td>
-                            <td>{{serviceTnt.pick_up_eksport_sm_czas}}</td>
-                            <td><input type="checkbox" [checked]="serviceTnt.serwis_miejski" disabled /></td>
+                            <td>{{serviceTnt.diplomatNextDay}}</td>
+                            <td><input type="checkbox" [checked]="serviceTnt.serwisPodmiejski" disabled /></td>
+                            <td>{{serviceTnt.pickUpDomesticCzas}}</td>
+                            <td>{{serviceTnt.pickUpEksportSmCzas}}</td>
+                            <td><input type="checkbox" [checked]="serviceTnt.serwisMiejski" disabled /></td>
                         </tr>
                     </tbody>
                 </table>
@@ -121,21 +121,8 @@
 </div>
 
 
-
-<div bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title pull-left">Large modal</h4>
-                <button type="button" class="close pull-right" (click)="lgModal.hide()" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                ...
-            </div>
-            <div class="modal-footer">{{selecteditem}} </div>
-        </div>
-    </div>
-</div>
+<lg-modal #lgModal>
+    <service-detail></service-detail>
+    {{selecteditem}}
+</lg-modal>
 

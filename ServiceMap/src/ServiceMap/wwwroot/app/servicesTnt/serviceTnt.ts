@@ -12,26 +12,26 @@
 //}
 
 export interface IServiceTnt {
-    depot_code_1a: string;
+    depotCode1a: string;
     town: string;
-    from_postcode: string;
-    to_postcode: string;
+    fromPostcode: string;
+    toPostcode: string;
     sobota: boolean;
     ex9: boolean;
     ex10: boolean;
     ex12: boolean;
     priority: string;
-    wieczorne_dostarczenie: boolean;
-    standard_selivery_od: string;
-    standard_delivery_do: string;
-    pick_up_domestic_zgl: string;
-    date_time_pick_up_eksport_sm_zgl: string
-    samochod_z_winda_dostepny_w_standardzie?: boolean;
-    diplomat_next_day: string;
-    serwis_podmiejski?: boolean;
-    pick_up_domestic_czas: string;
-    pick_up_eksport_sm_czas: string;
-    serwis_miejski?: boolean;
+    wieczorneDostarczenie: boolean;
+    standardDeliveryOd: string;
+    standardDeliveryDo: string;
+    pickUpDomesticZgl: string;
+    dateTimePickUpEksportSmZgl: string
+    samochodZwindaDostepnyWstandardzie?: boolean;
+    diplomatNextDay: string;
+    serwisPodmiejski?: boolean;
+    pickUpDomesticCzas: string;
+    pickUpEksportSmCzas: string;
+    serwisMiejski?: boolean;
 }
 export interface IServiceFilter {
     postCode: string;
