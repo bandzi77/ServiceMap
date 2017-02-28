@@ -1,13 +1,17 @@
 ﻿
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <a class="navbar-brand"></a>
-            <ul class="nav navbar-nav">
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
                 <li *ngIf="isSuperusers"><a [routerLink]="['/welcome']">Konta Użytkowników</a></li>
                 <li><a [routerLink]="['/serviceTnt']">Mapa Serwisowa</a></li>
             </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li ><a>Wyloguj</a></li>
+            </ul>
         </div>
-    </nav>
-    <div class="container fill">
-        <router-outlet></router-outlet>
     </div>
+</nav>
+<div class="container fill">
+    <router-outlet></router-outlet>
+</div>
