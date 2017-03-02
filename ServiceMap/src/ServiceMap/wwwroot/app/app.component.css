@@ -48,7 +48,7 @@ tr {
 }
 
 th, td {
-    min-width: 120px;
+    min-width: 130px;
 }
 
 th {
@@ -58,6 +58,7 @@ th {
 tbody {
     display: block;
     height: 500px;
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+    width:100%;
 }
-
