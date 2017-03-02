@@ -5,16 +5,16 @@ using System.Threading.Tasks;
 
 namespace ServiceMap.Models.ServiceTnt
 {
-    public class Depots
+    public class DepotDetails
     {
-        public Int16 ID { get; set; }
+        public Int16 Id { get; set; }
         public string DepotCode { get; set; }
         public string AddressesTown { get; set; }
         public string AddressesStreet { get; set; }
         public string ExitCustomsOfficeOfficeNumber { get; set; }
-        public char AWKWInfoIsSystemOrDiplomat { get; set; }
-        public bool AWKWInfoIsBHPCompliant { get; set; }
-        public string AWKWInfoSupportingLocation { get; set; }
+        public char AwkwInfoIsSystemOrDiplomat { get; set; }
+        public bool AwkwInfoIsBHPCompliant { get; set; }
+        public string AwkwInfoSupportingLocation { get; set; }
         public string InternationalPackageHoursInfo { get; set; }
         public string DomesticPackageHoursInfo { get; set; }
         public string SaturdayPackageHoursInfo { get; set; }

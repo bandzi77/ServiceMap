@@ -1,14 +1,14 @@
-﻿import { Component, OnInit } from '@angular/core';
-import { IServiceTnt } from './serviceTnt';
+﻿import { Component, OnInit, Input } from '@angular/core';
+import { IDepotDetails } from './depotDetails';
 
 @Component({
-    selector: 'service-detail',
-    templateUrl: 'app/servicesTnt/serviceTnt-detail.component.html'
+    selector: 'depot-details',
+    templateUrl: 'app/servicesTnt/depot-detail.component.html'
 })
 
 export class ServiceTntDetailComponent implements OnInit {
     pageTitle: string = 'Dane Oddziału';
-    product: IServiceTnt;
+    @Input() depotsTnt: IDepotDetails[];
 
   
     ngOnInit(): void

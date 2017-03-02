@@ -1,16 +1,5 @@
 ﻿import { IPage } from '../pagination/page';
 
-//export interface IServiceTnt {
-//    productId: number;
-//    productName: string;
-//    productCode: string;
-//    releaseDate: string;
-//    price: number;
-//    description: string;
-//    starRating: number;
-//    imageUrl: string;
-//}
-
 export interface IServiceTnt {
     depotCode1a: string;
     town: string;

@@ -58,7 +58,7 @@
                             <th>EX10</th>
                             <th>EX12</th>
                             <th>Priority</th>
-                            <th>Wieczorne dostarczenie</th>
+                            <th style="min-width:150px;">Wieczorne dostarczenie</th>
 
                             <th>Standard Delivery OD</th>
                             <th>Standard Delivery DO</th>
@@ -88,25 +88,51 @@
                             <td style="min-width:350px;max-width:350px;">{{serviceTnt.town}}</td>
                             <td>{{serviceTnt.fromPostcode | lowercase}}</td>
                             <td>{{serviceTnt.toPostcode}}</td>
-                            <td><input type="checkbox" [checked]="serviceTnt.sobota" disabled /></td>
 
-                            <td><input type="checkbox" [checked]="serviceTnt.ex9" /></td>
-                            <td><input type="checkbox" [checked]="serviceTnt.ex10" /></td>
-                            <td><input type="checkbox" [checked]="serviceTnt.ex12" /></td>
+                            <td>
+                                <span *ngIf="serviceTnt.sobota"><i class="fa fa-check-square-o fa-1x" aria-hidden="true"></i></span>
+                                <span *ngIf="!serviceTnt.sobota"><i class="fa fa-square-o fa-1x" aria-hidden="true"></i></span>
+                            </td>
+
+                            <td>
+                                <span *ngIf="serviceTnt.ex9"><i class="fa fa-check-square-o fa-1x" aria-hidden="true"></i></span>
+                                <span *ngIf="!serviceTnt.ex9"><i class="fa fa-square-o fa-1x" aria-hidden="true"></i></span>
+                            </td>
+                            <td>
+                                <span *ngIf="serviceTnt.ex10"><i class="fa fa-check-square-o fa-1x" aria-hidden="true"></i></span>
+                                <span *ngIf="!serviceTnt.ex10"><i class="fa fa-square-o fa-1x" aria-hidden="true"></i></span>
+                            </td>
+                            <td>
+                                <span *ngIf="serviceTnt.ex12"><i class="fa fa-check-square-o fa-1x" aria-hidden="true"></i></span>
+                                <span *ngIf="!serviceTnt.ex12"><i class="fa fa-square-o fa-1x" aria-hidden="true"></i></span>
+                            </td>
+
                             <td>{{serviceTnt.priority}}</td>
-                            <td><input type="checkbox" [checked]="serviceTnt.wieczorneDostarczenie" disabled /></td>
+                            <td style="min-width:150px;">
+                                <span *ngIf="serviceTnt.wieczorneDostarczenie"><i class="fa fa-check-square-o fa-1x" aria-hidden="true"></i></span>
+                                <span *ngIf="!serviceTnt.wieczorneDostarczenie"><i class="fa fa-square-o fa-1x" aria-hidden="true"></i></span>
+                            </td>
 
                             <td>{{serviceTnt.standardDeliveryOd}}</td>
                             <td>{{serviceTnt.standardDeliveryDo}}</td>
                             <td>{{serviceTnt.pickUpDomesticZgl}}</td>
                             <td style="min-width:200px;">{{serviceTnt.dateTimePickUpEksportSmZgl}}</td>
-                            <td style="min-width:200px;"><input type="checkbox" [checked]="serviceTnt.samochodZwindaDostepnyWstandardzie" disabled /></td>
+                            <td style="min-width:200px;">
+                                <span *ngIf="serviceTnt.samochodZwindaDostepnyWstandardzie"><i class="fa fa-check-square-o fa-1x" aria-hidden="true"></i></span>
+                                <span *ngIf="!serviceTnt.samochodZwindaDostepnyWstandardzie"><i class="fa fa-square-o fa-1x" aria-hidden="true"></i></span>
+                            </td>
 
                             <td>{{serviceTnt.diplomatNextDay}}</td>
-                            <td><input type="checkbox" [checked]="serviceTnt.serwisPodmiejski" disabled /></td>
+                            <td>
+                                <span *ngIf="serviceTnt.serwisPodmiejski"><i class="fa fa-check-square-o fa-1x" aria-hidden="true"></i></span>
+                                <span *ngIf="!serviceTnt.serwisPodmiejski"><i class="fa fa-square-o fa-1x" aria-hidden="true"></i></span>
+                            </td>
                             <td>{{serviceTnt.pickUpDomesticCzas}}</td>
                             <td>{{serviceTnt.pickUpEksportSmCzas}}</td>
-                            <td><input type="checkbox" [checked]="serviceTnt.serwisMiejski" disabled /></td>
+                            <td>
+                                <span *ngIf="serviceTnt.serwisMiejski"><i class="fa fa-check-square-o fa-1x" aria-hidden="true"></i></span>
+                                <span *ngIf="!serviceTnt.serwisMiejski"><i class="fa fa-square-o fa-1x" aria-hidden="true"></i></span>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -121,8 +147,7 @@
 </div>
 
 
-<lg-modal #lgModal>
-    <service-detail></service-detail>
-    {{selecteditem}}
+<lg-modal #lgModal [myheader]="' '">
+    <depot-details [depotsTnt]='depotTnt'></depot-details>
 </lg-modal>
 

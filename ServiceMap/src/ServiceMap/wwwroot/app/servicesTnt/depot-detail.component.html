@@ -1,0 +1,171 @@
+﻿
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        {{pageTitle}}
+    </div>
+    <div class="panel-body" *ngIf="depotsTnt && depotsTnt.length">
+
+        <div class="form-group" *ngFor="let item of depotsTnt;">
+            <!-- 1 -->
+            <div class="row">
+                <strong class="col-md-4">DepotCode:</strong>
+                <div class="col-md-8">{{item.depotCode}}</div>
+            </div>
+            <div class="row">
+                <strong class="col-md-4 text-nowrap">Addresses Town:</strong>
+                <div class="col-md-8">{{item.addressesTown}}</div>
+            </div>
+            <div class="row">
+                <strong class="col-md-4 text-nowrap">Addresses Street:</strong>
+                <div class="col-md-8">{{item.addressesStreet}}</div>
+            </div>
+            <div class="row">
+                <strong class="col-md-4 text-nowrap">ExitCustomsOffice OfficeNumber:</strong>
+                <div class="col-md-8">{{item.exitCustomsOfficeOfficeNumber}}</div>
+            </div>
+            <div class="row">
+                <strong class="col-md-4 text-nowrap">AWKWInfo IsSystemOrDiplomat:</strong>
+                <div class="col-md-8">{{item.awkwInfoIsSystemOrDiplomat}}</div>
+            </div>
+            <!-- 2_1 -->
+            <div class="row">
+                <strong class="col-md-4 text-nowrap">AWKWInfo IsBHPCompliant:</strong>
+                <div class="col-md-8">
+                    <span *ngIf="item.awkwInfoIsBHPCompliant"><i class="fa fa-check-square-o fa-1x" aria-hidden="true"></i></span>
+                    <span *ngIf="!item.awkwInfoIsBHPCompliant"><i class="fa fa-square-o fa-1x" aria-hidden="true"></i></span>
+                </div>
+
+                <!--<input type="checkbox" [checked]="item.awkwInfoIsBHPCompliant" disabled />-->
+
+            </div>
+            <div class="row">
+                <strong class="col-md-4 text-nowrap">AWKWInfo SupportingLocation:</strong>
+                <div class="col-md-8">{{item.awkwInfoSupportingLocation}}</div>
+            </div>
+            <div class="row">
+                <strong class="col-md-4 text-nowrap">InternationalPackageHours Info:</strong>
+                <div class="col-md-8">{{item.internationalPackageHoursInfo}}</div>
+            </div>
+            <div class="row">
+                <strong class="col-md-4 text-nowrap">DomesticPackageHours Info:</strong>
+                <div class="col-md-8">{{item.domesticPackageHoursInfo}}</div>
+            </div>
+            <div class="row">
+                <strong class="col-md-4 text-nowrap">SaturdayPackageHours Info:</strong>
+                <div class="col-md-8">{{item.saturdayPackageHoursInfo}}</div>
+            </div>
+            <!-- 2_2 -->
+            <div class="row">
+                <strong class="col-md-4 text-nowrap">SaturdayOpsHours Info:</strong>
+                <div class="col-md-8">{{item.saturdayOpsHoursInfo}}</div>
+            </div>
+            <div class="row">
+                <strong class="col-md-4 text-nowrap">WeekPackageHours Info:</strong>
+                <div class="col-md-8">{{item.weekPackageHoursInfo}}</div>
+            </div>
+            <div class="row">
+                <strong class="col-md-4 text-nowrap">CustomsOffice OfficeNumber:</strong>
+                <div class="col-md-8">{{item.customsOfficeOfficeNumber}}</div>
+            </div>
+            <div class="row">
+                <strong class="col-md-4 text-nowrap">ExitCustomsOffice OfficeDesc:</strong>
+                <div class="col-md-8">{{item.exitCustomsOfficeOfficeDesc}}</div>
+            </div>
+            <div class="row">
+                <strong class="col-md-4 text-nowrap">CustomsOffice OfficeDesc:</strong>
+                <div class="col-md-8">{{item.customsOfficeOfficeDesc}}</div>
+            </div>
+            <!-- 3 -->
+            <div class="row">
+                <strong class="col-md-4 text-nowrap">Addresses Postcode:</strong>
+                <div class="col-md-8">{{item.addressesPostcode}}</div>
+            </div>
+            <div class="row">
+                <strong class="col-md-4">ContactInfo1 Phone:</strong>
+                <div class="col-md-8">{{item.contactInfo1Phone}}</div>
+            </div>
+            <div class="row">
+                <strong class="col-md-4 text-nowrap">ContactInfo1 Extension:</strong>
+                <div class="col-md-8">{{item.contactInfo1Extension}}</div>
+            </div>
+            <div class="row">
+                <strong class="col-md-4">ContactInfo1 Description:</strong>
+                <div class="col-md-8">{{item.contactInfo1Description}}</div>
+            </div>
+            <div class="row">
+                <strong class="col-md-4 text-nowrap">ContactInfo2 Phone:</strong>
+                <div class="col-md-8">{{item.contactInfo2Phone}}</div>
+            </div>
+            <!-- 4 -->
+            <div class="row">
+                <strong class="col-md-4 text-nowrap">ContactInfo2 Extension:</strong>
+                <div class="col-md-8">{{item.contactInfo2Extension}}</div>
+            </div>
+            <div class="row">
+                <strong class="col-md-4">ContactInfo2 Description:</strong>
+                <div class="col-md-8">{{item.contactInfo2Description}}</div>
+            </div>
+            <div class="row">
+                <strong class="col-md-4 text-nowrap">ContactInfo3 Phone:</strong>
+                <div class="col-md-8">{{item.contactInfo3Phone}}</div>
+            </div>
+            <div class="row">
+                <strong class="col-md-4">ContactInfo3 Extension:</strong>
+                <div class="col-md-8">{{item.contactInfo3Extension}}</div>
+            </div>
+            <div class="row">
+                <strong class="col-md-4 text-nowrap">ContactInfo3 Description:</strong>
+                <div class="col-md-8">{{item.contactInfo3Description}}</div>
+            </div>
+            <!-- 5 -->
+            <div class="row">
+                <strong class="col-md-4 text-nowrap">AfterHoursContactInfo1 Phone:</strong>
+                <div class="col-md-8">{{item.afterHoursContactInfo1Phone}}</div>
+            </div>
+            <div class="row">
+                <strong class="col-md-4">AfterHoursContactInfo1 Extension:</strong>
+                <div class="col-md-8">{{item.afterHoursContactInfo1Extension}}</div>
+            </div>
+            <div class="row">
+                <strong class="col-md-4 text-nowrap">AfterHoursContactInfo1 Description:</strong>
+                <div class="col-md-8">{{item.afterHoursContactInfo1Description}}</div>
+            </div>
+            <div class="row">
+                <strong class="col-md-4">AfterHoursContactInfo2 Phone:</strong>
+                <div class="col-md-8">{{item.afterHoursContactInfo2Phone}}</div>
+            </div>
+            <div class="row">
+                <strong class="col-md-4 text-nowrap">AfterHoursContactInfo2 Extension:</strong>
+                <div class="col-md-8">{{item.afterHoursContactInfo2Extension}}</div>
+            </div>
+            <!-- 6 -->
+            <div class="row">
+                <strong class="col-md-4 text-nowrap">AfterHoursContactInfo2 Description:</strong>
+                <div class="col-md-8">{{item.afterHoursContactInfo2Description}}</div>
+            </div>
+            <div class="row">
+                <strong class="col-md-4">AfterHoursContactInfo3 Phone:</strong>
+                <div class="col-md-8">{{item.afterHoursContactInfo3Phone}}</div>
+            </div>
+            <div class="row">
+                <strong class="col-md-4 text-nowrap">AfterHoursContactInfo3 Extension:</strong>
+                <div class="col-md-8">{{item.afterHoursContactInfo3Extension}}</div>
+            </div>
+            <div class="row">
+                <strong class="col-md-4">AfterHoursContactInfo3 Description:</strong>
+                <div class="col-md-8">{{item.afterHoursContactInfo3Description}}</div>
+            </div>
+            <div class="row">
+                <strong class="col-md-4 text-nowrap">Name:</strong>
+                <div class="col-md-8">{{item.name}}</div>
+            </div>
+            <!-- 7 -->
+            <div class="row">
+                <strong class="col-md-4 text-nowrap">SamedayUndelCutoffTime Info:</strong>
+                <div class="col-md-8">{{item.samedayUndelCutoffTimeInfo}}</div>
+            </div>
+            <hr />
+        </div>
+    </div>
+</div>
+<span *ngIf="depotsTnt && depotsTnt.length==0">Brak danych</span>

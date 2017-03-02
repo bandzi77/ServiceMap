@@ -7,7 +7,7 @@ import { ModalDirective } from 'ng2-bootstrap';
 })
 
 export class LgModalComponent {
-    @Input() header: string;
+    @Input() myheader: string;
     @ViewChild('lgModal') public lgModalRef: ModalDirective;
 
     show() {

@@ -1,5 +1,6 @@
 ﻿import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { IServiceTnt, IServiceFilter } from './serviceTnt';
+import { IDepotDetails, IDepotDetailsFilter } from './depotDetails';
 import { IPage } from '../pagination/page';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ServicesTntService } from './serviceTnt.service';
@@ -20,16 +21,16 @@ export class ServiceTntListComponent implements OnInit {
     postCode: string;
     cityName: string;
     servicesTnt: IServiceTnt[];
+    depotTnt: IDepotDetails[];
     paging: IPage[];
     errorMessage: string;
-    selecteditem: number;
     private serviceFilter: IServiceFilter;
     @ViewChild('lgModal') lgModalRef: LgModalComponent;
 
     constructor(private _serviceTntService: ServicesTntService, private _route: ActivatedRoute, private viewContainerRef: ViewContainerRef) {
     }
 
-    
+
 
     searchServicesTnt(): void {
 
@@ -54,24 +55,24 @@ export class ServiceTntListComponent implements OnInit {
     }
 
 
-    _createServiceFilter(page?: number): IServiceFilter {
-        let _serviceFilter: IServiceFilter =
-            {
-                postCode: this.postCode,
-                cityName: this.cityName,
-                currentPage: page
-            };
-
-        return _serviceFilter;
-    }
+   
 
     private _getData(filtr: IServiceFilter) {
+
+        this._setPage(filtr);
         this.busy = this._serviceTntService.searchServicesTnt(filtr)
             .subscribe(result => {
                 this.servicesTnt = result.serviceTnt;
                 this.paging = result.paging;
             },
             error => this.errorMessage = <any>error);
+    }
+
+
+    _setPage(serviceFilter: IServiceFilter): void {
+        if (serviceFilter.currentPage === undefined) {
+            serviceFilter.currentPage = null;
+        };
     }
 
     onSearchService() {
@@ -87,8 +88,25 @@ export class ServiceTntListComponent implements OnInit {
         this._getData(filtr);
         //alert("Kliknąłeś stronkę: " + page);
     }
-    onClick(item: any, lgModal: any) {
-        this.selecteditem = item;
-        this.lgModalRef.show()
+
+    _createServiceFilter(page?: number): IServiceFilter {
+        let _serviceFilter: IServiceFilter =
+            {
+                postCode: this.postCode,
+                cityName: this.cityName,
+                currentPage: page
+            };
+
+        return _serviceFilter;
+    }
+    onClick(item: any) {
+        let filtr: IDepotDetailsFilter = { depotCode:item };
+        this.busy = this._serviceTntService.getDepotDetails(filtr).subscribe(result => {
+            this.depotTnt = result.depotDetails;
+            this.lgModalRef.show();
+        },
+            error => this.errorMessage = <any>error);
+
+       
     }
 }
