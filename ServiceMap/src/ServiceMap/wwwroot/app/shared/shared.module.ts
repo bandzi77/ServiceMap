@@ -31,6 +31,5 @@ import { LgModalComponent } from './lgModal.component';
     ],
 })
 
-export class SheredModule {
-
+export class SharedModule {
 }

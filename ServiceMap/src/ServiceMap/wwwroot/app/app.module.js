@@ -5,6 +5,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+/// <reference path="users/user.component.ts" />
+/// <reference path="users/user.component.ts" />
 var core_1 = require("@angular/core");
 var platform_browser_1 = require("@angular/platform-browser");
 var router_1 = require("@angular/router");
@@ -13,6 +15,9 @@ var app_component_1 = require("./app.component");
 var shared_module_1 = require("./shared/shared.module");
 var welcome_component_1 = require("./home/welcome.component");
 var serviceTnt_module_1 = require("./servicesTnt/serviceTnt.module");
+var forms_1 = require("@angular/forms");
+var user_component_1 = require("./users/user.component");
+var serviceTnt_list_component_1 = require("./servicesTnt/serviceTnt-list.component");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -23,16 +28,21 @@ AppModule = __decorate([
         imports: [
             platform_browser_1.BrowserModule,
             http_1.HttpModule,
-            router_1.RouterModule.forRoot([
-                { path: 'welcome', component: welcome_component_1.WelcomeComponent },
-                { path: '', redirectTo: 'welcome', pathMatch: 'full' },
-                { path: '**', redirectTo: 'welcome', pathMatch: 'full' }
-            ]),
+            // TODO - Do usunięcia
             serviceTnt_module_1.ProductModule,
-            shared_module_1.SheredModule
+            forms_1.ReactiveFormsModule,
+            router_1.RouterModule.forRoot([
+                { path: 'adduser', component: user_component_1.UserComponent },
+                { path: 'serviceTnt', component: serviceTnt_list_component_1.ServiceTntListComponent },
+                { path: 'welcome', component: welcome_component_1.WelcomeComponent },
+                { path: '', redirectTo: 'serviceTnt', pathMatch: 'full' },
+                { path: '**', redirectTo: 'serviceTnt', pathMatch: 'full' },
+            ]),
+            shared_module_1.SharedModule
         ],
         declarations: [
             app_component_1.AppComponent,
+            user_component_1.UserComponent,
             welcome_component_1.WelcomeComponent
         ],
         bootstrap: [app_component_1.AppComponent]

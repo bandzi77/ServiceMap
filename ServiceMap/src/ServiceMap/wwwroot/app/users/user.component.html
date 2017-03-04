@@ -1,0 +1,95 @@
+﻿<div class="panel panel-primary">
+    <div class="panel-heading">
+        Dodaj nowe konto
+    </div>
+    <div class="panel-body">
+        <form class="form-horizontal"
+              novalidate
+              (ngSubmit)="save(signupForm)"
+              [formGroup]="userForm">
+            <fieldset>
+                <div class="form-group">
+                    <label class="col-md-2 control-label"
+                           for="emailId">Email</label>
+                    <div class="col-md-8">
+                        <input class="form-control"
+                               id="emailId"
+                               type="email"
+                               placeholder="Email (wymagane)"
+                               formControlName="email" />
+                        <span class="help-block" *ngIf="emailMessage">
+                            {{ emailMessage }}
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label"
+                           for="passwordId">Hasło</label>
+                    <div class="col-md-8">
+                        <input class="form-control"
+                               id="passwordId"
+                               type="password"
+                               placeholder="Hasło (wymagane)"
+                               formControlName="password" />
+                        <span class="help-block" *ngIf="passwordMessage">
+                            {{ passwordMessage }}
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label"
+                           for="numOfReqstPerDayId">Liczba zapytań</label>
+                    <div class="col-md-8">
+                        <input class="form-control"
+                               id="numOfReqstPerDayId"
+                               type="text"
+                               placeholder="Liczba zapytań w dniu (wymagane)"
+                               formControlName="numOfReqstPerDay" />
+                        <span class="help-block" *ngIf="numOfReqstPerDayMessage">
+                            {{ numOfReqstPerDayMessage }}
+                        </span>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-8 checkbox">
+                        <label>
+                            <input id="isSuperUserId"
+                                   type="checkbox"
+                                   formControlName="isSuperUserId" />
+                            Konto użytkownika TNT
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-8 checkbox">
+                        <label>
+                            <input id="isLockedId"
+                                   type="checkbox"
+                                   formControlName="isLocked" />
+                            Konto zablokowane
+                        </label>
+                    </div>
+                </div>
+         
+                <div class="form-group">
+                    <div class="col-md-4 col-md-offset-2">
+                        <span>
+                            <button class="btn btn-primary"
+                                    type="submit"
+                                    [disabled]="!userForm.valid">
+                                Zapisz
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+
+<br>Dirty: {{ userForm.dirty }}
+<br>Touched: {{ userForm.touched }}
+<br>Valid: {{ userForm.valid }}
+<br>Value: {{ userForm.value | json }}
