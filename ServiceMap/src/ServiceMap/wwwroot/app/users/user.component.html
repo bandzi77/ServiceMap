@@ -71,8 +71,8 @@
 
 
                 <div class="form-group">
-                    <div class="col-md-offset-2 col-md-8 checkbox">
-                        <label>
+                    <div class="col-md-offset-2 col-md-3">
+                        <label class="btn btn-primary check-btn-ms">
                             <input id="isSuperUserId"
                                    type="checkbox"
                                    formControlName="isSuperUser" (click)="onSetIsSuperUser()" />
@@ -81,8 +81,8 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-md-offset-2 col-md-8 checkbox">
-                        <label>
+                    <div class="col-md-offset-2 col-md-3">
+                        <label class="btn btn-primary check-btn-ms">
                             <input id="isLockedId"
                                    type="checkbox"
                                    formControlName="isLocked" />
@@ -106,9 +106,7 @@
         </form>
     </div>
 </div>
-<br>dante:{{userForm.get('isSuperUser').value}}
 <br>Dirty: {{ userForm.dirty }}
 <br>Touched: {{ userForm.touched }}
 <br>Valid: {{ userForm.valid }}
 <br>Value: {{ userForm.value | json }}
-<br /> mouse: {{inputType}}

@@ -1,10 +1,8 @@
-﻿export class User {
-
-    constructor(
-        public email = '',
-        public password = '',
-        public isSuperUser = false,
-        public isLocked = false,
-        public numOfReqstPerDay?: number
-    ) { }
-} 
+﻿export class IUser {
+    public id: number;
+    public email = '';
+    public password = '';
+    public isSuperUser = false;
+    public isLocked = false;
+    public numOfReqstPerDay?: number;
+}

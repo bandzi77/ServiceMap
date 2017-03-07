@@ -5,7 +5,8 @@ import 'rxjs/add/operator/debounceTime';
 
 @Component({
     selector: 'cr-user',
-    templateUrl: './app/users/user.component.html'
+    templateUrl: './app/users/user.component.html',
+    styleUrls: ['./app/users/user.component.css']
 })
 export class UserComponent implements OnInit {
     private _inputType = {
@@ -37,7 +38,7 @@ export class UserComponent implements OnInit {
 
     ngOnInit(): void {
         this.userForm = this.fb.group({
-            email: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+')]],
+            email: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+')]],
             password: ['', [Validators.required, Validators.pattern("(?=.*\\d)(?=.*[_a-z])(?=.+[\\!\\@\\#\\$\\%\\^\\&\\*\\(\\)\\+\\-\\=])(?!.*\\s).{8,12}")]],
             numOfReqstPerDay: ['', checkRange(1, 1000)],
             isSuperUser: false,
@@ -65,13 +66,13 @@ export class UserComponent implements OnInit {
     
         if (ischecked) {
             this.emailValidationMessages.pattern = 'Adres nie należy do domeny @tnt.com'
-            emailControl.setValidators([Validators.required, Validators.pattern('[a-z0-9._%+-]+@tnt.com')]);
+            emailControl.setValidators([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@tnt.com')]);
             numOfReqstPerDayControl.clearValidators();
       
         }
         else {
             this.emailValidationMessages.pattern = 'Niepoprawny adres email'
-            emailControl.setValidators([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-z0-9.-]+')]);
+            emailControl.setValidators([Validators.required, Validators.pattern(('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+'))]);
             numOfReqstPerDayControl.setValidators([Validators.required,checkRange(1, 1000)]);
 
         }
