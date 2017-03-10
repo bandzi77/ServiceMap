@@ -15,6 +15,7 @@ var app_component_1 = require("./app.component");
 var shared_module_1 = require("./shared/shared.module");
 var welcome_component_1 = require("./home/welcome.component");
 var serviceTnt_module_1 = require("./servicesTnt/serviceTnt.module");
+var user_service_1 = require("./users/user.service");
 var forms_1 = require("@angular/forms");
 var user_component_1 = require("./users/user.component");
 var serviceTnt_list_component_1 = require("./servicesTnt/serviceTnt-list.component");
@@ -29,7 +30,7 @@ AppModule = __decorate([
             platform_browser_1.BrowserModule,
             http_1.HttpModule,
             // TODO - Do usunięcia
-            serviceTnt_module_1.ProductModule,
+            serviceTnt_module_1.ServiceTntModule,
             forms_1.ReactiveFormsModule,
             router_1.RouterModule.forRoot([
                 { path: 'adduser', component: user_component_1.UserComponent },
@@ -45,6 +46,7 @@ AppModule = __decorate([
             user_component_1.UserComponent,
             welcome_component_1.WelcomeComponent
         ],
+        providers: [user_service_1.UserService],
         bootstrap: [app_component_1.AppComponent]
     })
 ], AppModule);

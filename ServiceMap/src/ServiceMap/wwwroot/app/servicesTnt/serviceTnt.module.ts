@@ -38,4 +38,4 @@ import { SharedModule } from '../shared/shared.module';
     ]
 })
 
-export class ProductModule { }
+export class ServiceTntModule { }

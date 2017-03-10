@@ -11,8 +11,8 @@ import 'rxjs/add/observable/of';
 import { IUser } from './user';
 
 @Injectable()
-export class ProductService {
-    private baseUrl = 'api/products';
+export class UserService {
+    private baseUrl = 'api/users';
 
     constructor(private http: Http) { }
 
@@ -23,19 +23,15 @@ export class ProductService {
             .catch(this.handleError);
     }
 
-    getUser(id: number): Observable<IUser> {
-        if (id === 0) {
-            return Observable.of(this.initializeProduct());
+    getUser(user: IUser): Observable<IUser> {
+        if (user.id===0) {
+            return Observable.of(this.initializeUser());
             // return Observable.create((observer: any) => {
             //     observer.next(this.initializeProduct());
             //     observer.complete();
             // });
         };
-        const url = `${this.baseUrl}/${id}`;
-        return this.http.get(url)
-            .map(this.extractData)
-            .do(data => console.log('getProduct: ' + JSON.stringify(data)))
-            .catch(this.handleError);
+        return Observable.of(user);
     }
 
     deleteUser(id: number): Observable<Response> {
@@ -48,28 +44,28 @@ export class ProductService {
             .catch(this.handleError);
     }
 
-    saveUser(product: IUser): Observable<IUser> {
+    saveUser(user: IUser): Observable<IUser> {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        if (product.id === 0) {
-            return this.addUser(product, options);
+        if (user.id === 0) {
+            return this.addUser(user, options);
         }
-        return this.updateUser(product, options);
+        return this.updateUser(user, options);
     }
 
-    private addUser(product: IUser, options: RequestOptions): Observable<IUser> {
-        product.id = undefined;
-        return this.http.post(this.baseUrl, product, options)
+    private addUser(user: IUser, options: RequestOptions): Observable<IUser> {
+        user.id = undefined;
+        return this.http.post(this.baseUrl, user, options)
             .map(this.extractData)
             .do(data => console.log('addUser: ' + JSON.stringify(data)))
             .catch(this.handleError);
     }
 
-    private updateUser(product: IUser, options: RequestOptions): Observable<IUser> {
-        const url = `${this.baseUrl}/${product.id}`;
-        return this.http.put(url, product, options)
-            .map(() => product)
+    private updateUser(user: IUser, options: RequestOptions): Observable<IUser> {
+        const url = `${this.baseUrl}/${user.id}`;
+        return this.http.put(url, user, options)
+            .map(() => user)
             .do(data => console.log('updateUser: ' + JSON.stringify(data)))
             .catch(this.handleError);
     }
@@ -86,7 +82,7 @@ export class ProductService {
         return Observable.throw(error.json().error || 'Server error');
     }
 
-    initializeProduct(): IUser {
+    initializeUser(): IUser {
         // Return an initialized object
         return {
             id: 0,

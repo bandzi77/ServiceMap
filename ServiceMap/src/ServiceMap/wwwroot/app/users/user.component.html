@@ -1,6 +1,6 @@
 ﻿<div class="panel panel-primary">
     <div class="panel-heading">
-        Dodaj nowe konto
+       {{pageTitle}}
     </div>
     <div class="panel-body">
         <form class="form-horizontal"
@@ -8,44 +8,47 @@
               (ngSubmit)="save(signupForm)"
               [formGroup]="userForm">
             <fieldset>
-                <div class="form-group" [ngClass]="{'has-error': emailMessage}">
-                    <label class="col-md-2 control-label"
-                           for="emailId">Email</label>
-                    <div class="col-md-8">
-                        <input autocomplete="off"
-                               class="form-control"
-                               id="emailId"
-                               type="email"
-                               placeholder="Email (wymagane)"
-                               formControlName="email" 
-                                maxlength="250"/>
-                        <span class="help-block" *ngIf="emailMessage">
-                            {{ emailMessage }}
-                        </span>
-                    </div>
-                </div>
-                <div class="form-group" [ngClass]="{'has-error': passwordMessage}">
-                    <label class="col-md-2 control-label"
-                           for="passwordId">Hasło</label>
-                    <div class="col-md-8">
-                        <div class="input-group">
-                            <input class="form-control"
-                                   autocomplete="off"
-                                   id="passwordId"
-                                   type={{inputType}}
-                                   placeholder="Hasło (wymagane)"
-                                   formControlName="password" 
-                                   maxlength="12"/>
-                            <span (mousedown)="onEyeEvent($event)"
-                                  (mouseup)="onEyeEvent($event)"
-                                  (mouseleave)="onEyeEvent($event)"
-                                  class="input-group-addon btn"><i class="fa fa-eye fa-1x"></i></span>
+
+                    <div class="form-group" [ngClass]="{'has-error': emailMessage}">
+                        <label class="col-md-2 control-label"
+                               for="emailId">Email</label>
+                        <div class="col-md-8">
+                            <input autocomplete="off"
+                                   class="form-control"
+                                   id="emailId"
+                                   type="email"
+                                   placeholder="Email (wymagane)"
+                                   formControlName="email"
+                                   maxlength="250" 
+                                   />
+                            <span class="help-block" *ngIf="emailMessage">
+                                {{ emailMessage }}
+                            </span>
                         </div>
-                        <span class="help-block" *ngIf="passwordMessage">
-                            {{ passwordMessage }}
-                        </span>
                     </div>
-                </div>
+                    <div class="form-group" [ngClass]="{'has-error': passwordMessage}">
+                        <label class="col-md-2 control-label"
+                               for="passwordId">Hasło</label>
+                        <div class="col-md-8">
+                            <div class="input-group">
+                                <input class="form-control"
+                                       autocomplete="off"
+                                       id="passwordId"
+                                       type={{inputType}}
+                                       placeholder="Hasło (wymagane)"
+                                       formControlName="password"
+                                       maxlength="12" />
+                                <span (mousedown)="onEyeEvent($event)"
+                                      (mouseup)="onEyeEvent($event)"
+                                      (mouseleave)="onEyeEvent($event)"
+                                      class="input-group-addon btn"><i class="fa fa-eye fa-1x"></i></span>
+                            </div>
+                            <span class="help-block" *ngIf="passwordMessage">
+                                {{ passwordMessage }}
+                            </span>
+                        </div>
+                    </div>
+
                 <div class="form-group" *ngIf="!userForm.get('isSuperUser').value"
                      [ngClass]="{'has-error': (userForm.get('numOfReqstPerDay').touched
                                               || userForm.get('numOfReqstPerDay').dirty) &&
@@ -75,7 +78,7 @@
                         <label class="btn btn-primary check-btn-ms">
                             <input id="isSuperUserId"
                                    type="checkbox"
-                                   formControlName="isSuperUser" (click)="onSetIsSuperUser()" />
+                                   formControlName="isSuperUser" />
                             Konto użytkownika TNT
                         </label>
                     </div>

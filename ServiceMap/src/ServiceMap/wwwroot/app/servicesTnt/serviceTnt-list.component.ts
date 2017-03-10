@@ -30,8 +30,6 @@ export class ServiceTntListComponent implements OnInit {
     constructor(private _serviceTntService: ServicesTntService, private _route: ActivatedRoute, private viewContainerRef: ViewContainerRef) {
     }
 
-
-
     searchServicesTnt(): void {
 
     }
@@ -54,9 +52,6 @@ export class ServiceTntListComponent implements OnInit {
         //    error => this.errorMessage = <any>error);
     }
 
-
-   
-
     private _getData(filtr: IServiceFilter) {
 
         this._setPage(filtr);
@@ -67,7 +62,6 @@ export class ServiceTntListComponent implements OnInit {
             },
             error => this.errorMessage = <any>error);
     }
-
 
     _setPage(serviceFilter: IServiceFilter): void {
         if (serviceFilter.currentPage === undefined) {
@@ -99,6 +93,7 @@ export class ServiceTntListComponent implements OnInit {
 
         return _serviceFilter;
     }
+
     onClick(item: any) {
         let filtr: IDepotDetailsFilter = { depotCode:item };
         this.busy = this._serviceTntService.getDepotDetails(filtr).subscribe(result => {
@@ -106,7 +101,5 @@ export class ServiceTntListComponent implements OnInit {
             this.lgModalRef.show();
         },
             error => this.errorMessage = <any>error);
-
-       
     }
 }

@@ -5,7 +5,7 @@
             <ul class="nav navbar-nav navbar-left">
                 <li><a [routerLink]="['/serviceTnt']">Mapa Serwisowa</a></li>
                 <li *ngIf="isSuperusers"><a [routerLink]="['/welcome']">Konta Użytkowników</a></li>
-                <li *ngIf="isSuperusers"><a [routerLink]="['/adduser']">Dodaj Użytkownika</a></li>
+                <li *ngIf="isSuperusers"><a [routerLink]="['/adduser']" [queryParams]="{ id:0, email:'test@wp.pl', isSuperUser:true }" >Dodaj Użytkownika</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li ><a>Wyloguj</a></li>
