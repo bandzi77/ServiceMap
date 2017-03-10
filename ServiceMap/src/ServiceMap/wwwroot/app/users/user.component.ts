@@ -46,7 +46,7 @@ export class UserComponent implements OnInit {
     ngOnInit(): void {
         this.userForm = this.fb.group({
             id: 0,
-            email: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+')]],
+            email: [{ value: '', disabled: true }, [Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+')]],
             password: ['', [Validators.required, Validators.pattern("(?=.*\\d)(?=.*[_a-z])(?=.+[\\!\\@\\#\\$\\%\\^\\&\\*\\(\\)\\+\\-\\=])(?!.*\\s).{8,12}")]],
             numOfReqstPerDay: ['', checkRange(1, 1000)],
             isSuperUser: false,
@@ -88,6 +88,7 @@ export class UserComponent implements OnInit {
     onUserRetrieved(user: IUser): void {
         if (this.userForm) {
             this.userForm.reset();
+            this.userForm.enable();
         }
         this.user = user;
 
