@@ -48,7 +48,7 @@ namespace ServiceMap.Models.apiModels
 
                 AppUser user = new AppUser
                 {
-                    UserName = username,
+                  //  UserName = username,
                     Email = email,
                     AccessFailedCount = 5
                 };

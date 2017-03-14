@@ -27,15 +27,23 @@ export class UserComponent implements OnInit {
     numOfReqstPerDay: string = '';
     private sub: Subscription;
 
+    emailTntRegEx: string = '[a-zA-Z0-9._%+-]+@tnt.com';
+    regExpEmail = new RegExp(this.emailTntRegEx);
+    emailRegEx: string = '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+';
+    passwordRegEx: string = '(?=.*\\d)(?=.*[_a-z])(?=.+[\\!\\@\\#\\$\\%\\^\\&\\*\\(\\)\\+\\-\\=])(?!.*\\s).{8,12}'
+    patternEmailTnt: string = 'Niepoprawny adres email z domeny tnt.com. Dopuszczalne znaki specjalne to ._%+-';
+    patternEmail: string = 'Niepoprawny adres email. Dopuszczalne znaki specjalne to ._%+-';
+
     private emailValidationMessages = {
         required: 'Wprowadź adres email',
-        pattern: 'Niepoprawny adres email'
+        pattern: this.patternEmail
     };
+
 
     private passValidationMessages = {
         required: "Wprowadź hasło",
         pattern: "Niepoprawne hasło. Długość hasła powinna mieścić się w przedziale od 8 do 12 znaków.\n\r" +
-        "Hasło powinno zawierać litery oraz co najmniej jedną cyfrę i co najmniej jeden znak specjalny _!@#$%^&*()+-="
+        "Hasło powinno zawierać litery, co najmniej jedną cyfrę oraz co najmniej jeden znak specjalny _!@#$%^&*()+-="
     };
 
     constructor(private fb: FormBuilder,
@@ -46,8 +54,8 @@ export class UserComponent implements OnInit {
     ngOnInit(): void {
         this.userForm = this.fb.group({
             id: 0,
-            email: [{ value: '', disabled: true }, [Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+')]],
-            password: ['', [Validators.required, Validators.pattern("(?=.*\\d)(?=.*[_a-z])(?=.+[\\!\\@\\#\\$\\%\\^\\&\\*\\(\\)\\+\\-\\=])(?!.*\\s).{8,12}")]],
+            email: [{ value: '', disabled: true }, [Validators.required, Validators.pattern(this.emailRegEx)]],
+            password: ['', [Validators.required, Validators.pattern(this.passwordRegEx)]],
             numOfReqstPerDay: ['', checkRange(1, 1000)],
             isSuperUser: false,
             isLocked: false
@@ -76,7 +84,6 @@ export class UserComponent implements OnInit {
                     isLocked: Boolean(params['isLocked'])
                 }
                 this.onUserRetrieved(user);
-
             }
         );
     }
@@ -87,28 +94,30 @@ export class UserComponent implements OnInit {
 
     onUserRetrieved(user: IUser): void {
         if (this.userForm) {
-            this.userForm.reset();
             this.userForm.enable();
         }
         this.user = user;
 
         if (this.user.id === 0) {
-            this.pageTitle = 'Dodaj nowe konto';
+            this.pageTitle = 'Dodaj nowego użytkownika';
         } else {
-            this.pageTitle = `Edytuj konto: ${this.user.email}`;
-            this.userForm.get('email').clearValidators();
+
+            this.pageTitle = `Edytuj użytkownika: ${this.user.email}`;
+
             this.userForm.get('email').disable();
-            this.userForm.get('password').clearValidators();
             this.userForm.get('password').disable();
+            if (!this.regExpEmail.test(this.user.email)) {
+                this.userForm.get('isSuperUser').disable();
+            }
 
             this.userForm.patchValue({
-            id: isNaN(this.user.id)? 0 : this.user.id,
-            email: this.user.email === "undefined" ? '' : this.user.email,
-            password: '',
-            numOfReqstPerDay: isNaN(this.user.numOfReqstPerDay) ? '' : this.user.numOfReqstPerDay,
-            isSuperUser: this.user.isSuperUser,
-            isLocked: this.user.isLocked
-        });
+                id: isNaN(this.user.id) ? 0 : this.user.id,
+                email: this.user.email === "undefined" ? '' : this.user.email,
+                password: '********',
+                numOfReqstPerDay: isNaN(this.user.numOfReqstPerDay) ? '' : this.user.numOfReqstPerDay,
+                isSuperUser: this.user.isSuperUser,
+                isLocked: this.user.isLocked
+            });
             // Update the data on the form
         }
     }
@@ -119,13 +128,13 @@ export class UserComponent implements OnInit {
         const numOfReqstPerDayControl = this.userForm.get('numOfReqstPerDay');
 
         if (ischecked) {
-            this.emailValidationMessages.pattern = 'Adres nie należy do domeny @tnt.com'
-            emailControl.setValidators([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@tnt.com')]);
+            this.emailValidationMessages.pattern = this.patternEmailTnt;
+            emailControl.setValidators([Validators.required, Validators.pattern(this.emailTntRegEx)]);
             numOfReqstPerDayControl.clearValidators();
         }
         else {
-            this.emailValidationMessages.pattern = 'Niepoprawny adres email'
-            emailControl.setValidators([Validators.required, Validators.pattern(('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+'))]);
+            this.emailValidationMessages.pattern = this.patternEmail;
+            emailControl.setValidators([Validators.required, Validators.pattern((this.emailRegEx))]);
             numOfReqstPerDayControl.setValidators([Validators.required, checkRange(1, 1000)]);
         }
 
@@ -143,10 +152,10 @@ export class UserComponent implements OnInit {
 
 
     private onEyeEvent(event: MouseEvent): void {
-        if (event.type === 'mousedown' && event.button === 0) {
+        if (event.type === 'mousedown' && event.button === 0 && this.user.id === 0) {
             this.inputType = this._inputType.keydown;
         }
-        if ((event.type === 'mouseup' && event.button === 0) || event.type === 'mouseleave') {
+        if (((event.type === 'mouseup' && event.button === 0) || event.type === 'mouseleave') && this.user.id === 0) {
             this.inputType = this._inputType.keyup;
         }
     }
@@ -156,7 +165,6 @@ export class UserComponent implements OnInit {
         console.log('Saved: ' + JSON.stringify(this.userForm.value));
     }
 }
-
 
 function checkRange(min: number, max: number): ValidatorFn {
     return (c: AbstractControl): { [key: string]: boolean } | null => {

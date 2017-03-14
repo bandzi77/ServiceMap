@@ -12,6 +12,7 @@ import { UserService } from './users/user.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { UserComponent } from './users/user.component'
 import { ServiceTntListComponent } from './servicesTnt/serviceTnt-list.component';
+import { ProductModule } from './users/user-module';
 
 
 @NgModule({
@@ -28,11 +29,11 @@ import { ServiceTntListComponent } from './servicesTnt/serviceTnt-list.component
 
             { path: '', redirectTo: 'serviceTnt', pathMatch: 'full' },
             { path: '**', redirectTo: 'serviceTnt', pathMatch: 'full' },      ]),
-        SharedModule
+        SharedModule,
+        ProductModule
     ],
     declarations: [
         AppComponent,
-        UserComponent,
         WelcomeComponent
     ],
     providers:[UserService],

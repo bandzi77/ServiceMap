@@ -2,7 +2,7 @@
     <div class="panel-heading">
        {{pageTitle}}
     </div>
-    <div class="panel-body">
+    <div class="panel-body" *ngIf="userForm">
         <form class="form-horizontal"
               novalidate
               (ngSubmit)="save(signupForm)"
@@ -41,7 +41,9 @@
                                 <span (mousedown)="onEyeEvent($event)"
                                       (mouseup)="onEyeEvent($event)"
                                       (mouseleave)="onEyeEvent($event)"
-                                      class="input-group-addon btn"><i class="fa fa-eye fa-1x"></i></span>
+                                      class="input-group-addon btn"
+                                      [ngClass]="{'disabled': userForm.get('id').value!==0}"
+                                      ><i class="fa fa-eye fa-1x"></i></span>
                             </div>
                             <span class="help-block" *ngIf="passwordMessage">
                                 {{ passwordMessage }}
@@ -74,8 +76,9 @@
 
 
                 <div class="form-group">
-                    <div class="col-md-offset-2 col-md-3">
-                        <label class="btn btn-primary check-btn-ms">
+                    <div class="col-md-offset-2 col-md-3">                               <!--[ngClass]="{'disabled': isNotTntUser}"-->
+                        <label 
+                               class="btn btn-primary smap-check-btn">
                             <input id="isSuperUserId"
                                    type="checkbox"
                                    formControlName="isSuperUser" />
@@ -85,7 +88,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-3">
-                        <label class="btn btn-primary check-btn-ms">
+                        <label class="btn btn-primary smap-check-btn">
                             <input id="isLockedId"
                                    type="checkbox"
                                    formControlName="isLocked" />
@@ -95,7 +98,7 @@
                 </div>
 
                 <div class="form-group">
-                    <div class="col-md-offset-9">
+                    <div class="col-md-offset-9 col-md-1">
                         <span>
                             <button class="btn btn-primary"
                                     type="submit"

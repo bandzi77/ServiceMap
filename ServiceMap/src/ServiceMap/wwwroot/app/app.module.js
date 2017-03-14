@@ -19,6 +19,7 @@ var user_service_1 = require("./users/user.service");
 var forms_1 = require("@angular/forms");
 var user_component_1 = require("./users/user.component");
 var serviceTnt_list_component_1 = require("./servicesTnt/serviceTnt-list.component");
+var user_module_1 = require("./users/user-module");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -39,11 +40,11 @@ AppModule = __decorate([
                 { path: '', redirectTo: 'serviceTnt', pathMatch: 'full' },
                 { path: '**', redirectTo: 'serviceTnt', pathMatch: 'full' },
             ]),
-            shared_module_1.SharedModule
+            shared_module_1.SharedModule,
+            user_module_1.ProductModule
         ],
         declarations: [
             app_component_1.AppComponent,
-            user_component_1.UserComponent,
             welcome_component_1.WelcomeComponent
         ],
         providers: [user_service_1.UserService],
