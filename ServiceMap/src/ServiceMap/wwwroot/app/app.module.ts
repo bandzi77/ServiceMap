@@ -10,9 +10,10 @@ import { WelcomeComponent } from './home/welcome.component';
 import { ServiceTntModule } from './servicesTnt/serviceTnt.module';
 import { UserService } from './users/user.service';
 import { ReactiveFormsModule } from '@angular/forms';
-import { UserComponent } from './users/user.component'
+import { UserComponent } from './users/user.component';
 import { ServiceTntListComponent } from './servicesTnt/serviceTnt-list.component';
 import { ProductModule } from './users/user-module';
+import { UserListComponent } from './users/user-list.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { ProductModule } from './users/user-module';
         RouterModule.forRoot([
             { path: 'adduser', component: UserComponent },
             { path: 'serviceTnt', component: ServiceTntListComponent },
-            { path: 'welcome', component: WelcomeComponent },
+            { path: 'userlist', component: UserListComponent },
+            //{ path: 'welcome', component: WelcomeComponent },
 
             { path: '', redirectTo: 'serviceTnt', pathMatch: 'full' },
             { path: '**', redirectTo: 'serviceTnt', pathMatch: 'full' },      ]),

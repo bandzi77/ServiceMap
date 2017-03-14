@@ -53,7 +53,7 @@ export class UserComponent implements OnInit {
 
     ngOnInit(): void {
         this.userForm = this.fb.group({
-            id: 0,
+            _id: 0,
             email: [{ value: '', disabled: true }, [Validators.required, Validators.pattern(this.emailRegEx)]],
             password: ['', [Validators.required, Validators.pattern(this.passwordRegEx)]],
             numOfReqstPerDay: ['', checkRange(1, 1000)],
@@ -76,7 +76,7 @@ export class UserComponent implements OnInit {
             params => {
 
                 let user = <IUser>{
-                    id: Number(params['id']),
+                    _id: Number(params['_id']),
                     email: String(params['email']),
                     password: '',
                     numOfReqstPerDay: Number(params['numOfReqstPerDay']),
@@ -98,12 +98,10 @@ export class UserComponent implements OnInit {
         }
         this.user = user;
 
-        if (this.user.id === 0) {
+        if (this.user._id === 0) {
             this.pageTitle = 'Dodaj nowego użytkownika';
         } else {
-
             this.pageTitle = `Edytuj użytkownika: ${this.user.email}`;
-
             this.userForm.get('email').disable();
             this.userForm.get('password').disable();
             if (!this.regExpEmail.test(this.user.email)) {
@@ -111,7 +109,7 @@ export class UserComponent implements OnInit {
             }
 
             this.userForm.patchValue({
-                id: isNaN(this.user.id) ? 0 : this.user.id,
+                _id: isNaN(this.user._id) ? 0 : this.user._id,
                 email: this.user.email === "undefined" ? '' : this.user.email,
                 password: '********',
                 numOfReqstPerDay: isNaN(this.user.numOfReqstPerDay) ? '' : this.user.numOfReqstPerDay,
@@ -130,6 +128,7 @@ export class UserComponent implements OnInit {
         if (ischecked) {
             this.emailValidationMessages.pattern = this.patternEmailTnt;
             emailControl.setValidators([Validators.required, Validators.pattern(this.emailTntRegEx)]);
+            numOfReqstPerDayControl.reset();
             numOfReqstPerDayControl.clearValidators();
         }
         else {
@@ -152,17 +151,54 @@ export class UserComponent implements OnInit {
 
 
     private onEyeEvent(event: MouseEvent): void {
-        if (event.type === 'mousedown' && event.button === 0 && this.user.id === 0) {
+        if (event.type === 'mousedown' && event.button === 0 && this.user._id === 0) {
             this.inputType = this._inputType.keydown;
         }
-        if (((event.type === 'mouseup' && event.button === 0) || event.type === 'mouseleave') && this.user.id === 0) {
+        if (((event.type === 'mouseup' && event.button === 0) || event.type === 'mouseleave') && this.user._id === 0) {
             this.inputType = this._inputType.keyup;
         }
     }
 
-    save() {
+    deleteUser(): void {
+        if (this.user._id === 0) {
+            // Don't delete, it was never saved.
+            this.onSaveComplete();
+        } else {
+            if (confirm(`Czy chcesz usunąć użytkownika: ${this.user.email}?`)) {
+                this.userService.deleteUser(this.user._id)
+                    .subscribe(
+                    () => this.onSaveComplete(),
+                    (error: any) => this.errorMessage = <any>error
+                    );
+            }
+        }
+    }
+
+
+    saveUser() {
+        if (this.userForm.dirty && this.userForm.valid) {
+            // Copy the form values over the product object values
+            let p = Object.assign({}, this.user, this.userForm.value);
+
+            this.userService.saveUser(p)
+                .subscribe(
+                () => this.onSaveComplete(),
+                (error: any) => this.errorMessage = <any>error
+                );
+        } else if (!this.userForm.dirty) {
+            this.onSaveComplete();
+        }
+
+
         console.log(this.userForm);
         console.log('Saved: ' + JSON.stringify(this.userForm.value));
+    }
+
+    onSaveComplete(): void {
+        // Reset the form to clear the flags
+        this.userForm.reset();
+        // TODO
+         this.router.navigate(['/userlist']);
     }
 }
 

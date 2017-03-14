@@ -14,15 +14,7 @@ export class ServicesTntService {
     private _serchServicesUrl = 'api/servicesTnt/GetServices';
     private _getDepotDetails = 'api/servicesTnt/GetDepotDetails';
     constructor(private _http: Http) {
-
     };
-
-    //getServicesTnt(): Observable<IServiceTnt[]> {
-    //    return this._http.get(this._productUrl)
-    //        .map((response: Response) => <IServiceTnt[]>response.json())
-    //        .do(data => console.log('All' + JSON.stringify(data)))
-    //        .catch(this.handleError);
-    //}
 
     getDepotDetails(depotFilter: IDepotDetailsFilter): Observable<IDepotDetailsResult> {
         let searchParams = new URLSearchParams();

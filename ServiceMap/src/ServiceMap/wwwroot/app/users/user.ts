@@ -1,5 +1,5 @@
 ﻿export class IUser {
-    public id: number;
+    public _id: number;
     public email = '';
     public password = '';
     public isSuperUser = false;

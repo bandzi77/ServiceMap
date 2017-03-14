@@ -20,6 +20,7 @@ var forms_1 = require("@angular/forms");
 var user_component_1 = require("./users/user.component");
 var serviceTnt_list_component_1 = require("./servicesTnt/serviceTnt-list.component");
 var user_module_1 = require("./users/user-module");
+var user_list_component_1 = require("./users/user-list.component");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -36,7 +37,8 @@ AppModule = __decorate([
             router_1.RouterModule.forRoot([
                 { path: 'adduser', component: user_component_1.UserComponent },
                 { path: 'serviceTnt', component: serviceTnt_list_component_1.ServiceTntListComponent },
-                { path: 'welcome', component: welcome_component_1.WelcomeComponent },
+                { path: 'userlist', component: user_list_component_1.UserListComponent },
+                //{ path: 'welcome', component: WelcomeComponent },
                 { path: '', redirectTo: 'serviceTnt', pathMatch: 'full' },
                 { path: '**', redirectTo: 'serviceTnt', pathMatch: 'full' },
             ]),

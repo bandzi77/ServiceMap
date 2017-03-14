@@ -18,8 +18,8 @@ export class ServiceTntListComponent implements OnInit {
     imageWidth: number = 50;
     imageMargin: number = 2;
     listFilter: string;
-    postCode: string;
-    cityName: string;
+    postCode: string='';
+    cityName: string='';
     servicesTnt: IServiceTnt[];
     depotTnt: IDepotDetails[];
     paging: IPage[];

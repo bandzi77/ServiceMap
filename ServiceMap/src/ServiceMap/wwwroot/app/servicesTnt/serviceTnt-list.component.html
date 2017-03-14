@@ -43,7 +43,7 @@
             </div>
         </div>
         <div class="tablecontainer">
-            <div class="table-responsive ">
+            <div class="table-responsive">
 
                 <table class="table table-bordered table-striped table-condensed table-fixed " *ngIf="servicesTnt && servicesTnt.length">
                     <thead>
@@ -64,7 +64,7 @@
                             <th>Standard Delivery DO</th>
                             <th>Pick up domestic zgl</th>
                             <th style="min-width:200px;">DateTimePick up eksport sm zgl</th>
-                            <th style="min-width:200px;">Samochod z winda dostepny w standardzie</th>
+                            <th style="min-width:220px;">Samochod z winda dostepny w standardzie</th>
 
                             <th>Diplomat next day</th>
                             <th>Serwis podmiejski</th>
@@ -117,7 +117,7 @@
                             <td>{{serviceTnt.standardDeliveryDo}}</td>
                             <td>{{serviceTnt.pickUpDomesticZgl}}</td>
                             <td style="min-width:200px;">{{serviceTnt.dateTimePickUpEksportSmZgl}}</td>
-                            <td style="min-width:200px;">
+                            <td style="min-width:220px;">
                                 <span *ngIf="serviceTnt.samochodZwindaDostepnyWstandardzie"><i class="fa fa-check-square-o fa-1x" aria-hidden="true"></i></span>
                                 <span *ngIf="!serviceTnt.samochodZwindaDostepnyWstandardzie"><i class="fa fa-square-o fa-1x" aria-hidden="true"></i></span>
                             </td>

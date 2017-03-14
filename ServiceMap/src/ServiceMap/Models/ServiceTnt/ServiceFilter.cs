@@ -7,9 +7,8 @@ namespace ServiceMap.Models.ServiceTnt
 {
     public class ServiceFilter
     {
-        public string postCode { get; set; }
-        public string cityName { get; set; }
-        public int? currentPage { get; set; }
-
+        public string PostCode { get; set; }
+        public string CityName { get; set; }
+        public Int16? CurrentPage { get; set; }
     }
 }

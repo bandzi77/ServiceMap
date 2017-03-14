@@ -60,5 +60,59 @@ tbody {
     height: 500px;
     overflow-y: auto;
     overflow-x: hidden;
-    width:100%;
+    width: 100%;
 }
+
+.btn-psz-gray,
+.btn-psz-filter {
+    background-color: #ddd;
+    border-color: #ddd;
+    color: #000;
+}
+
+    .btn-psz-gray:hover,
+    .btn-psz-gray:focus,
+    .btn-psz-gray:active,
+    .btn-psz-gray.active,
+    .btn-psz-filter:hover {
+        background-color: #d0d0d0;
+        border-color: #c4c4c4;
+        color: #000;
+    }
+
+
+.smap-check-btn2 {
+    min-width: 200px;
+    text-align: left;
+}
+
+
+.btn-psz-blue {
+    background-color: #1468B2;
+    border-color: #1468B2;
+    color: #fff;
+}
+
+    .btn-psz-blue:hover,
+    .btn-psz-blue:focus,
+    .btn-psz-blue:active,
+    .btn-psz-blue.active {
+        background-color: #115b9b;
+        border-color: #0f4d84;
+        color: #fff;
+    }
+
+.btn-psz-green {
+    background-color: #189A46;
+    border-color: #189A46;
+    color: #fff;
+}
+
+    .btn-psz-green:hover,
+    .btn-psz-green:focus,
+    .btn-psz-green:active,
+    .btn-psz-green.active {
+        background-color: #15843c;
+        border-color: #116e32;
+        color: #fff;
+    }

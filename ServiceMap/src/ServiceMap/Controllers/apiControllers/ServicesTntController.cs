@@ -22,7 +22,7 @@ namespace ServiceMap.Controllers.apiControllers
 
         // GET api/values/5
         [HttpGet("GetServices")]
-        public IActionResult GetServices(string postCode, string cityName, Int16? currentPage)
+        public IActionResult GetServices([FromQuery] ServiceFilter sfilter)
         {
             var paging = new { totalCount = 3, pageSize = 3 };
             //x => x.productId >= (currentPage ?? 1)
@@ -66,6 +66,7 @@ namespace ServiceMap.Controllers.apiControllers
         //{
         //}
 
+     
 
         private List<DepotDetails> getMockDepotDetails()
         {

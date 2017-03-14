@@ -5,6 +5,7 @@ import { UserDetailGuard, UserEditGuard } from './user-guard.service';
 import { UserComponent } from './user.component';
 import { UserService } from './user.service';
 import { SharedModule } from '../shared/shared.module';
+import { UserListComponent } from './user-list.component';
 
 
 @NgModule({
@@ -18,16 +19,11 @@ import { SharedModule } from '../shared/shared.module';
                 canActivate: [UserDetailGuard],
                 component: UserComponent
             },
-            //{
-            //    path: 'adduser',
-            //    canActivate: [UserDetailGuard],
-            //    component: UserComponent
-            //},
         ])
     ],
     declarations: [
-       // ProductListComponent,
         UserComponent,
+        UserListComponent
     ],
     providers: [
         UserService,

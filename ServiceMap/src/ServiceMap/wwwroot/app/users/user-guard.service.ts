@@ -10,12 +10,12 @@ export class UserDetailGuard implements CanActivate {
     }
 
     canActivate(route: ActivatedRouteSnapshot): boolean {
-        let id = Number(route.queryParams['id']);
+        let id = Number(route.queryParams['_id']);
         let email = route.queryParams['email'];
         if ((isNaN(id) || id < 0) || (id > 0 && (email==="undefined" || email==null ))) {
             alert('Niepoprawne adres http');
             // start a new navigation to redirect to list page
-            this.router.navigate(['/welcome']);
+            this.router.navigate(['/userlist']);
             // abort current navigation
             return false;
         };
@@ -25,11 +25,10 @@ export class UserDetailGuard implements CanActivate {
 
 @Injectable()
 export class UserEditGuard implements CanDeactivate<UserComponent> {
-
     canDeactivate(component: UserComponent): boolean {
         if (component.userForm.dirty) {
-            let productName = component.userForm.get('email').value || 'Nowy użytkownik';
-            return confirm(`Opuszczenie strony spowoduje utratę danych użytkownika ${productName}?`);
+            let productName = component.userForm.get('email').value || 'nowego użytkownika';
+            return confirm(`Opuszczenie strony spowoduje utratę danych dla ${productName}?`);
         }
         return true;
     }

@@ -18,13 +18,13 @@ export class UserService {
 
     getUsers(): Observable<IUser[]> {
         return this.http.get(this.baseUrl)
-            .map(this.extractData)
+            .map(this._extractData)
             .do(data => console.log('getProducts: ' + JSON.stringify(data)))
-            .catch(this.handleError);
+            .catch(this._handleError);
     }
 
     getUser(user: IUser): Observable<IUser> {
-        if (user.id===0) {
+        if (user._id===0) {
             return Observable.of(this.initializeUser());
             // return Observable.create((observer: any) => {
             //     observer.next(this.initializeProduct());
@@ -34,48 +34,48 @@ export class UserService {
         return Observable.of(user);
     }
 
-    deleteUser(id: number): Observable<Response> {
+    deleteUser(_id: number): Observable<Response> {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        const url = `${this.baseUrl}/${id}`;
+        const url = `${this.baseUrl}/${_id}`;
         return this.http.delete(url, options)
             .do(data => console.log('deleteUser: ' + JSON.stringify(data)))
-            .catch(this.handleError);
+            .catch(this._handleError);
     }
 
     saveUser(user: IUser): Observable<IUser> {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        if (user.id === 0) {
-            return this.addUser(user, options);
+        if (user._id === 0) {
+            return this._addUser(user, options);
         }
-        return this.updateUser(user, options);
+        return this._updateUser(user, options);
     }
 
-    private addUser(user: IUser, options: RequestOptions): Observable<IUser> {
-        user.id = undefined;
+    private _addUser(user: IUser, options: RequestOptions): Observable<IUser> {
+        user._id = undefined;
         return this.http.post(this.baseUrl, user, options)
-            .map(this.extractData)
+            .map(this._extractData)
             .do(data => console.log('addUser: ' + JSON.stringify(data)))
-            .catch(this.handleError);
+            .catch(this._handleError);
     }
 
-    private updateUser(user: IUser, options: RequestOptions): Observable<IUser> {
-        const url = `${this.baseUrl}/${user.id}`;
+    private _updateUser(user: IUser, options: RequestOptions): Observable<IUser> {
+        const url = `${this.baseUrl}/${user._id}`;
         return this.http.put(url, user, options)
             .map(() => user)
             .do(data => console.log('updateUser: ' + JSON.stringify(data)))
-            .catch(this.handleError);
+            .catch(this._handleError);
     }
 
-    private extractData(response: Response) {
+    private _extractData(response: Response) {
         let body = response.json();
         return body.data || {};
     }
 
-    private handleError(error: Response): Observable<any> {
+    private _handleError(error: Response): Observable<any> {
         // in a real world app, we may send the server to some remote logging infrastructure
         // instead of just logging it to the console
         console.error(error);
@@ -85,7 +85,7 @@ export class UserService {
     initializeUser(): IUser {
         // Return an initialized object
         return {
-            id: 0,
+            _id: 0,
             email: null,
             password:null,
             numOfReqstPerDay: null,

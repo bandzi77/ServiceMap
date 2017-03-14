@@ -1,55 +1,53 @@
 ﻿<div class="panel panel-primary">
     <div class="panel-heading">
-       {{pageTitle}}
+        {{pageTitle}}
     </div>
     <div class="panel-body" *ngIf="userForm">
         <form class="form-horizontal"
               novalidate
-              (ngSubmit)="save(signupForm)"
+              (ngSubmit)="saveUser()"
               [formGroup]="userForm">
             <fieldset>
 
-                    <div class="form-group" [ngClass]="{'has-error': emailMessage}">
-                        <label class="col-md-2 control-label"
-                               for="emailId">Email</label>
-                        <div class="col-md-8">
-                            <input autocomplete="off"
-                                   class="form-control"
-                                   id="emailId"
-                                   type="email"
-                                   placeholder="Email (wymagane)"
-                                   formControlName="email"
-                                   maxlength="250" 
-                                   />
-                            <span class="help-block" *ngIf="emailMessage">
-                                {{ emailMessage }}
-                            </span>
-                        </div>
+                <div class="form-group" [ngClass]="{'has-error': emailMessage}">
+                    <label class="col-md-2 control-label"
+                           for="emailId">Email</label>
+                    <div class="col-md-8">
+                        <input autocomplete="off"
+                               class="form-control"
+                               id="emailId"
+                               type="email"
+                               placeholder="Email (wymagane)"
+                               formControlName="email"
+                               maxlength="250" />
+                        <span class="help-block" *ngIf="emailMessage">
+                            {{ emailMessage }}
+                        </span>
                     </div>
-                    <div class="form-group" [ngClass]="{'has-error': passwordMessage}">
-                        <label class="col-md-2 control-label"
-                               for="passwordId">Hasło</label>
-                        <div class="col-md-8">
-                            <div class="input-group">
-                                <input class="form-control"
-                                       autocomplete="off"
-                                       id="passwordId"
-                                       type={{inputType}}
-                                       placeholder="Hasło (wymagane)"
-                                       formControlName="password"
-                                       maxlength="12" />
-                                <span (mousedown)="onEyeEvent($event)"
-                                      (mouseup)="onEyeEvent($event)"
-                                      (mouseleave)="onEyeEvent($event)"
-                                      class="input-group-addon btn"
-                                      [ngClass]="{'disabled': userForm.get('id').value!==0}"
-                                      ><i class="fa fa-eye fa-1x"></i></span>
-                            </div>
-                            <span class="help-block" *ngIf="passwordMessage">
-                                {{ passwordMessage }}
-                            </span>
+                </div>
+                <div class="form-group" [ngClass]="{'has-error': passwordMessage}">
+                    <label class="col-md-2 control-label"
+                           for="passwordId">Hasło</label>
+                    <div class="col-md-8">
+                        <div class="input-group">
+                            <input class="form-control"
+                                   autocomplete="off"
+                                   id="passwordId"
+                                   type={{inputType}}
+                                   placeholder="Hasło (wymagane)"
+                                   formControlName="password"
+                                   maxlength="12" />
+                            <span (mousedown)="onEyeEvent($event)"
+                                  (mouseup)="onEyeEvent($event)"
+                                  (mouseleave)="onEyeEvent($event)"
+                                  class="input-group-addon btn"
+                                  [ngClass]="{'disabled': userForm.get('_id').value!==0}"><i class="fa fa-eye fa-1x"></i></span>
                         </div>
+                        <span class="help-block" *ngIf="passwordMessage">
+                            {{ passwordMessage }}
+                        </span>
                     </div>
+                </div>
 
                 <div class="form-group" *ngIf="!userForm.get('isSuperUser').value"
                      [ngClass]="{'has-error': (userForm.get('numOfReqstPerDay').touched
@@ -76,9 +74,8 @@
 
 
                 <div class="form-group">
-                    <div class="col-md-offset-2 col-md-3">                               <!--[ngClass]="{'disabled': isNotTntUser}"-->
-                        <label 
-                               class="btn btn-primary smap-check-btn">
+                    <div class="col-md-offset-2 col-md-3">
+                        <label class="btn btn-primary smap-check-btn">
                             <input id="isSuperUserId"
                                    type="checkbox"
                                    formControlName="isSuperUser" />
@@ -98,13 +95,28 @@
                 </div>
 
                 <div class="form-group">
-                    <div class="col-md-offset-9 col-md-1">
+                    <div class="col-md-offset-7 col-md-4">
                         <span>
                             <button class="btn btn-primary"
+                                    style="width:80px"
                                     type="submit"
                                     [disabled]="!userForm.valid">
                                 Zapisz
                             </button>
+                        </span>
+                        <span>
+                            <a class="btn btn-default"
+                               style="width:80px"
+                               [routerLink]="['/userlist']">
+                                Anuluj
+                            </a>
+                        </span>
+                        <span>
+                            <a class="btn btn-default"
+                               style="width:80px"
+                               (click)="deleteUser()">
+                                Usuń
+                            </a>
                         </span>
                     </div>
                 </div>
@@ -112,7 +124,7 @@
         </form>
     </div>
 </div>
-<br>Dirty: {{ userForm.dirty }}
+<!--<br>Dirty: {{ userForm.dirty }}
 <br>Touched: {{ userForm.touched }}
 <br>Valid: {{ userForm.valid }}
-<br>Value: {{ userForm.value | json }}
+<br>Value: {{ userForm.value | json }}-->
