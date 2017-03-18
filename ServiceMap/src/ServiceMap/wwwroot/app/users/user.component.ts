@@ -1,4 +1,9 @@
-﻿import { Component, OnInit } from '@angular/core';
+﻿import {
+    Component, OnInit, trigger,
+    state,
+    style,
+    transition,
+    animate } from '@angular/core';
 import { FormControl, FormBuilder, FormGroup, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IUser } from './user';
@@ -9,7 +14,15 @@ import { Subscription } from 'rxjs/Subscription';
 @Component({
     selector: 'cr-user',
     templateUrl: './app/users/user.component.html',
-    styleUrls: ['./app/users/user.component.css']
+    styleUrls: ['./app/users/user.component.css'],
+    animations: [
+        trigger('shrinkOut', [
+            state('true', style({ opacity: 1 })),
+            state('void', style({ opacity: 0 })),
+            transition(':enter', animate('100ms ease-in-out')),
+            transition(':leave', animate('250ms ease-in-out'))
+            ])
+    ]
 })
 export class UserComponent implements OnInit {
     pageTitle: string = '';
@@ -18,7 +31,7 @@ export class UserComponent implements OnInit {
         keydown: 'text',
         keyup: 'password'
     }
-
+    dupa: string = 'inactive';
     inputType: string = "password";
     user: IUser = new IUser();
     userForm: FormGroup;
@@ -46,6 +59,7 @@ export class UserComponent implements OnInit {
         "Hasło powinno zawierać litery, co najmniej jedną cyfrę oraz co najmniej jeden znak specjalny _!@#$%^&*()+-="
     };
 
+   
     constructor(private fb: FormBuilder,
         private route: ActivatedRoute,
         private router: Router,
@@ -153,9 +167,11 @@ export class UserComponent implements OnInit {
     private onEyeEvent(event: MouseEvent): void {
         if (event.type === 'mousedown' && event.button === 0 && this.user._id === 0) {
             this.inputType = this._inputType.keydown;
+            //this.dupa = 'active';
         }
         if (((event.type === 'mouseup' && event.button === 0) || event.type === 'mouseleave') && this.user._id === 0) {
             this.inputType = this._inputType.keyup;
+            //this.dupa = 'inactive';
         }
     }
 
