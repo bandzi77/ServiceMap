@@ -51,22 +51,22 @@
                 <div class="form-group"
                      *ngIf="!userForm.get('isSuperUser').value"
                      [@shrinkOut]="!userForm.get('isSuperUser').value"
-                     [ngClass]="{'has-error': (userForm.get('numOfReqstPerDay').touched
-                                              || userForm.get('numOfReqstPerDay').dirty) &&
-                                              !userForm.get('numOfReqstPerDay').valid }">
+                     [ngClass]="{'has-error': (userForm.get('limitOfRequestsPerDay').touched
+                                              || userForm.get('limitOfRequestsPerDay').dirty) &&
+                                              !userForm.get('limitOfRequestsPerDay').valid }">
                     <label class="col-md-2 control-label"
-                           for="numOfReqstPerDayId">Liczba zapytań</label>
+                           for="limitOfRequestsPerDayId">Liczba zapytań</label>
                     <div class="col-md-8">
                         <input class="form-control"
-                               id="numOfReqstPerDayId"
+                               id="limitOfRequestsPerDayId"
                                type="text"
                                placeholder="Liczba zapytań w dniu (wymagane)"
-                               formControlName="numOfReqstPerDay"
+                               formControlName="limitOfRequestsPerDay"
                                maxlength="4" />
-                        <span class="help-block" *ngIf="(userForm.get('numOfReqstPerDay').touched
-                                                         || userForm.get('numOfReqstPerDay').dirty) &&
-                                                         userForm.get('numOfReqstPerDay').errors">
-                            <span *ngIf="userForm.get('numOfReqstPerDay').errors.range">
+                        <span class="help-block" *ngIf="(userForm.get('limitOfRequestsPerDay').touched
+                                                         || userForm.get('limitOfRequestsPerDay').dirty) &&
+                                                         userForm.get('limitOfRequestsPerDay').errors">
+                            <span *ngIf="userForm.get('limitOfRequestsPerDay').errors.range">
                                 Wprowadź wartość z przedziału od 1 do 1000
                             </span>
                         </span>

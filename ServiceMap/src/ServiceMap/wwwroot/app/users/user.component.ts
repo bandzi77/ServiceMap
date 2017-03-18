@@ -40,7 +40,7 @@ export class UserComponent implements OnInit, OnDestroy {
     userForm: FormGroup;
     emailMessage: string = '';
     passwordMessage: string = '';
-    numOfReqstPerDay: string = '';
+    limitOfRequestsPerDay: string = '';
     private sub: Subscription;
     private emailTntRegEx: string = '[a-zA-Z0-9._%+-]+@tnt.com';
     private regExpEmail = new RegExp(this.emailTntRegEx);
@@ -78,7 +78,7 @@ export class UserComponent implements OnInit, OnDestroy {
             Validators.minLength(8),
             Validators.maxLength(12),
             Validators.pattern(this.passwordRegEx)]],
-            numOfReqstPerDay: ['', checkRange(1, 1000)],
+            limitOfRequestsPerDay: ['', checkRange(1, 1000)],
             isSuperUser: false,
             isLocked: false
         });
@@ -98,10 +98,10 @@ export class UserComponent implements OnInit, OnDestroy {
         this.sub = this.route.queryParams.subscribe(
             params => {
                 let user = <IUser>{
-                    _id: Number(params['_id']),
+                    _id: String(params['_id']),
                     email: String(params['email']),
                     password: '',
-                    numOfReqstPerDay: Number(params['numOfReqstPerDay']),
+                    limitOfRequestsPerDay: Number(params['limitOfRequestsPerDay']),
                     isSuperUser: Boolean(params['isSuperUser']),
                     isLocked: Boolean(params['isLocked'])
                 }
@@ -121,7 +121,7 @@ export class UserComponent implements OnInit, OnDestroy {
             this.userForm.enable();
         }
 
-        if (this.user._id === 0) {
+        if (this.user._id === "0") {
             this.pageTitle = 'Dodaj nowego użytkownika';
         } else {
             this.pageTitle = `Edytuj użytkownika: ${this.user.email}`;
@@ -132,10 +132,10 @@ export class UserComponent implements OnInit, OnDestroy {
             }
 
             this.userForm.patchValue({
-                _id: isNaN(this.user._id) ? 0 : this.user._id,
+                _id: this.user._id === "undefined" ? '' : this.user._id,
                 email: this.user.email === "undefined" ? '' : this.user.email,
                 password: '********',
-                numOfReqstPerDay: isNaN(this.user.numOfReqstPerDay) ? '' : this.user.numOfReqstPerDay,
+                limitOfRequestsPerDay: isNaN(this.user.limitOfRequestsPerDay) ? '' : this.user.limitOfRequestsPerDay,
                 isSuperUser: this.user.isSuperUser,
                 isLocked: this.user.isLocked
             });
@@ -144,22 +144,22 @@ export class UserComponent implements OnInit, OnDestroy {
 
     setNotification(ischecked: boolean): void {
         const emailControl = this.userForm.get('email');
-        const numOfReqstPerDayControl = this.userForm.get('numOfReqstPerDay');
+        const limitOfRequestsPerDayControl = this.userForm.get('limitOfRequestsPerDay');
 
         if (ischecked) {
             this.emailValidationMessages.pattern = this.patternEmailTnt;
             emailControl.setValidators([Validators.required, Validators.pattern(this.emailTntRegEx)]);
-            numOfReqstPerDayControl.reset();
-            numOfReqstPerDayControl.clearValidators();
+            limitOfRequestsPerDayControl.reset();
+            limitOfRequestsPerDayControl.clearValidators();
         }
         else {
             this.emailValidationMessages.pattern = this.patternEmail;
             emailControl.setValidators([Validators.required, Validators.pattern((this.emailRegEx))]);
-            numOfReqstPerDayControl.setValidators([Validators.required, checkRange(1, 1000)]);
+            limitOfRequestsPerDayControl.setValidators([Validators.required, checkRange(1, 1000)]);
         }
 
         emailControl.updateValueAndValidity();
-        numOfReqstPerDayControl.updateValueAndValidity();
+        limitOfRequestsPerDayControl.updateValueAndValidity();
     }
 
     setMessage(c: AbstractControl, ValidationMessages: Object, resultObject: string): void {
@@ -171,18 +171,18 @@ export class UserComponent implements OnInit, OnDestroy {
     }
 
     private onEyeEvent(event: MouseEvent): void {
-        if (event.type === 'mousedown' && event.button === 0 && this.user._id === 0) {
+        if (event.type === 'mousedown' && event.button === 0 && this.user._id === "0") {
             this.inputType = this._inputType.keydown;
             //this.dupa = 'active';
         }
-        if (((event.type === 'mouseup' && event.button === 0) || event.type === 'mouseleave') && this.user._id === 0) {
+        if (((event.type === 'mouseup' && event.button === 0) || event.type === 'mouseleave') && this.user._id === "0") {
             this.inputType = this._inputType.keyup;
             //this.dupa = 'inactive';
         }
     }
 
     deleteUser(): void {
-        if (this.user._id === 0) {
+        if (this.user._id === "0") {
             // Don't delete, it was never saved.
             this.onSaveComplete();
         } else {

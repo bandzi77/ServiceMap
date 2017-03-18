@@ -53,12 +53,15 @@ namespace ServiceMap.Models.apiModels
                     AccessFailedCount = 5
                 };
 
-                IdentityResult result = await userManager
-                    .CreateAsync(user, password);
+                IdentityResult result = await userManager.CreateAsync(user, password);
+
+
+
                 if (result.Succeeded)
                 {
                     await userManager.AddToRoleAsync(user, roleSuperUser);
                 }
+              
             }
         }
     }

@@ -19,6 +19,8 @@ namespace ServiceMap.Models.User
         public bool IsSuperUser { get; set; }
         [Required]
         public bool IsLocked { get; set; }
-        public int? NumOfReqstPerDay { get; set; }
+        public int? LimitOfRequestsPerDay { get; set; }
+        public int? NumberOfRequestsPerDay { get; set; }
+        //NumOfReqstPerDay
     }
 }

@@ -52,6 +52,10 @@ namespace ServiceMap.Controllers
                     {
                         return Redirect(returnUrl ?? "/");
                     }
+                    else
+                    {
+                        await userManager.SetLockoutEndDateAsync(user, DateTime.Now);
+                    }
                 }
                 ModelState.AddModelError(nameof(LoginModel.Email),
                     "Invalid user or password");

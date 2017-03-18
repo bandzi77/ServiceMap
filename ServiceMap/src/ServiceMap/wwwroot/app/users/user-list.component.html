@@ -52,7 +52,7 @@
                     <tbody>
                         <tr *ngFor="let user of users">
                             <td>{{user.email | lowercase}}</td>
-                            <td>{{user.numOfReqstPerDay}}</td>
+                            <td>{{user.limitOfRequestsPerDay}}</td>
                             <td>
                                 <span *ngIf="user.isSuperUser"><i class="fa fa-check-square-o fa-1x" aria-hidden="true"></i></span>
                                 <span *ngIf="!user.isSuperUser"><i class="fa fa-square-o fa-1x" aria-hidden="true"></i></span>

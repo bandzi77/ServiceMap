@@ -1,8 +1,9 @@
 ﻿export class IUser {
-    public _id: number;
+    public _id: string;
     public email = '';
     public password = '';
     public isSuperUser = false;
     public isLocked = false;
-    public numOfReqstPerDay?: number;
+    public limitOfRequestsPerDay?: number;
+    public numberOfRequestsPerDay?: number;
 }

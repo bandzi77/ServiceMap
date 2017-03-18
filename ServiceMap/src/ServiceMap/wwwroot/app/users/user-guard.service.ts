@@ -10,10 +10,10 @@ export class UserDetailGuard implements CanActivate {
     }
 
     canActivate(route: ActivatedRouteSnapshot): boolean {
-        let id = Number(route.queryParams['_id']);
+        let id = String(route.queryParams['_id']);
         let email = route.queryParams['email'];
-        if ((isNaN(id) || id < 0) || (id > 0 && (email==="undefined" || email==null ))) {
-            alert('Niepoprawne adres http');
+        if ((id === "undefined" || id == null) || (id !== "0"  && (email === "undefined" || email == null))) {
+            alert('Niepoprawny adres http');
             // start a new navigation to redirect to list page
             this.router.navigate(['/userlist']);
             // abort current navigation

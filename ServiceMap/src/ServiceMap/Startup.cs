@@ -12,6 +12,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using ServiceMap.Models.apiModels;
 using ServiceMap.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Net;
 
 namespace ServiceMap
 {
@@ -46,13 +48,23 @@ namespace ServiceMap
                 opts.Password.RequireUppercase = false;
                 opts.Password.RequireDigit = true;
                 opts.Lockout.MaxFailedAccessAttempts = 5;
-                opts.Lockout.DefaultLockoutTimeSpan = TimeSpan.MaxValue;
+                opts.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromDays(365);
 
                 // Cookie settings
                 opts.Cookies.ApplicationCookie.ExpireTimeSpan = TimeSpan.FromDays(1);
                 opts.Cookies.ApplicationCookie.CookieName = "MyTCookie";
                 opts.Cookies.ApplicationCookie.CookieHttpOnly = true;
                 opts.Cookies.ApplicationCookie.SlidingExpiration = true;
+
+
+                //opts.Cookies.ApplicationCookie.Events = new CookieAuthenticationEvents
+                //{
+                //    OnRedirectToLogin = ctx =>
+                //    {
+                //        ctx.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                //        return Task.FromResult<object>(null);
+                //    }
+                //};
                 //opts.Cookies.ApplicationCookie.AutomaticAuthenticate = true;
                 //opts.Cookies.ApplicationCookie.AuthenticationScheme = Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationDefaults.AuthenticationScheme;
                 //opts.Cookies.ApplicationCookie.ReturnUrlParameter = Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationDefaults.ReturnUrlParameter;

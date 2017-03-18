@@ -24,7 +24,7 @@ export class UserService {
     }
 
     getUser(user: IUser): Observable<IUser> {
-        if (user._id===0) {
+        if (user._id==="0") {
             return Observable.of(this.initializeUser());
             // return Observable.create((observer: any) => {
             //     observer.next(this.initializeProduct());
@@ -34,7 +34,7 @@ export class UserService {
         return Observable.of(user);
     }
 
-    deleteUser(_id: number): Observable<Response> {
+    deleteUser(_id: string): Observable<Response> {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
@@ -48,7 +48,7 @@ export class UserService {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        if (user._id === 0) {
+        if (user._id === "0") {
             return this._addUser(user, options);
         }
         return this._updateUser(user, options);
@@ -85,10 +85,10 @@ export class UserService {
     initializeUser(): IUser {
         // Return an initialized object
         return {
-            _id: 0,
+            _id: "0",
             email: null,
             password:null,
-            numOfReqstPerDay: null,
+            limitOfRequestsPerDay: null,
             isSuperUser:false,
             isLocked: false
         };
