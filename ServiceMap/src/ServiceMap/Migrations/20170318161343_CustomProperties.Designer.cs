@@ -8,7 +8,7 @@ using ServiceMap.Models.apiModels;
 namespace ServiceMap.Migrations
 {
     [DbContext(typeof(AppIdentityDbContext))]
-    [Migration("20170123230616_CustomProperties")]
+    [Migration("20170318161343_CustomProperties")]
     partial class CustomProperties
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -138,6 +138,8 @@ namespace ServiceMap.Migrations
 
                     b.Property<bool>("EmailConfirmed");
 
+                    b.Property<int?>("LimitOfRequestsPerDay");
+
                     b.Property<bool>("LockoutEnabled");
 
                     b.Property<DateTimeOffset?>("LockoutEnd");
@@ -148,7 +150,7 @@ namespace ServiceMap.Migrations
                     b.Property<string>("NormalizedUserName")
                         .HasAnnotation("MaxLength", 256);
 
-                    b.Property<int?>("NumberOfRequestsPerMonth");
+                    b.Property<int?>("NumberOfRequestsPerDay");
 
                     b.Property<string>("PasswordHash");
 
@@ -163,7 +165,14 @@ namespace ServiceMap.Migrations
                     b.Property<string>("UserName")
                         .HasAnnotation("MaxLength", 256);
 
+                    b.Property<int>("_Id")
+                        .ValueGeneratedOnAdd();
+
                     b.HasKey("Id");
+
+                    b.HasIndex("_Id")
+                      .IsUnique()
+                      .HasName("_IdIndex");
 
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");

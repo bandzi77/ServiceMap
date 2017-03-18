@@ -137,6 +137,8 @@ namespace ServiceMap.Migrations
 
                     b.Property<bool>("EmailConfirmed");
 
+                    b.Property<int?>("LimitOfRequestsPerDay");
+
                     b.Property<bool>("LockoutEnabled");
 
                     b.Property<DateTimeOffset?>("LockoutEnd");
@@ -147,7 +149,7 @@ namespace ServiceMap.Migrations
                     b.Property<string>("NormalizedUserName")
                         .HasAnnotation("MaxLength", 256);
 
-                    b.Property<int?>("NumberOfRequestsPerMonth");
+                    b.Property<int?>("NumberOfRequestsPerDay");
 
                     b.Property<string>("PasswordHash");
 
@@ -161,6 +163,8 @@ namespace ServiceMap.Migrations
 
                     b.Property<string>("UserName")
                         .HasAnnotation("MaxLength", 256);
+
+                    b.Property<int>("_Id");
 
                     b.HasKey("Id");
 

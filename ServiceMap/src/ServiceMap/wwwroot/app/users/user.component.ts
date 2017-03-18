@@ -1,15 +1,18 @@
 ﻿import {
-    Component, OnInit, trigger,
+    trigger,
     state,
     style,
     transition,
-    animate } from '@angular/core';
+    animate, Component, OnInit, OnDestroy
+} from '@angular/core';
 import { FormControl, FormBuilder, FormGroup, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IUser } from './user';
 import { UserService } from './user.service';
 import 'rxjs/add/operator/debounceTime';
 import { Subscription } from 'rxjs/Subscription';
+import { Observable } from 'rxjs/Observable';
+//import { GenericValidator } from '../shared/generic-validator';
 
 @Component({
     selector: 'cr-user',
@@ -21,17 +24,17 @@ import { Subscription } from 'rxjs/Subscription';
             state('void', style({ opacity: 0 })),
             transition(':enter', animate('100ms ease-in-out')),
             transition(':leave', animate('250ms ease-in-out'))
-            ])
+        ])
     ]
 })
-export class UserComponent implements OnInit {
+export class UserComponent implements OnInit, OnDestroy {
+
     pageTitle: string = '';
     errorMessage: string;
     private _inputType = {
         keydown: 'text',
         keyup: 'password'
     }
-    dupa: string = 'inactive';
     inputType: string = "password";
     user: IUser = new IUser();
     userForm: FormGroup;
@@ -39,27 +42,26 @@ export class UserComponent implements OnInit {
     passwordMessage: string = '';
     numOfReqstPerDay: string = '';
     private sub: Subscription;
-
-    emailTntRegEx: string = '[a-zA-Z0-9._%+-]+@tnt.com';
-    regExpEmail = new RegExp(this.emailTntRegEx);
+    private emailTntRegEx: string = '[a-zA-Z0-9._%+-]+@tnt.com';
+    private regExpEmail = new RegExp(this.emailTntRegEx);
     emailRegEx: string = '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+';
     passwordRegEx: string = '(?=.*\\d)(?=.*[_a-z])(?=.+[\\!\\@\\#\\$\\%\\^\\&\\*\\(\\)\\+\\-\\=])(?!.*\\s).{8,12}'
-    patternEmailTnt: string = 'Niepoprawny adres email z domeny tnt.com. Dopuszczalne znaki specjalne to ._%+-';
-    patternEmail: string = 'Niepoprawny adres email. Dopuszczalne znaki specjalne to ._%+-';
+    patternEmailTnt: string = 'Niepoprawny adres email z domeny tnt.com. Dopuszczalne znaki specjalne ._%+-';
+    patternEmail: string = 'Niepoprawny adres email. Dopuszczalne znaki specjalne ._%+-';
 
     private emailValidationMessages = {
-        required: 'Wprowadź adres email',
-        pattern: this.patternEmail
+        required: 'Email jest wymagany',
+        pattern: this.patternEmail,
+        maxlength: 'Email nie może przekraczać 250 znaków.'
     };
-
 
     private passValidationMessages = {
-        required: "Wprowadź hasło",
-        pattern: "Niepoprawne hasło. Długość hasła powinna mieścić się w przedziale od 8 do 12 znaków.\n\r" +
-        "Hasło powinno zawierać litery, co najmniej jedną cyfrę oraz co najmniej jeden znak specjalny _!@#$%^&*()+-="
+        required: "Hasło jest wymagane.",
+        pattern: "Hasło musi zawierać litery, co najmniej jedną cyfrę oraz co najmniej jeden znak specjalny _!@#$%^&*()+-=",
+        minlength: 'Hasło musi składać się z co najmniej z 8 znaków.',
+        maxlength: 'Hasło nie może przekraczać 12 znaków.'
     };
 
-   
     constructor(private fb: FormBuilder,
         private route: ActivatedRoute,
         private router: Router,
@@ -68,19 +70,26 @@ export class UserComponent implements OnInit {
     ngOnInit(): void {
         this.userForm = this.fb.group({
             _id: 0,
-            email: [{ value: '', disabled: true }, [Validators.required, Validators.pattern(this.emailRegEx)]],
-            password: ['', [Validators.required, Validators.pattern(this.passwordRegEx)]],
+            email: [{ value: '', disabled: true }, [
+                Validators.required,
+                Validators.maxLength(250),
+                Validators.pattern(this.emailRegEx)]],
+            password: ['', [Validators.required,
+            Validators.minLength(8),
+            Validators.maxLength(12),
+            Validators.pattern(this.passwordRegEx)]],
             numOfReqstPerDay: ['', checkRange(1, 1000)],
             isSuperUser: false,
             isLocked: false
         });
 
         const emailControl = this.userForm.get('email');
-        emailControl.valueChanges.subscribe(value =>
+        emailControl.valueChanges.debounceTime(0).subscribe(value =>
             this.setMessage(emailControl, this.emailValidationMessages, 'emailMessage'));
 
+
         const passwordControl = this.userForm.get('password');
-        passwordControl.valueChanges.subscribe(value =>
+        passwordControl.valueChanges.debounceTime(0).subscribe(value =>
             this.setMessage(passwordControl, this.passValidationMessages, 'passwordMessage'));
 
         this.userForm.get('isSuperUser').valueChanges
@@ -88,7 +97,6 @@ export class UserComponent implements OnInit {
 
         this.sub = this.route.queryParams.subscribe(
             params => {
-
                 let user = <IUser>{
                     _id: Number(params['_id']),
                     email: String(params['email']),
@@ -107,10 +115,11 @@ export class UserComponent implements OnInit {
     }
 
     onUserRetrieved(user: IUser): void {
+        this.user = user;
+
         if (this.userForm) {
             this.userForm.enable();
         }
-        this.user = user;
 
         if (this.user._id === 0) {
             this.pageTitle = 'Dodaj nowego użytkownika';
@@ -130,12 +139,10 @@ export class UserComponent implements OnInit {
                 isSuperUser: this.user.isSuperUser,
                 isLocked: this.user.isLocked
             });
-            // Update the data on the form
         }
     }
 
     setNotification(ischecked: boolean): void {
-
         const emailControl = this.userForm.get('email');
         const numOfReqstPerDayControl = this.userForm.get('numOfReqstPerDay');
 
@@ -162,7 +169,6 @@ export class UserComponent implements OnInit {
                 ValidationMessages[key]).join(' ');
         }
     }
-
 
     private onEyeEvent(event: MouseEvent): void {
         if (event.type === 'mousedown' && event.button === 0 && this.user._id === 0) {
@@ -214,7 +220,7 @@ export class UserComponent implements OnInit {
         // Reset the form to clear the flags
         this.userForm.reset();
         // TODO
-         this.router.navigate(['/userlist']);
+        this.router.navigate(['/userlist']);
     }
 }
 
