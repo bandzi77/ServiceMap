@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using ServiceMap.Models;
+using Microsoft.Extensions.Configuration;
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace ServiceMap.Controllers.apiControllers
@@ -13,12 +14,12 @@ namespace ServiceMap.Controllers.apiControllers
     [Authorize]
     public class PermissionsController : Controller
     {
-        private IEnvironments _environments;
+        IConfiguration _configuration;
 
- 
-        public PermissionsController(IEnvironments environments)
+
+        public PermissionsController(IConfiguration configuration)
         {
-            _environments = environments;
+            _configuration = configuration;
         }
 
         // GET: api/values
@@ -27,7 +28,7 @@ namespace ServiceMap.Controllers.apiControllers
         {
             bool issuperuser = false;
 
-            if (User.IsInRole(_environments.roleSuperuser))
+            if (User.IsInRole(_configuration["Data:Roles:Superuser"]))
             {
                 issuperuser = true;
             }

@@ -62,8 +62,8 @@ namespace ServiceMap
                 //(opt=>opt.Cookies.ApplicationCookie.LoginPath="/")
                 .AddEntityFrameworkStores<AppIdentityDbContext>();
             //services.AddScoped<IAuthorizationService, AuthorizationService>();
-
-            services.AddSingleton<IEnvironments>(new Environments_(Configuration));
+            services.AddSingleton(Configuration);
+            //services.AddTransient<IConfiguration, ConfigureServices>();
             services.AddMvc();
         }
 
@@ -87,8 +87,7 @@ namespace ServiceMap
             app.UseStatusCodePages();
             app.UseStaticFiles();
             app.UseIdentity();
-            AppIdentityDbContext.CreateAdminAccount(app.ApplicationServices,
-            Configuration).Wait();
+            AppIdentityDbContext.CreateAdminAccount(app.ApplicationServices, Configuration).Wait();
 
             app.UseMvc(routes =>
             {
