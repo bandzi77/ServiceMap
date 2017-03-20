@@ -55,12 +55,12 @@
                                               || userForm.get('limitOfRequestsPerDay').dirty) &&
                                               !userForm.get('limitOfRequestsPerDay').valid }">
                     <label class="col-md-2 control-label"
-                           for="limitOfRequestsPerDayId">Liczba zapytań</label>
+                           for="limitOfRequestsPerDayId">Limit zapytań</label>
                     <div class="col-md-8">
                         <input class="form-control"
                                id="limitOfRequestsPerDayId"
                                type="text"
-                               placeholder="Liczba zapytań w dniu (wymagane)"
+                               placeholder="Limit zapytań w dniu (wymagane)"
                                formControlName="limitOfRequestsPerDay"
                                maxlength="4" />
                         <span class="help-block" *ngIf="(userForm.get('limitOfRequestsPerDay').touched
@@ -105,10 +105,10 @@
                                 Zapisz
                             </button>
                         </span>
-                        <span>
+                        <span>  <!--[routerLink]="['/userlist']"-->
                             <a class="btn btn-default"
                                style="width:80px"
-                               [routerLink]="['/userlist']">
+                               (click)="onBack()">
                                 Anuluj
                             </a>
                         </span>

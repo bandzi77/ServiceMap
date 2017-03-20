@@ -9,7 +9,7 @@ namespace ServiceMap.Models.User
     public class User
     {
         [Required]
-        public int _Id { get; set; }
+        public string _id { get; set; }
         [Required]
         public string Email { get; set; }
         [RegularExpression("(?=.*\\d)(?=.*[_a-z])(?=.+[\\!\\@\\#\\$\\%\\^\\&\\*\\(\\)\\+\\-\\=])(?!.*\\s).{8,12}")]
@@ -21,6 +21,5 @@ namespace ServiceMap.Models.User
         public bool IsLocked { get; set; }
         public int? LimitOfRequestsPerDay { get; set; }
         public int? NumberOfRequestsPerDay { get; set; }
-        //NumOfReqstPerDay
     }
 }

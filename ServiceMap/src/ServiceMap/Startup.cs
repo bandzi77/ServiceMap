@@ -14,6 +14,7 @@ using ServiceMap.Models.apiModels;
 using ServiceMap.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Net;
+using Microsoft.AspNetCore.Identity;
 
 namespace ServiceMap
 {
@@ -38,6 +39,7 @@ namespace ServiceMap
             // TODO str 214
             services.AddDbContext<AppIdentityDbContext>(options =>
             options.UseSqlServer(Configuration["Data:ConnectionStrings:DbServiceMapIndentity"]));
+
             services.AddIdentity<AppUser, IdentityRole>(opts=>
             {
                 opts.User.RequireUniqueEmail = true;
@@ -52,7 +54,7 @@ namespace ServiceMap
 
                 // Cookie settings
                 opts.Cookies.ApplicationCookie.ExpireTimeSpan = TimeSpan.FromDays(1);
-                opts.Cookies.ApplicationCookie.CookieName = "MyTCookie";
+                opts.Cookies.ApplicationCookie.CookieName = "MyTntCookie";
                 opts.Cookies.ApplicationCookie.CookieHttpOnly = true;
                 opts.Cookies.ApplicationCookie.SlidingExpiration = true;
 
@@ -75,6 +77,9 @@ namespace ServiceMap
                 .AddEntityFrameworkStores<AppIdentityDbContext>();
             //services.AddScoped<IAuthorizationService, AuthorizationService>();
             services.AddSingleton(Configuration);
+            services.AddSingleton<RoleManager<IdentityRole>>();
+            services.AddSingleton<UserManager<AppUser>>();
+            //   services.AddTransient<IServiceProvider, ServiceCollection>();
             //services.AddTransient<IConfiguration, ConfigureServices>();
             services.AddMvc();
         }
@@ -100,7 +105,7 @@ namespace ServiceMap
             app.UseStaticFiles();
             app.UseIdentity();
             AppIdentityDbContext.CreateAdminAccount(app.ApplicationServices, Configuration).Wait();
-
+            
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

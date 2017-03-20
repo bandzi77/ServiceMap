@@ -1,0 +1,12 @@
+﻿
+th, td {
+    min-width: 150px;
+    width: 150px;
+}
+th:first-child,td:first-child{
+    min-width:320px;
+    width:320px;
+}
+table {
+    width:auto !important;
+}

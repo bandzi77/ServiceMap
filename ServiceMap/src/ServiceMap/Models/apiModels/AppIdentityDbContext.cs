@@ -31,11 +31,10 @@ namespace ServiceMap.Models.apiModels
             string roleSuperUser = configuration["Data:Roles:Superuser"];
             string roleUser = configuration["Data:Roles:User"];
 
-
             if (await userManager.FindByEmailAsync(email) == null)
             {
                 if (await roleManager.FindByNameAsync(roleSuperUser) == null)
-                {
+                {   
                     await roleManager.CreateAsync(new IdentityRole(roleSuperUser));
 
                 }

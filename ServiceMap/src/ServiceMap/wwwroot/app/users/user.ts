@@ -7,3 +7,12 @@
     public limitOfRequestsPerDay?: number;
     public numberOfRequestsPerDay?: number;
 }
+
+export interface IUserFilter {
+    email: string;
+    showLockedOnly?: boolean;
+}
+
+export interface IUserResult {
+    users: IUser[];
+}

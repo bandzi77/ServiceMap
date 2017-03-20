@@ -28,3 +28,11 @@
     position: static;
 }
 
+
+th, td {
+    min-width: 130px;
+}
+
+tbody {
+    width: 100%;
+}

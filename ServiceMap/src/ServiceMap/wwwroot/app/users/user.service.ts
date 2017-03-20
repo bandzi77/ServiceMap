@@ -1,6 +1,5 @@
 ﻿import { Injectable } from '@angular/core';
-import { Http, Response, Headers, RequestOptions } from '@angular/http';
-
+import { Http, Response, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
@@ -8,7 +7,7 @@ import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
 
-import { IUser } from './user';
+import { IUser, IUserFilter,IUserResult } from './user';
 
 @Injectable()
 export class UserService {
@@ -16,10 +15,14 @@ export class UserService {
 
     constructor(private http: Http) { }
 
-    getUsers(): Observable<IUser[]> {
-        return this.http.get(this.baseUrl)
+    getUsers(userFilter: IUserFilter): Observable<IUserResult> {
+        let searchParams = new URLSearchParams();
+        searchParams.set('email', userFilter.email);
+        searchParams.set('showLockedOnly', String(userFilter.showLockedOnly));
+      
+        return this.http.get(this.baseUrl, { search: searchParams })
             .map(this._extractData)
-            .do(data => console.log('getProducts: ' + JSON.stringify(data)))
+            .do(data => console.log('getUsers' + JSON.stringify(data)))
             .catch(this._handleError);
     }
 
@@ -55,7 +58,6 @@ export class UserService {
     }
 
     private _addUser(user: IUser, options: RequestOptions): Observable<IUser> {
-        user._id = undefined;
         return this.http.post(this.baseUrl, user, options)
             .map(this._extractData)
             .do(data => console.log('addUser: ' + JSON.stringify(data)))
@@ -72,7 +74,7 @@ export class UserService {
 
     private _extractData(response: Response) {
         let body = response.json();
-        return body.data || {};
+        return body || {};
     }
 
     private _handleError(error: Response): Observable<any> {
@@ -89,6 +91,7 @@ export class UserService {
             email: null,
             password:null,
             limitOfRequestsPerDay: null,
+            numberOfRequestsPerDay: null,
             isSuperUser:false,
             isLocked: false
         };

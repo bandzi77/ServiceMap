@@ -42,23 +42,23 @@ namespace ServiceMap.Controllers
             if (ModelState.IsValid)
             {
                 AppUser user = await userManager.FindByEmailAsync(details.Email);
+               var list= userManager.Users.ToAsyncEnumerable();
                 if (user != null)
                 {
                     await signInManager.SignOutAsync();
                     Microsoft.AspNetCore.Identity.SignInResult result =
-                            await signInManager.PasswordSignInAsync(
-                                user, details.Password, false, true);
+                        await signInManager.PasswordSignInAsync(user, details.Password, false, true);
+
                     if (result.Succeeded)
                     {
                         return Redirect(returnUrl ?? "/");
                     }
                     else
-                    {
+                    {// odblokowanie konta
                         await userManager.SetLockoutEndDateAsync(user, DateTime.Now);
                     }
                 }
-                ModelState.AddModelError(nameof(LoginModel.Email),
-                    "Invalid user or password");
+                ModelState.AddModelError(nameof(LoginModel.Email),"Niepoprawny email lub hasło");
             }
             return View(details);
         }
@@ -77,33 +77,33 @@ namespace ServiceMap.Controllers
         }
 
 
-        /*
-         public virtual async Task<identityresult> LockUserAccount(string userId, int? forDays)
-{
-    var result = await this.SetLockoutEnabledAsync(userId, true);
-    if (result.Succeeded)
-    {
-        if (forDays.HasValue)
-        {
-            result = await SetLockoutEndDateAsync(userId, DateTimeOffset.UtcNow.AddDays(forDays.Value));
-        }
-        else
-        {
-            result = await SetLockoutEndDateAsync(userId, DateTimeOffset.MaxValue);
-        }
-    }
-    return result;
-}
-public virtual async Task<identityresult> UnlockUserAccount(string userId)
-{
-    var result = await this.SetLockoutEnabledAsync(userId, false);
-    if (result.Succeeded)
-    {
-        await ResetAccessFailedCountAsync(userId);
-    }
-    return result;
-}
-         */
+
+        //public virtual async Task<identityresult> LockUserAccount(string userId, int? forDays)
+        //{
+        //    var result = await this.SetLockoutEnabledAsync(userId, true);
+        //    if (result.Succeeded)
+        //    {
+        //        if (forDays.HasValue)
+        //        {
+        //            result = await SetLockoutEndDateAsync(userId, DateTimeOffset.UtcNow.AddDays(forDays.Value));
+        //        }
+        //        else
+        //        {
+        //            result = await SetLockoutEndDateAsync(userId, DateTimeOffset.MaxValue);
+        //        }
+        //    }
+        //    return result;
+        //}
+        //public virtual async Task<identityresult> UnlockUserAccount(string userId)
+        //{
+        //    var result = await this.SetLockoutEnabledAsync(userId, false);
+        //    if (result.Succeeded)
+        //    {
+        //        await ResetAccessFailedCountAsync(userId);
+        //    }
+        //    return result;
+        //}
+
 
 
 

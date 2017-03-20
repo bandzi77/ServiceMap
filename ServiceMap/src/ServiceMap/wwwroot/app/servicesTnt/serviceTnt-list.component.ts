@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+﻿import { Component, OnInit, ViewChild } from '@angular/core';
 import { IServiceTnt, IServiceFilter } from './serviceTnt';
 import { IDepotDetails, IDepotDetailsFilter } from './depotDetails';
 import { IPage } from '../pagination/page';
@@ -13,7 +13,7 @@ import { LgModalComponent } from '../shared/lgModal.component';
 })
 
 export class ServiceTntListComponent implements OnInit {
-    busy: Subscription;
+    busyIndicator: Subscription;
     pageTitle: string = "Lista Serwisów TNT";
     imageWidth: number = 50;
     imageMargin: number = 2;
@@ -27,7 +27,7 @@ export class ServiceTntListComponent implements OnInit {
     private serviceFilter: IServiceFilter;
     @ViewChild('lgModal') lgModalRef: LgModalComponent;
 
-    constructor(private _serviceTntService: ServicesTntService, private _route: ActivatedRoute, private viewContainerRef: ViewContainerRef) {
+    constructor(private _serviceTntService: ServicesTntService, private _route: ActivatedRoute) {
     }
 
     searchServicesTnt(): void {
@@ -35,27 +35,13 @@ export class ServiceTntListComponent implements OnInit {
     }
 
     ngOnInit(): void {
-
         let id = +this._route.snapshot.params['currentPage'];
-
-        //searchParams.set('postCode', serviceFilter.postCode);
-        //searchParams.set('cityName', serviceFilter.cityName);
-        //searchParams.set('currentPage', currentPage);
-
-        //this.pageTitle += `:${id}`;
-
-        //console.log('testowanie init');
-        //this._serviceTntService.getServicesTnt()
-        //    .subscribe(servicesTnt =>
-        //        this.servicesTnt =
-        //        servicesTnt,
-        //    error => this.errorMessage = <any>error);
     }
 
     private _getData(filtr: IServiceFilter) {
 
         this._setPage(filtr);
-        this.busy = this._serviceTntService.searchServicesTnt(filtr)
+        this.busyIndicator = this._serviceTntService.searchServicesTnt(filtr)
             .subscribe(result => {
                 this.servicesTnt = result.serviceTnt;
                 this.paging = result.paging;
@@ -96,7 +82,7 @@ export class ServiceTntListComponent implements OnInit {
 
     onClick(item: any) {
         let filtr: IDepotDetailsFilter = { depotCode:item };
-        this.busy = this._serviceTntService.getDepotDetails(filtr).subscribe(result => {
+        this.busyIndicator = this._serviceTntService.getDepotDetails(filtr).subscribe(result => {
             this.depotTnt = result.depotDetails;
             this.lgModalRef.show();
         },

@@ -12,6 +12,7 @@ import { UserService } from './user.service';
 import 'rxjs/add/operator/debounceTime';
 import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
+import { Location } from '@angular/common';
 //import { GenericValidator } from '../shared/generic-validator';
 
 @Component({
@@ -65,11 +66,12 @@ export class UserComponent implements OnInit, OnDestroy {
     constructor(private fb: FormBuilder,
         private route: ActivatedRoute,
         private router: Router,
-        private userService: UserService) { }
+        private userService: UserService,
+        private location: Location) { }
 
     ngOnInit(): void {
         this.userForm = this.fb.group({
-            _id: 0,
+            _id: "0",
             email: [{ value: '', disabled: true }, [
                 Validators.required,
                 Validators.maxLength(250),
@@ -102,12 +104,16 @@ export class UserComponent implements OnInit, OnDestroy {
                     email: String(params['email']),
                     password: '',
                     limitOfRequestsPerDay: Number(params['limitOfRequestsPerDay']),
-                    isSuperUser: Boolean(params['isSuperUser']),
-                    isLocked: Boolean(params['isLocked'])
+                    isSuperUser: String(params['isSuperUser'])==="true",
+                    isLocked: String(params['isLocked'])==="true"
                 }
                 this.onUserRetrieved(user);
             }
         );
+    }
+
+    onBack() {
+        this.location.back();
     }
 
     ngOnDestroy(): void {
