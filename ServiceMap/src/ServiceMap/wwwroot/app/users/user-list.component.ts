@@ -25,23 +25,23 @@ export class UserListComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.sub = this._route.queryParams.subscribe(
             params => {
-                this.email = String(params['email']) === "undefined" ? '' : params['email'];
+                this.email = params.hasOwnProperty('email') ? params['email'] : '';
                 this.showLockedOnly = params['showLockedOnly'] === "true";
-                if (String(params['email']) !== "undefined")
-                { this.onSearchUsers(); }
+                if (params.hasOwnProperty('email')) {
+                    this.onSearchUsers();
+                }
             });
     }
-
 
     ngOnDestroy(): void {
         this.sub.unsubscribe();
     }
 
-   private onSearchUsers() {
+    private onSearchUsers() {
         console.log('Wyszukiwanie użytkowników');
-        let filtr = this._createUserFilter();
-
+        // Powoduje, że po powrocie odświeża listę
         this.router.navigate(['/userlist'], { queryParams: { email: this.email, showLockedOnly: this.showLockedOnly } });
+        let filtr = this._createUserFilter();
         this._getData(filtr);
     }
 

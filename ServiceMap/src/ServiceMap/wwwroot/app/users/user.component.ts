@@ -23,8 +23,8 @@ import { Location } from '@angular/common';
         trigger('shrinkOut', [
             state('true', style({ opacity: 1 })),
             state('void', style({ opacity: 0 })),
-            transition(':enter', animate('100ms ease-in-out')),
-            transition(':leave', animate('250ms ease-in-out'))
+            transition(':enter', animate('0ms ease-in-out')),
+            transition(':leave', animate('300ms ease-in-out'))
         ])
     ]
 })
@@ -46,7 +46,7 @@ export class UserComponent implements OnInit, OnDestroy {
     private emailTntRegEx: string = '[a-zA-Z0-9._%+-]+@tnt.com';
     private regExpEmail = new RegExp(this.emailTntRegEx);
     emailRegEx: string = '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+';
-    passwordRegEx: string = '(?=.*\\d)(?=.*[_a-z])(?=.+[\\!\\@\\#\\$\\%\\^\\&\\*\\(\\)\\+\\-\\=])(?!.*\\s).{8,12}'
+    passwordRegEx: string = '(?=.*\\d)(?=.*[a-zA-Z])(?=.+[_\\!\\@\\#\\$\\%\\^\\&\\*\\(\\)\\+\\-\\=])(?!.*\\s).{8,12}'
     patternEmailTnt: string = 'Niepoprawny adres email z domeny tnt.com. Dopuszczalne znaki specjalne ._%+-';
     patternEmail: string = 'Niepoprawny adres email. Dopuszczalne znaki specjalne ._%+-';
 
@@ -117,7 +117,7 @@ export class UserComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        this.sub.unsubscribe();
+           this.sub.unsubscribe();
     }
 
     onUserRetrieved(user: IUser): void {
@@ -128,6 +128,12 @@ export class UserComponent implements OnInit, OnDestroy {
         }
 
         if (this.user._id === "0") {
+            this.userForm.reset();
+            this.userForm.patchValue({
+                _id: "0",
+                isSuperUser: false,
+                isLocked: false
+            });
             this.pageTitle = 'Dodaj nowego użytkownika';
         } else {
             this.pageTitle = `Edytuj użytkownika: ${this.user.email}`;
@@ -202,7 +208,6 @@ export class UserComponent implements OnInit, OnDestroy {
         }
     }
 
-
     saveUser() {
         if (this.userForm.dirty && this.userForm.valid) {
             // Copy the form values over the product object values
@@ -226,7 +231,8 @@ export class UserComponent implements OnInit, OnDestroy {
         // Reset the form to clear the flags
         this.userForm.reset();
         // TODO
-        this.router.navigate(['/userlist']);
+        //this.router.navigate(['/userlist']);
+        this.onBack()
     }
 }
 

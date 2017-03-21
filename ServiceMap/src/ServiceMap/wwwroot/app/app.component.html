@@ -4,9 +4,9 @@
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-left">
                 <li><a [routerLink]="['/serviceTnt']">Mapa Serwisowa</a></li>
-                <li *ngIf="isSuperusers"><a [routerLink]="['/userlist']">Lista Użytkowników</a></li>
-                <!--<li *ngIf="isSuperusers"><a [routerLink]="['/welcome']">Konta Użytkowników</a></li>-->
-                <li *ngIf="isSuperusers"><a [routerLink]="['/adduser']" [queryParams]="{ _id:0 }" >Dodaj Użytkownika</a></li>
+                <li *ngIf="isSuperUser"><a [routerLink]="['/userlist']">Lista Użytkowników</a></li>
+                <!--<li *ngIf="isSuperusers"><a [routerLink]="['/welcome']">Konta Użytkowników[queryParams]="{ _id:0 }</a></li>-->
+                <li *ngIf="isSuperUser"><a [routerLink]="['/adduser']" [queryParams]="{ _id:0 }">Dodaj Użytkownika</a></li>
                 <!--[queryParams]="{ id:0, email:'test@wp.pl', isSuperUser:true }-->
             </ul>
             <ul class="nav navbar-nav navbar-right">

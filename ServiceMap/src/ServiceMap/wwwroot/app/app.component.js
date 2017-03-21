@@ -24,7 +24,7 @@ var AppComponent = (function () {
     AppComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.checkPermissions()
-            .subscribe(function (data) { return _this.isSuperusers = data; }, function (error) { return console.error(error); });
+            .subscribe(function (data) { return _this.isSuperUser = data; }, function (error) { return console.error(error); });
     };
     AppComponent.prototype.checkPermissions = function () {
         return this._http.get(environment_1.apiUrl.getpermissions)

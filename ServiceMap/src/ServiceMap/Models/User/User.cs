@@ -12,7 +12,7 @@ namespace ServiceMap.Models.User
         public string _id { get; set; }
         [Required]
         public string Email { get; set; }
-        [RegularExpression("(?=.*\\d)(?=.*[_a-z])(?=.+[\\!\\@\\#\\$\\%\\^\\&\\*\\(\\)\\+\\-\\=])(?!.*\\s).{8,12}")]
+        [RegularExpression("(?=.*\\d)(?=.*[a-zA-Z])(?=.+[_\\!\\@\\#\\$\\%\\^\\&\\*\\(\\)\\+\\-\\=])(?!.*\\s).{8,12}")]
         [Required]
         public string Password { get; set; }
         [Required]

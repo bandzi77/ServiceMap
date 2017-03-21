@@ -22,41 +22,52 @@ namespace ServiceMap.Controllers.apiControllers
         private UserManager<AppUser> userManager;
         private RoleManager<IdentityRole> roleManager;
         private IConfiguration _configuration;
+        private string roleSuperUser;
+        private string roleUser;
 
         public UsersController(UserManager<AppUser> userMgr, RoleManager<IdentityRole> roleMgr, IConfiguration configuration)
         {
             userManager = userMgr;
             roleManager = roleMgr;
             _configuration = configuration;
+            roleSuperUser = configuration["Data:Roles:Superuser"];
+            roleUser = configuration["Data:Roles:User"];
         }
 
 
         // GET: api/values
         [HttpGet]
-        public IActionResult Get(string email, bool showLockedOnly)
+        public async Task<IActionResult> Get(string email, bool showLockedOnly)
         {
             IQueryable<AppUser> _users = null;
 
-            var roleId = roleManager.Roles.Where(x => x.NormalizedName == _configuration["Data:Roles:Superuser"].ToUpper()).Select(x=>x.Id).Single();
+            var userRole = await roleManager.FindByNameAsync(roleSuperUser);
 
             if (!String.IsNullOrWhiteSpace(email))
-            { _users = userManager.Users.Where(x => x.NormalizedEmail.StartsWith(email.ToUpper())); }
-            else { _users = userManager.Users; }
-            var _result = _users.Select(x => new User()
+            {
+                _users = userManager.Users.Where(x => x.NormalizedEmail.StartsWith(email.ToUpper()));
+            }
+            else
+            {
+                _users = userManager.Users;
+            }
+
+            var _result = _users
+                .Select(x => new User()
             {
                 _id = x.Id,
                 Email = x.Email,
                 LimitOfRequestsPerDay = x.LimitOfRequestsPerDay,
                 NumberOfRequestsPerDay = x.NumberOfRequestsPerDay,
-                IsSuperUser = x.Roles.Any(y => y.RoleId == roleId),
+                IsSuperUser = x.Roles.Any(y => y.RoleId == userRole.Id),
                 IsLocked = x.LockoutEnd > DateTime.Now && x.LockoutEnabled
-            }).ToList();
+            });
 
-            //for (int i = 0; i < 10; i++)
-            //{
-            //    _result.AddRange(_result);
-            //}
-          
+            if (showLockedOnly)
+            {
+                _result= _result.Where(x => x.IsLocked == showLockedOnly);
+            }
+
             var result = new { users = _result, paging = "" };
             return Ok(result);
         }
@@ -70,14 +81,13 @@ namespace ServiceMap.Controllers.apiControllers
 
         // POST api/values
         [HttpPost]
-        public async void Post([FromBody] User user)
+        public async Task<bool> Post([FromBody] User user)
         {
-            if (ModelState.IsValid && user._id=="0")
+            bool _result = false;
+            if (ModelState.IsValid && user._id == "0")
             {
-                string roleSuperUser = _configuration["Data:Roles:Superuser"];
-                string roleUser = _configuration["Data:Roles:User"];
 
-                if (await userManager.FindByEmailAsync(user.Email) == null)
+                if (await userManager.FindByEmailAsync(user.Email.ToUpper()) == null)
                 {
                     if (await roleManager.FindByNameAsync(roleSuperUser) == null)
                     {
@@ -93,12 +103,12 @@ namespace ServiceMap.Controllers.apiControllers
 
                     AppUser new_user = new AppUser
                     {
-                        UserName = user.Email,
-                        Email = user.Email,
+                        UserName = user.Email.ToUpper(),
+                        Email = user.Email.ToUpper(),
                         AccessFailedCount = 5,
-                        LockoutEnd= user.IsLocked ? DateTimeOffset.MaxValue : (DateTimeOffset?)null ,
-                        LimitOfRequestsPerDay =user.LimitOfRequestsPerDay,
-                        NumberOfRequestsPerDay= user.NumberOfRequestsPerDay
+                        LockoutEnd = user.IsLocked ? DateTimeOffset.MaxValue : (DateTimeOffset?)null,
+                        LimitOfRequestsPerDay = user.LimitOfRequestsPerDay,
+                        NumberOfRequestsPerDay = user.NumberOfRequestsPerDay
                     };
 
                     IdentityResult result = await userManager.CreateAsync(new_user, user.Password);
@@ -110,22 +120,78 @@ namespace ServiceMap.Controllers.apiControllers
                             await userManager.AddToRoleAsync(new_user, roleSuperUser);
                         }
                         else
-                        { await userManager.AddToRoleAsync(new_user, roleUser); }
+                        {
+                            await userManager.AddToRoleAsync(new_user, roleUser);
+                        }
+                        
                     }
+                    return result.Succeeded;
                 }
             }
+            return _result;
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] User value)
+        public async Task Put(string id, [FromBody] User user)
         {
+            ModelState.Remove("Password");
+            if (ModelState.IsValid && user._id != "0")
+            {
+                var _oldUser = await userManager.FindByIdAsync(id);
+                if (_oldUser != null)
+                {
+                    _oldUser.LimitOfRequestsPerDay = user.LimitOfRequestsPerDay;
+                    _oldUser.LockoutEnd = user.IsLocked ? DateTimeOffset.MaxValue : (DateTimeOffset?)null;
+                    await userManager.UpdateAsync(_oldUser);
+
+                    if (!user.IsLocked)
+                    {
+                        await userManager.ResetAccessFailedCountAsync(_oldUser);
+                    }
+
+                    var role = await roleManager.FindByNameAsync(roleSuperUser);
+                    if (await userManager.IsInRoleAsync(_oldUser, role.Name) && !user.IsSuperUser)
+                    {
+                        await userManager.RemoveFromRoleAsync(_oldUser, role.Name);
+
+                        var userRole = await roleManager.FindByNameAsync(roleUser);
+                        if (!await userManager.IsInRoleAsync(_oldUser, userRole.Name))
+                        {
+                            await userManager.AddToRoleAsync(_oldUser, userRole.Name);
+                        }
+                        return;
+                    }
+
+                    role = await roleManager.FindByNameAsync(roleUser);
+                    if (await userManager.IsInRoleAsync(_oldUser, role.Name) && user.IsSuperUser)
+                    {
+                        await userManager.RemoveFromRoleAsync(_oldUser, role.Name);
+
+                        var userRole = await roleManager.FindByNameAsync(roleSuperUser);
+                        if (!await userManager.IsInRoleAsync(_oldUser, userRole.Name))
+                        {
+                            await userManager.AddToRoleAsync(_oldUser, userRole.Name);
+                        }
+                        return;
+                    }
+                }
+
+            }
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task Delete(string id)
         {
+            if (id != "0")
+            {
+                var user = await userManager.FindByIdAsync(id);
+                if (user != null)
+                {
+                    await userManager.DeleteAsync(user);
+                }
+            }
         }
     }
 }

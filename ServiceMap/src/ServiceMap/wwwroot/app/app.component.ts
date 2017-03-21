@@ -14,7 +14,7 @@ import 'rxjs/add/observable/throw';
     styleUrls: ['/app.component.css']
 })
 export class AppComponent implements OnInit {
-    isSuperusers: boolean;
+    isSuperUser: boolean;
     errorMsg: string;
 
     constructor(private _http: Http) {
@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
     ngOnInit() {
         this.checkPermissions()
             .subscribe(
-            data => this.isSuperusers = data,
+            data => this.isSuperUser = data,
             error => console.error(<any>error));
     }
 

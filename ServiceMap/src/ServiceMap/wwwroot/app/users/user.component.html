@@ -41,7 +41,7 @@
                                   (mouseup)="onEyeEvent($event)"
                                   (mouseleave)="onEyeEvent($event)"
                                   class="input-group-addon btn"
-                                  [ngClass]="{'disabled': userForm.get('_id').value!==0}"><i class="fa fa-eye fa-1x"></i></span>
+                                  [ngClass]="{'disabled': userForm.get('_id').value!='0'}"><i class="fa fa-eye fa-1x"></i></span>
                         </div>
                         <span class="help-block" *ngIf="passwordMessage">
                             {{ passwordMessage }}

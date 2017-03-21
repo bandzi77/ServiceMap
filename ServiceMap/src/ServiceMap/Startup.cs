@@ -77,8 +77,8 @@ namespace ServiceMap
                 .AddEntityFrameworkStores<AppIdentityDbContext>();
             //services.AddScoped<IAuthorizationService, AuthorizationService>();
             services.AddSingleton(Configuration);
-            services.AddSingleton<RoleManager<IdentityRole>>();
-            services.AddSingleton<UserManager<AppUser>>();
+            services.AddScoped<RoleManager<IdentityRole>>();
+            services.AddScoped<UserManager<AppUser>>();
             //   services.AddTransient<IServiceProvider, ServiceCollection>();
             //services.AddTransient<IConfiguration, ConfigureServices>();
             services.AddMvc();
