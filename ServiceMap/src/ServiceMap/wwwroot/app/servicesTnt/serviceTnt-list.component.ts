@@ -14,7 +14,7 @@ import { LgModalComponent } from '../shared/lgModal.component';
 
 export class ServiceTntListComponent implements OnInit {
     busyIndicator: Subscription;
-    pageTitle: string = "Lista Serwisów TNT";
+    pageTitle: string = "Mapa Serwisowa";
     imageWidth: number = 50;
     imageMargin: number = 2;
     listFilter: string;

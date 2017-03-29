@@ -19,12 +19,13 @@ require("rxjs/add/observable/throw");
 var AppComponent = (function () {
     function AppComponent(_http) {
         this._http = _http;
+        this.isSuperUser = false;
     }
     ;
     AppComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.checkPermissions()
-            .subscribe(function (data) { return _this.isSuperUser = data; }, function (error) { return console.error(error); });
+            .subscribe(function (data) { return _this.isSuperUser = data === true; }, function (error) { return console.error(error); });
     };
     AppComponent.prototype.checkPermissions = function () {
         return this._http.get(environment_1.apiUrl.getpermissions)
@@ -47,7 +48,7 @@ var AppComponent = (function () {
     };
     AppComponent.prototype.extractData = function (res) {
         var body = res.json();
-        return body.data || {};
+        return body || {};
     };
     AppComponent.prototype.logData = function (data) {
         console.log('All: ' + JSON.stringify(data));

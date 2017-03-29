@@ -72,6 +72,10 @@ td,th {
     border-left: 1px solid #ccc;
 }
 
+td:last-child{
+    border-right: 1px solid #ccc;
+}
+
 tr:last-child {
     border-bottom: 1px solid #ccc;
 }

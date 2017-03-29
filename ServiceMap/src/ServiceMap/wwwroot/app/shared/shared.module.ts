@@ -2,7 +2,7 @@
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { BusyModule, BusyConfig } from 'angular2-busy';
-import { ModalModule } from 'ng2-bootstrap';
+import { ModalModule, PopoverModule } from 'ng2-bootstrap';
 import { PageModule } from '../pagination/page.module';
 import { LgModalComponent } from './lgModal.component';
 
@@ -12,11 +12,12 @@ import { LgModalComponent } from './lgModal.component';
     ],
     exports: [
         CommonModule,
-        FormsModule,
         BusyModule,
-        ModalModule,
+        FormsModule,
+        LgModalComponent,
+        ModalModule, 
         PageModule,
-        LgModalComponent
+        PopoverModule
     ],
     imports: [
         CommonModule,
@@ -27,7 +28,8 @@ import { LgModalComponent } from './lgModal.component';
                 minDuration: 0
             })
         ),
-        ModalModule.forRoot()
+        ModalModule.forRoot(),
+        PopoverModule.forRoot()
     ],
 })
 

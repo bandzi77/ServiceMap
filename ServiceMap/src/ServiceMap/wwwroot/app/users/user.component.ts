@@ -24,7 +24,7 @@ import { Location } from '@angular/common';
             state('true', style({ opacity: 1 })),
             state('void', style({ opacity: 0 })),
             transition(':enter', animate('0ms ease-in-out')),
-            transition(':leave', animate('300ms ease-in-out'))
+            transition(':leave', animate('0ms ease-in-out'))//300ms ease-in-out
         ])
     ]
 })
@@ -45,22 +45,22 @@ export class UserComponent implements OnInit, OnDestroy {
     private sub: Subscription;
     private emailTntRegEx: string = '[a-zA-Z0-9._%+-]+@tnt.com';
     private regExpEmail = new RegExp(this.emailTntRegEx);
-    emailRegEx: string = '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+';
+    emailRegEx: string = '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.]+'; //'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+';
     passwordRegEx: string = '(?=.*\\d)(?=.*[a-zA-Z])(?=.+[_\\!\\@\\#\\$\\%\\^\\&\\*\\(\\)\\+\\-\\=])(?!.*\\s).{8,12}'
-    patternEmailTnt: string = 'Niepoprawny adres email z domeny tnt.com. Dopuszczalne znaki specjalne ._%+-';
-    patternEmail: string = 'Niepoprawny adres email. Dopuszczalne znaki specjalne ._%+-';
+    patternEmailTnt: string = 'Niepoprawny adres email z domeny tnt.com.';
+    patternEmail: string = 'Niepoprawny adres email.';
 
     private emailValidationMessages = {
-        required: 'Email jest wymagany',
+        required: 'Email jest wymagany.',
         pattern: this.patternEmail,
         maxlength: 'Email nie może przekraczać 250 znaków.'
     };
 
     private passValidationMessages = {
         required: "Hasło jest wymagane.",
-        pattern: "Hasło musi zawierać litery, co najmniej jedną cyfrę oraz co najmniej jeden znak specjalny _!@#$%^&*()+-=",
-        minlength: 'Hasło musi składać się z co najmniej z 8 znaków.',
-        maxlength: 'Hasło nie może przekraczać 12 znaków.'
+        pattern: "Hasło nie spełnia wymagań.",
+        minlength: 'Hasło jest za krótkie.',
+        maxlength: 'Hasło jest za długie.'
     };
 
     constructor(private fb: FormBuilder,

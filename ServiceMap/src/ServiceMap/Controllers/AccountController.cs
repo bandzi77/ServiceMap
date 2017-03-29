@@ -70,6 +70,13 @@ namespace ServiceMap.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        //[HttpPost]
+        //public async Task<IActionResult> Logout()
+        //{
+        //    await signManager.SignOutAsync();
+        //    return RedirectToAction("Index", "Home");
+        //}
+
         [AllowAnonymous]
         public IActionResult AccessDenied()
         {
