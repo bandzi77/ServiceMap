@@ -12,13 +12,15 @@ var core_1 = require("@angular/core");
 var environment_1 = require("./environments/environment");
 var http_1 = require("@angular/http");
 var Observable_1 = require("rxjs/Observable");
+var common_1 = require("@angular/common");
 require("rxjs/add/operator/map");
 require("rxjs/add/operator/do");
 require("rxjs/add/operator/catch");
 require("rxjs/add/observable/throw");
 var AppComponent = (function () {
-    function AppComponent(_http) {
+    function AppComponent(_http, location) {
         this._http = _http;
+        this.location = location;
         this.isSuperUser = false;
     }
     ;
@@ -30,6 +32,29 @@ var AppComponent = (function () {
     AppComponent.prototype.checkPermissions = function () {
         return this._http.get(environment_1.apiUrl.getpermissions)
             .map(this.extractData)
+            .do(this.logData)
+            .catch(this.handleError);
+    };
+    AppComponent.prototype.onLogOut = function () {
+        console.log('Wylogowanie użytkownika');
+        this.logOut()
+            .subscribe(
+        //  TODO - DO POPRAWY
+        function () { return location.reload(); });
+        //data => data,
+        //    error => console.error(<any>error));
+    };
+    AppComponent.prototype.logOut = function () {
+        //let headers = new Headers({ 'Content-Type': 'application/json' });
+        //let options = new RequestOptions({ headers: headers });
+        //let body = JSON.stringify({n:"t"});
+        //return this._http.post(apiUrl.logout, body, options)
+        //    //.map(this.extractData)
+        //    .map(res => <void>res.json())
+        //    .do(this.logData)
+        //    .catch(this.handleError);
+        return this._http.get(environment_1.apiUrl.logout)
+            .map(function (res) { return res.json(); })
             .do(this.logData)
             .catch(this.handleError);
     };
@@ -61,7 +86,8 @@ AppComponent = __decorate([
         templateUrl: 'app/app.component.html',
         styleUrls: ['/app.component.css']
     }),
-    __metadata("design:paramtypes", [http_1.Http])
+    __metadata("design:paramtypes", [http_1.Http,
+        common_1.Location])
 ], AppComponent);
 exports.AppComponent = AppComponent;
 //# sourceMappingURL=app.component.js.map

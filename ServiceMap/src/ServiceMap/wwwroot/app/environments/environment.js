@@ -7,6 +7,7 @@ exports.environment = {
     production: false
 };
 exports.apiUrl = {
-    getpermissions: 'api/Permissions'
+    getpermissions: 'api/App',
+    logout: 'api/App/GetLogout'
 };
 //# sourceMappingURL=environment.js.map

@@ -40,7 +40,7 @@ namespace ServiceMap
             services.AddDbContext<AppIdentityDbContext>(options =>
             options.UseSqlServer(Configuration["Data:ConnectionStrings:DbServiceMapIndentity"]));
 
-            services.AddIdentity<AppUser, IdentityRole>(opts=>
+            services.AddIdentity<AppUser, IdentityRole>(opts =>
             {
                 opts.User.RequireUniqueEmail = true;
                 //opts.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyz";
@@ -71,7 +71,7 @@ namespace ServiceMap
                 //opts.Cookies.ApplicationCookie.AuthenticationScheme = Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationDefaults.AuthenticationScheme;
                 //opts.Cookies.ApplicationCookie.ReturnUrlParameter = Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationDefaults.ReturnUrlParameter;
 
-            } )
+            })
                 // W przypadku innej ścieżki niż domyślna
                 //(opt=>opt.Cookies.ApplicationCookie.LoginPath="/")
                 .AddEntityFrameworkStores<AppIdentityDbContext>();
@@ -105,7 +105,7 @@ namespace ServiceMap
             app.UseStaticFiles();
             app.UseIdentity();
             AppIdentityDbContext.CreateAdminAccount(app.ApplicationServices, Configuration).Wait();
-            
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

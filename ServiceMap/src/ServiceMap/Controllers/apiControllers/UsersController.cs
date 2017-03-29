@@ -19,14 +19,16 @@ namespace ServiceMap.Controllers.apiControllers
     [Authorize(Roles = "Superusers")]
     public class UsersController : Controller
     {
+        private SignInManager<AppUser> signInManager;
         private UserManager<AppUser> userManager;
         private RoleManager<IdentityRole> roleManager;
         private IConfiguration _configuration;
         private string roleSuperUser;
         private string roleUser;
 
-        public UsersController(UserManager<AppUser> userMgr, RoleManager<IdentityRole> roleMgr, IConfiguration configuration)
+        public UsersController(SignInManager<AppUser> signinMgr, UserManager<AppUser> userMgr, RoleManager<IdentityRole> roleMgr, IConfiguration configuration)
         {
+            signInManager = signinMgr;
             userManager = userMgr;
             roleManager = roleMgr;
             _configuration = configuration;
@@ -67,6 +69,7 @@ namespace ServiceMap.Controllers.apiControllers
             {
                 _result= _result.Where(x => x.IsLocked == showLockedOnly);
             }
+            _result = _result.OrderBy(x => x.Email);
 
             var result = new { users = _result, paging = "" };
             return Ok(result);
@@ -123,7 +126,6 @@ namespace ServiceMap.Controllers.apiControllers
                         {
                             await userManager.AddToRoleAsync(new_user, roleUser);
                         }
-                        
                     }
                     return result.Succeeded;
                 }

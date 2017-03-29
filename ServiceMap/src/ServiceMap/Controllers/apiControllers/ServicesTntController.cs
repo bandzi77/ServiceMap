@@ -5,12 +5,14 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ServiceMap.Models.apiModels;
 using ServiceMap.Models.ServiceTnt;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace ServiceMap.Controllers.apiControllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     public class ServicesTntController : Controller
     {
         //// GET: api/values
@@ -33,6 +35,8 @@ namespace ServiceMap.Controllers.apiControllers
             {
                 serviceTnt.AddRange(serviceTnt);
             }
+
+            serviceTnt= serviceTnt.Where(x => x.Town.StartsWith(sfilter?.CityName??"", StringComparison.OrdinalIgnoreCase)).Select(x=>x).ToList();
 
             var result = new { serviceTnt = serviceTnt, paging = paging };
             return Ok(result);

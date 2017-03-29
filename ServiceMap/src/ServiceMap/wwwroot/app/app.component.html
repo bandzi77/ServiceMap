@@ -3,13 +3,13 @@
     <div class="container-fluid">
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-left">
-                <li><a [routerLink]="['/serviceTnt']">Mapa Serwisowa</a></li>
-                <li *ngIf="isSuperUser"><a [routerLink]="['/userlist']">Lista Użytkowników</a></li>
+                <li class="btn btn-lg"><a [routerLink]="['/serviceTnt']">Mapa Serwisowa</a></li>
+                <li class="btn btn-lg" *ngIf="isSuperUser"><a [routerLink]="['/userlist']">Lista Użytkowników</a></li>
                 <!--<li *ngIf="isSuperusers"><a [routerLink]="['/welcome']">Konta Użytkowników[queryParams]="{ _id:0 }</a></li>-->
-                 <li *ngIf="isSuperUser"><a [routerLink]="['/adduser']" [queryParams]="{ _id:0 }">Dodaj Użytkownika</a></li>
+                <li class="btn btn-lg" *ngIf="isSuperUser"><a [routerLink]="['/adduser']" [queryParams]="{ _id:0 }">Dodaj Użytkownika</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li ><a>Wyloguj</a></li>
+                <li class="btn btn-lg"><a (click)="onLogOut()">Wyloguj</a></li>
             </ul>
         </div>
     </div>

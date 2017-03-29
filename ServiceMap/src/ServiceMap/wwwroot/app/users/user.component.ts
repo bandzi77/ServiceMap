@@ -43,7 +43,7 @@ export class UserComponent implements OnInit, OnDestroy {
     passwordMessage: string = '';
     limitOfRequestsPerDay: string = '';
     private sub: Subscription;
-    private emailTntRegEx: string = '[a-zA-Z0-9._%+-]+@tnt.com';
+    private emailTntRegEx: string = '[a-zA-Z0-9._%+-]+@(TNT.COM|tnt.com)';
     private regExpEmail = new RegExp(this.emailTntRegEx);
     emailRegEx: string = '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.]+'; //'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+';
     passwordRegEx: string = '(?=.*\\d)(?=.*[a-zA-Z])(?=.+[_\\!\\@\\#\\$\\%\\^\\&\\*\\(\\)\\+\\-\\=])(?!.*\\s).{8,12}'

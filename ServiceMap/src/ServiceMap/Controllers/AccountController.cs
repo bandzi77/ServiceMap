@@ -58,19 +58,29 @@ namespace ServiceMap.Controllers
                         await userManager.SetLockoutEndDateAsync(user, DateTime.Now);
                     }
                 }
-                ModelState.AddModelError(nameof(LoginModel.Email),"Niepoprawny email lub hasło");
+                ModelState.AddModelError(nameof(LoginModel.Email),"Niepoprawny adres email lub hasło");
             }
             return View(details);
         }
 
-        [Authorize]
-        public async Task<IActionResult> Logout()
-        {
-            await signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Home");
-        }
-
+        
         //[HttpPost]
+        //[Authorize]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Logout()
+        //{
+        //    await signInManager.SignOutAsync();
+        //    return RedirectToAction("Index", "Home");
+        //}
+
+        // POST: /Account/LogOff
+        //[HttpPost]
+        //public ActionResult LogOff()
+        //{
+        //    AuthenticationManager.SignOut();
+        //    return RedirectToAction("Index", "Home");
+        //}
+        //
         //public async Task<IActionResult> Logout()
         //{
         //    await signManager.SignOutAsync();
@@ -110,9 +120,5 @@ namespace ServiceMap.Controllers
         //    }
         //    return result;
         //}
-
-
-
-
     }
 }

@@ -8,5 +8,6 @@ export const environment = {
 };
 
 export const apiUrl = {
-    getpermissions: 'api/Permissions'
+    getpermissions: 'api/App',
+    logout: 'api/App/GetLogout'
 };

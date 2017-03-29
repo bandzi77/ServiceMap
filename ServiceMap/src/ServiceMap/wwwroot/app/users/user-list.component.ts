@@ -45,8 +45,8 @@ export class UserListComponent implements OnInit, OnDestroy {
         this._getData(filtr);
     }
 
-    private _getData(filtr: IUserFilter) {
 
+    private _getData(filtr: IUserFilter) {
         this.busyIndicator = this._userService.getUsers(filtr)
             .subscribe(result => {
                 this.users = result.users;

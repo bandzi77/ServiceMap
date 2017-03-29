@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { apiUrl } from './environments/environment';
-import { Http, Response } from '@angular/http';
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import { Location } from '@angular/common';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
@@ -14,10 +15,11 @@ import 'rxjs/add/observable/throw';
     styleUrls: ['/app.component.css']
 })
 export class AppComponent implements OnInit {
-    public isSuperUser: boolean= false;
+    public isSuperUser: boolean = false;
     errorMsg: string;
 
-    constructor(private _http: Http) {
+    constructor(private _http: Http,
+        private location: Location) {
     };
 
     ngOnInit() {
@@ -30,6 +32,34 @@ export class AppComponent implements OnInit {
     private checkPermissions(): Observable<boolean> {
         return this._http.get(apiUrl.getpermissions)
             .map(this.extractData)
+            .do(this.logData)
+            .catch(this.handleError);
+    }
+
+
+    private onLogOut() {
+        console.log('Wylogowanie u¿ytkownika');
+        this.logOut()
+            .subscribe(
+                //  TODO - DO POPRAWY
+            () => location.reload()
+            );
+        //data => data,
+        //    error => console.error(<any>error));
+    }
+
+    private logOut(): Observable<void> {
+        //let headers = new Headers({ 'Content-Type': 'application/json' });
+        //let options = new RequestOptions({ headers: headers });
+        //let body = JSON.stringify({n:"t"});
+
+        //return this._http.post(apiUrl.logout, body, options)
+        //    //.map(this.extractData)
+        //    .map(res => <void>res.json())
+        //    .do(this.logData)
+        //    .catch(this.handleError);
+        return this._http.get(apiUrl.logout)
+            .map(res => <void>res.json())
             .do(this.logData)
             .catch(this.handleError);
     }
