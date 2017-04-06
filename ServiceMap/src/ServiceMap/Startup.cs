@@ -114,8 +114,17 @@ namespace ServiceMap
                 defaults: new { controller = "Error", action = "Error" });
 
                 routes.MapRoute(
+                  name: "infoPanel",
+                  template: "{controller=Account}/{action=InfoPanel}/{message}");
+
+                routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+
+
+                //routes.MapRoute(
+                //name: "forgotPassword",
+                //template: "{controller=Account}/{action=ForgotPassword}");
 
                 routes.MapSpaFallbackRoute(
                     name: "spa-fallback",

@@ -31,12 +31,12 @@ var AppComponent = (function () {
     };
     AppComponent.prototype.checkPermissions = function () {
         return this._http.get(environment_1.apiUrl.getpermissions)
-            .map(this.extractData)
-            .do(this.logData)
+            .map(this._extractData)
+            .do(this._logData)
             .catch(this.handleError);
     };
     AppComponent.prototype.onLogOut = function () {
-        console.log('Wylogowanie użytkownika');
+        console.log('Wylogowanie u�ytkownika');
         this.logOut()
             .subscribe(
         //  TODO - DO POPRAWY
@@ -55,7 +55,7 @@ var AppComponent = (function () {
         //    .catch(this.handleError);
         return this._http.get(environment_1.apiUrl.logout)
             .map(function (res) { return res.json(); })
-            .do(this.logData)
+            .do(this._logData)
             .catch(this.handleError);
     };
     AppComponent.prototype.handleError = function (error) {
@@ -71,11 +71,11 @@ var AppComponent = (function () {
         }
         return Observable_1.Observable.throw(errMsg);
     };
-    AppComponent.prototype.extractData = function (res) {
+    AppComponent.prototype._extractData = function (res) {
         var body = res.json();
         return body || {};
     };
-    AppComponent.prototype.logData = function (data) {
+    AppComponent.prototype._logData = function (data) {
         console.log('All: ' + JSON.stringify(data));
     };
     return AppComponent;

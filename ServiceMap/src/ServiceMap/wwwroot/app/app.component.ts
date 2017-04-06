@@ -31,8 +31,8 @@ export class AppComponent implements OnInit {
 
     private checkPermissions(): Observable<boolean> {
         return this._http.get(apiUrl.getpermissions)
-            .map(this.extractData)
-            .do(this.logData)
+            .map(this._extractData)
+            .do(this._logData)
             .catch(this.handleError);
     }
 
@@ -60,7 +60,7 @@ export class AppComponent implements OnInit {
         //    .catch(this.handleError);
         return this._http.get(apiUrl.logout)
             .map(res => <void>res.json())
-            .do(this.logData)
+            .do(this._logData)
             .catch(this.handleError);
     }
 
@@ -77,12 +77,12 @@ export class AppComponent implements OnInit {
         return Observable.throw(errMsg);
     }
 
-    private extractData(res: Response) {
+    private _extractData(res: Response) {
         let body = res.json();
         return body || {};
     }
 
-    private logData(data: any) {
+    private _logData(data: any) {
         console.log('All: ' + JSON.stringify(data));
     }
 }
