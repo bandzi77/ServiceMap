@@ -27,7 +27,9 @@
                         </div>
                         <div class="row">
                             <div class="col-md-6 text-left" style="vertical-align:bottom">
-                                <a href="@Url.Content("ForgotPassword")">Nie pamiętam hasła</a> 
+                                <a asp-action="ForgotPassword"
+                                   asp-controller="Account">
+                                Nie pamiętam hasła</a>  @*href="@Url.Content("ForgotPassword")"*@
                             </div>
                             <div class="col-md-6 text-right">
                                 <button class="btn btn-primary" type="submit">Zaloguj</button>

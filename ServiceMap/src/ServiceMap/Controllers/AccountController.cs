@@ -36,16 +36,19 @@ namespace ServiceMap.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public IActionResult ForgotPassword(string email)
+        public async Task<IActionResult> ForgotPassword(string email)
         {
-            // TODO
-            //if (ModelState.IsValid)
-            //{
-            //    ViewBag.Message = "test";
-            //    return View();
-            //}
-            string message = $"Na adres \"{email}\" został wysłany link do zresetowania hasła";
-            return RedirectToAction("InfoPanel","Account", new { message });
+            //TODO
+            if (ModelState.IsValid)
+            {
+                var user = await userManager.FindByEmailAsync(email);
+                if (user != null)
+                {
+
+                }
+            }
+            string message = $"Na adres email \"{email}\" został wysłany link pozwalający na zresetowanie hasła";
+            return RedirectToAction("InfoPanel", "Account", new { message });
         }
 
 

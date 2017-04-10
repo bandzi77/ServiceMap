@@ -38,7 +38,7 @@
                 <div class="navbar-collapse collapse">
 
                     <ul class="nav navbar-nav navbar-left">
-                        <li >
+                        <li>
                             <a href="http://www.tnt.com/express/pl_pl/site/home.html">
                                 <img alt="TNT" src="~/app/assets/images/logo.svg" style="width: 98px; height: 35px;" />
                             </a>
@@ -48,7 +48,9 @@
                         </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li class="btn btn-lg"><a href="@Url.Content("Login")">Zaloguj</a></li>
+                        <li class="btn btn-lg">
+                            <a href="@Url.Action("Login","Account")">Zaloguj</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -58,7 +60,7 @@
 
 
     @RenderBody()
-    </div>
+
     <environment names="Development">
         @* TODO *@
     </environment>

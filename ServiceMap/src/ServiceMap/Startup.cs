@@ -79,6 +79,7 @@ namespace ServiceMap
             services.AddSingleton(Configuration);
             services.AddScoped<RoleManager<IdentityRole>>();
             services.AddScoped<UserManager<AppUser>>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             //   services.AddTransient<IServiceProvider, ServiceCollection>();
             //services.AddTransient<IConfiguration, ConfigureServices>();
             services.AddMvc();
