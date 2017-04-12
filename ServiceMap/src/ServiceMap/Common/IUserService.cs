@@ -4,13 +4,14 @@ using ServiceMap.Models.apiModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading.Tasks;
 
 namespace ServiceMap.Common
 {
-    interface IUserService
+   public interface IUserService
     {
-        Task<AppUser> GetUser(IHttpContextAccessor httpContext, UserManager<AppUser> userMgr);
+         Task<AppUser> GetUser(ClaimsPrincipal user);
     }
 }

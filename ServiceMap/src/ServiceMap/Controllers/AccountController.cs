@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Authorization;
 using ServiceMap.Models;
 using Microsoft.AspNetCore.Identity;
 using ServiceMap.Models.apiModels;
+using ServiceMap.Common;
+using System.ComponentModel.DataAnnotations;
 
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
@@ -18,12 +20,15 @@ namespace ServiceMap.Controllers
     {
         private UserManager<AppUser> userManager;
         private SignInManager<AppUser> signInManager;
+        private IUserService currentUser;
+        private IEmailService emailService;
 
-        public AccountController(UserManager<AppUser> userMgr,
-                SignInManager<AppUser> signinMgr)
+        public AccountController(UserManager<AppUser> userMgr, SignInManager<AppUser> signinMgr, IUserService userService, IEmailService emailService)
         {
             userManager = userMgr;
             signInManager = signinMgr;
+            currentUser = userService;
+            this.emailService = emailService;
         }
 
         [AllowAnonymous]
@@ -32,19 +37,73 @@ namespace ServiceMap.Controllers
             return View();
         }
 
-
-        [HttpPost]
         [AllowAnonymous]
+        [HttpGet]
+        [ActionName("ResetPassword")]
+        public IActionResult LinkResetPassword(ResetPasswordModel model)
+        {
+            ModelState.Clear();
+            return View(model);
+        }
+
+
+        [AllowAnonymous]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ResetPassword(ResetPasswordModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (model.Password != model.ConfirmPassword)
+                {
+                    ModelState.AddModelError("Password", "Podane hasła są różne");
+                    return View(model);
+                }
+                var user = await userManager.FindByEmailAsync(model.Email.ToUpper());
+                if (user != null)
+                {
+                    var resetResult = await userManager.ResetPasswordAsync(user, model.Token, model.Password);
+                    if (!resetResult.Succeeded)
+                    {
+                        ModelState.AddModelError("email", "1. Wystąpił błąd podczas resetowania hasła");
+                        return View(model);
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError("email", "2. Wystąpił błąd podczas resetowania hasła");
+                    return View(model);
+                }
+
+
+                return RedirectToAction("Login", "Account");
+            }
+
+            return View(model);
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ForgotPassword(string email)
         {
             //TODO
+
             if (ModelState.IsValid)
             {
-                var user = await userManager.FindByEmailAsync(email);
+                var user = await userManager.FindByEmailAsync(email.ToUpper());
                 if (user != null)
                 {
+                    //var fromEmail = currentUser.GetUser(User).Result.NormalizedEmail;
 
+                    // Send an email with this linkuserId = user.Id,
+                    var token = await userManager.GeneratePasswordResetTokenAsync(user);
+                    var callbackUrl = Url.Action(nameof(ResetPassword), "Account", new { email = email.ToUpper(), token = token }, protocol: HttpContext.Request.Scheme);
+                    //await _emailSender.SendEmailAsync(model.Email, "Reset Password",
+                    //   $"Please reset your password by clicking here: <a href='{callbackUrl}'>link</a>");
+                    //   return View("ForgotPasswordConfirmation"); < a href = '{callbackUrl}' > link </ a >
+
+                    await emailService.SendEmailAsync("No replay", email, ConstsData.ResetLinkPasswordSubject, ConstsData.ResetLinkPasswordMsg + $"\n {callbackUrl}");
                 }
             }
             string message = $"Na adres email \"{email}\" został wysłany link pozwalający na zresetowanie hasła";

@@ -15,6 +15,7 @@ using ServiceMap.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Net;
 using Microsoft.AspNetCore.Identity;
+using ServiceMap.Common;
 
 namespace ServiceMap
 {
@@ -74,12 +75,17 @@ namespace ServiceMap
             })
                 // W przypadku innej ścieżki niż domyślna
                 //(opt=>opt.Cookies.ApplicationCookie.LoginPath="/")
-                .AddEntityFrameworkStores<AppIdentityDbContext>();
+                .AddEntityFrameworkStores<AppIdentityDbContext>()
+                .AddDefaultTokenProviders();
             //services.AddScoped<IAuthorizationService, AuthorizationService>();
             services.AddSingleton(Configuration);
             services.AddScoped<RoleManager<IdentityRole>>();
             services.AddScoped<UserManager<AppUser>>();
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddTransient<IUserService, UserService>();
+            services.AddSingleton<IEmailService, EmailService>();
+
+
+
             //   services.AddTransient<IServiceProvider, ServiceCollection>();
             //services.AddTransient<IConfiguration, ConfigureServices>();
             services.AddMvc();

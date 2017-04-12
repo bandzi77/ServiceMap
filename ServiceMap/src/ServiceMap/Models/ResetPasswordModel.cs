@@ -26,7 +26,7 @@ namespace ServiceMap.Models
         [Display(Name = "Potwierdź hasło")]
         public string ConfirmPassword { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Błędny link odzyskiwania hasła")]
         public string Token { get; set; }
     }
 }
