@@ -56,25 +56,27 @@ namespace ServiceMap.Controllers
             {
                 if (model.Password != model.ConfirmPassword)
                 {
-                    ModelState.AddModelError("Password", "Podane hasła są różne");
+                    ModelState.AddModelError("Password", ConstsData.DifferencesPasswordMsg);
                     return View(model);
                 }
+
                 var user = await userManager.FindByEmailAsync(model.Email.ToUpper());
+
                 if (user != null)
                 {
                     var resetResult = await userManager.ResetPasswordAsync(user, model.Token, model.Password);
                     if (!resetResult.Succeeded)
                     {
-                        ModelState.AddModelError("email", "1. Wystąpił błąd podczas resetowania hasła");
+                        ModelState.AddModelError("email", ConstsData.ResetLinkWrongToken);
                         return View(model);
                     }
                 }
-                else
+
+                if (user == null)
                 {
-                    ModelState.AddModelError("email", "2. Wystąpił błąd podczas resetowania hasła");
+                    ModelState.AddModelError("email", ConstsData.ResetLinkWrongEmail);
                     return View(model);
                 }
-
 
                 return RedirectToAction("Login", "Account");
             }
@@ -103,10 +105,10 @@ namespace ServiceMap.Controllers
                     //   $"Please reset your password by clicking here: <a href='{callbackUrl}'>link</a>");
                     //   return View("ForgotPasswordConfirmation"); < a href = '{callbackUrl}' > link </ a >
 
-                    await emailService.SendEmailAsync("No replay", email, ConstsData.ResetLinkPasswordSubject, ConstsData.ResetLinkPasswordMsg + $"\n {callbackUrl}");
+                    await emailService.SendEmailAsync("No replay", email, ConstsData.ResetLinkPasswordSubject, ConstsData.ResetLinkPasswordMsg + $"{callbackUrl}");
                 }
             }
-            string message = $"Na adres email \"{email}\" został wysłany link pozwalający na zresetowanie hasła";
+            string message = $"Na wskazany adres email \"{email}\" został wysłany link pozwalający na zresetowanie hasła";
             return RedirectToAction("InfoPanel", "Account", new { message });
         }
 

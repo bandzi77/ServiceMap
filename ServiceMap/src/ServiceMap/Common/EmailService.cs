@@ -21,12 +21,12 @@ namespace ServiceMap.Common
             var host = configuration["Data:SMTP:host"];
             int port; 
             int.TryParse(configuration["Data:SMTP:port"], out port);
-            var emailTNT = configuration["Data:SMTP:email"];
-            var passwordTNT = configuration["Data:SMTP:password"];
+            var emailTnt = configuration["Data:SMTP:email"];
+            var passwordTnt = configuration["Data:SMTP:password"];
 
             var emailMessage = new MimeMessage();
 
-            emailMessage.From.Add(new MailboxAddress(formName, emailTNT));
+            emailMessage.From.Add(new MailboxAddress(formName, emailTnt));
             //emailMessage.ReplyTo.Add(new MailboxAddress("", "mariusz-hyla@wp.pl"));
             emailMessage.To.Add(new MailboxAddress("", toEmail));
             emailMessage.Subject = subject;
@@ -37,7 +37,7 @@ namespace ServiceMap.Common
                 //client.LocalDomain = "tnt.com";
                 await client.ConnectAsync(host, port, SecureSocketOptions.None).ConfigureAwait(false);
                 client.AuthenticationMechanisms.Remove("XOAUTH2");
-                client.Authenticate(emailTNT, passwordTNT);
+                client.Authenticate(emailTnt, passwordTnt);
                 await client.SendAsync(emailMessage).ConfigureAwait(false);
                 await client.DisconnectAsync(true).ConfigureAwait(false);
             }

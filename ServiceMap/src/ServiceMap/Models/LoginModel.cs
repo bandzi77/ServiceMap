@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ServiceMap.Common;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -8,12 +9,12 @@ namespace ServiceMap.Models
 {
     public class LoginModel
     {
-        [Required(ErrorMessage ="Email jest wymagany")]
+        [Required(ErrorMessage = ConstsData.EmailRequiredMsg)]
         [UIHint("email")]
-        [EmailAddress(ErrorMessage = "Niepoprawny format adresu email")]
+        [EmailAddress(ErrorMessage = ConstsData.EmailValidationMsg)]
         public string Email { get; set; }
 
-        [Required(ErrorMessage ="Hasło jest wymagane")]
+        [Required(ErrorMessage = ConstsData.PasswordRequiredMsg)]
         [UIHint("password")]
         [Display(Name ="Hasło")]
         public string Password { get; set; }
