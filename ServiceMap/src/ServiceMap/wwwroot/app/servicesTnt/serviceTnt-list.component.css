@@ -1,8 +1,18 @@
-﻿/*thead {
-    color: green;
-}*/
+﻿
+.tablecontainer {
+    width: 100%;
+    overflow: hidden;
+}
 
 
+th, td {
+    min-width: 130px;
+    width: 130px;
+}
+
+.sm-last-th-with {
+    width:150px;
+}
 
 /*@font-face {
   font-family: 'FontAwesome';
@@ -26,13 +36,4 @@
     margin-right: 0 !important;
     margin-bottom: 15px;
     position: static;
-}
-
-
-th, td {
-    min-width: 130px;
-}
-
-tbody {
-    width: 100%;
 }

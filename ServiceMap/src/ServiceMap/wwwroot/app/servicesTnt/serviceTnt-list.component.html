@@ -1,9 +1,4 @@
 ﻿<div [ngBusy]="{busy: busyIndicator}"></div>
-<div class="panel panel-primary sm-main-panel">
-    <div class="panel-heading">
-        {{pageTitle}}
-    </div>
-    <div class="panel-body sm-main-panel sm-panel-body-padding-bottom">
         <div class="form-inline">
             <div class="panel panel-primary">
                 <div class="panel-heading">
@@ -38,15 +33,15 @@
             </div>
         </div>
 
-        <div class="row">
+        <!--<div class="row">
             <div class="col-md-6">
                 {{listFilter}}
             </div>
-        </div>
-        <div class="tablecontainer">
-            <div class="table-responsive">
-                <table class="table table-hover table-striped table-condensed"  *ngIf="servicesTnt && servicesTnt.length">
-                    <thead >
+        </div>-->
+        <div class="tablecontainer" style="height: 78%;">
+            <div class="table-responsive sm-max-height">
+                <table class="table table-hover table-striped table-condensed sm-max-height">
+                    <thead>
                         <tr>
                             <th>Depot code 1a</th>
                             <th style="min-width:350px;">Town</th>
@@ -58,22 +53,22 @@
                             <th>EX10</th>
                             <th>EX12</th>
                             <th>Priority</th>
-                            <th style="min-width:150px;">Wieczorne dostarczenie</th>
-
+                            <th style="min-width:150px; width:150px;">Wieczorne dostarczenie</th>
                             <th>Standard Delivery OD</th>
                             <th>Standard Delivery DO</th>
                             <th>Pick up domestic zgl</th>
-                            <th style="min-width:200px;">DateTimePick up eksport sm zgl</th>
-                            <th style="min-width:220px;">Samochod z winda dostepny w standardzie</th>
+                            <th style="min-width:200px; white-space:pre">DateTimePick up<br>eksport sm zgl</th>
+                            <th style="min-width:220px; white-space:pre">Samochod z winda<br>dostepny w standardzie</th>
 
                             <th>Diplomat next day</th>
                             <th>Serwis podmiejski</th>
                             <th>Pick up domestic czas</th>
                             <th>Pick up eksport sm czas</th>
-                            <th>Serwis miejski</th>
+                            <th class="sm-last-th-with">Serwis miejski</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <!--*ngIf="servicesTnt && servicesTnt.length"-->
+                    <tbody  class="sm-max-height">
                         <tr *ngFor="let serviceTnt of servicesTnt | productFilter : listFilter">
                             <td>
 
@@ -142,9 +137,6 @@
                   [pageSize]='paging.pageSize'
                   (pageClicked)='onPageClicked($event)'>
         </page-app>
-    </div>
-</div>
-
 
 <lg-modal #lgModal [myheader]="' '">
     <depot-details [depotsTnt]='depotTnt'></depot-details>

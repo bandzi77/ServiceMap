@@ -1,94 +1,89 @@
 ﻿<div [ngBusy]="{busy: busyIndicator}"></div>
-<div class="panel panel-primary sm-main-panel">
-    <div class="panel-heading">
-        {{pageTitle}}
-    </div>
-    <div class="panel-body">
-        <div class="form-inline">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <div class="form-group">
-                        <div>
-                            <label for="pesel" style="font-size:medium;">Podaj </label>
-                            <input class="form-control"
-                                   type="text"
-                                   autocomplete="off"
-                                   focus="true"
-                                   placeholder="Email"
-                                   [(ngModel)]="email" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div>
-                            <label class="btn btn-psz-filter">
-                                <input id="isLockedId"
-                                       type="checkbox"
-                                       [(ngModel)]="showLockedOnly" />
-                                Pokaż konta zablokowane
-                            </label>
-                        </div>
-                    </div>
-                    <!--TODO-->
-                    <!--[routerLink]="['/userlist']"
-                    [queryParams]="{email:email, showLockedOnly:showLockedOnly }"-->
-                    <button name="searchBtn"
-                            class="btn btn-psz-gray"
-                            (click)='onSearchUsers()'>
-                        <i class="fa fa-search fa-1x"></i> &nbsp;&nbsp;Szukaj
-                    </button>
+<div class="form-inline">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <div class="form-group">
+                <div>
+                    <label for="pesel" style="font-size:medium;">Podaj </label>
+                    <input class="form-control"
+                           type="text"
+                           autocomplete="off"
+                           focus="true"
+                           placeholder="Email"
+                           [(ngModel)]="email" />
                 </div>
             </div>
-        </div>
-        <div class="tablecontainer">
-            <div class="table-responsive">
-                <table class="table table-hover table-striped table-condensed" *ngIf="users && users.length">
-                    <thead>
-                        <tr>
-                            <th>Email</th>
-                            <th>Limit zapytań</th>
-                            <th>Liczba zapytań</th>
-                            <th style="min-width:180px;">Konto użytkownika TNT</th>
-                            <th>Konto zablokowane</th>
-                            <!--<th class="hidden">Id</th>-->
-                            <th>Edycja</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let user of users">
-                            <td>{{user.email | lowercase}}</td>
-                            <td>{{user.limitOfRequestsPerDay}}</td>
-                            <td>{{user.numberOfRequestsPerDay}}</td>
-                            <td style="min-width:180px;">
-                                <span *ngIf="user.isSuperUser"><i class="fa fa-check-square-o fa-1x" aria-hidden="true"></i></span>
-                                <span *ngIf="!user.isSuperUser"><i class="fa fa-square-o fa-1x" aria-hidden="true"></i></span>
-                            </td>
-                            <td>
-                                <span *ngIf="user.isLocked"><i class="fa fa-check-square-o fa-1x" aria-hidden="true"></i></span>
-                                <span *ngIf="!user.isLocked"><i class="fa fa-square-o fa-1x" aria-hidden="true"></i></span>
-                            </td>
-                            <!--<td class="hidden">{{user._id}}</td>-->
-                            <td>
-                                <a class="btn-sm btn-primary "
-                                   [routerLink]="['/adduser']"
-                                   [queryParams]="{_id:user._id, email:user.email, limitOfRequestsPerDay:user.limitOfRequestsPerDay, isSuperUser:user.isSuperUser, isLocked:user.isLocked }">
-                                    Edytuj
-                                </a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="form-group">
+                <div>
+                    <label class="btn btn-psz-filter">
+                        <input id="isLockedId"
+                               type="checkbox"
+                               [(ngModel)]="showLockedOnly" />
+                        Pokaż konta zablokowane
+                    </label>
+                </div>
             </div>
+            <!--TODO-->
+            <!--[routerLink]="['/userlist']"
+            [queryParams]="{email:email, showLockedOnly:showLockedOnly }"-->
+            <button name="searchBtn"
+                    class="btn btn-psz-gray"
+                    (click)='onSearchUsers()'>
+                <i class="fa fa-search fa-1x"></i> &nbsp;&nbsp;Szukaj
+            </button>
         </div>
-        <!--<page-app *ngIf='servicesTnt && servicesTnt.length && paging.pageSize>1'
-                  [totalCount]='paging.totalCount'
-                  [pageSize]='paging.pageSize'
-                  (pageClicked)='onPageClicked($event)'>
-        </page-app>-->
     </div>
 </div>
+<!--<div class="tablecontainer" style="height:89%">-->
+<div class="table-responsive" >
+    <table class="table table-hover table-striped table-condensed sm-max-height" >
+        <thead>
+            <tr>
+                <th><div class="sm-email-col-width">Email</div></th>
+                <th><div class="sm-common-width">Limit zapytań</div></th>
+                <th><div class="sm-common-width">Liczba zapytań</div></th>
+                <th><div class="sm-IsSuperUser-col-width">Konto użytkownika TNT</div></th>
+                <th><div class="sm-common-width">Konto zablokowane</div></th>
+                <!--<th class="hidden">Id</th>-->
+                <th class="sm-last-coll-with"><div >Edycja</div></th>
+            </tr>
+        </thead>
+        <!--*ngIf="users && users.length"-->
+        <tbody class="sm-max-height" >
+            <tr *ngFor="let user of users">
+                <td><div class="sm-wrap-tekst sm-email-col-width">{{user.email | lowercase}}</div></td>
+                <td><div class="sm-wrap-tekst sm-common-width">{{user.limitOfRequestsPerDay}}""</div></td>
+                <td><div class="sm-wrap-tekst sm-common-width">{{user.numberOfRequestsPerDay}}""</div></td>
+                <td>
+                    <div class="sm-wrap-tekst; sm-IsSuperUser-col-width" >
+                        <span *ngIf="user.isSuperUser"><i class="fa fa-check-square-o fa-1x" aria-hidden="true"></i></span>
+                        <span *ngIf="!user.isSuperUser"><i class="fa fa-square-o fa-1x" aria-hidden="true"></i></span>
+                    </div>
+                </td> 
 
+                <td>
+                    <div class="sm-wrap-tekst sm-common-width">
+                        <span *ngIf="user.isLocked"><i class="fa fa-check-square-o fa-1x" aria-hidden="true"></i></span>
+                        <span *ngIf="!user.isLocked"><i class="fa fa-square-o fa-1x" aria-hidden="true"></i></span>
+                    </div>
+                </td>
+                <!--<td class="hidden">{{user._id}}</td>-->
+                <td class="sm-last-coll-with">
 
-<!--<lg-modal #lgModal [myheader]="' '">
-    <depot-details [depotsTnt]='depotTnt'></depot-details>
-</lg-modal>-->
+                        <a class="btn-sm btn-primary "
+                           [routerLink]="['/adduser']"
+                           [queryParams]="{_id:user._id, email:user.email, limitOfRequestsPerDay:user.limitOfRequestsPerDay, isSuperUser:user.isSuperUser, isLocked:user.isLocked }">
+                            Edytuj
+                        </a>
 
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<!--</div>-->
+<!--<page-app *ngIf='servicesTnt && servicesTnt.length && paging.pageSize>1'
+          [totalCount]='paging.totalCount'
+          [pageSize]='paging.pageSize'
+          (pageClicked)='onPageClicked($event)'>
+</page-app>-->

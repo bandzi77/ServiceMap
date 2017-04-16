@@ -63,15 +63,17 @@ namespace ServiceMap.Controllers.apiControllers
                 NumberOfRequestsPerDay = x.NumberOfRequestsPerDay,
                 IsSuperUser = x.Roles.Any(y => y.RoleId == userRole.Id),
                 IsLocked = x.LockoutEnd > DateTime.Now && x.LockoutEnabled
-            });
+            }).AsQueryable();
 
             if (showLockedOnly)
             {
                 _result= _result.Where(x => x.IsLocked == showLockedOnly);
             }
-            _result = _result.OrderBy(x => x.Email);
-
-            var result = new { users = _result, paging = "" };
+            var t = _result.OrderBy(x => x.Email).ToList();
+            t.AddRange(t);
+            t.AddRange(t);
+            t.AddRange(t);
+            var result = new { users = t, paging = "" };
             return Ok(result);
         }
 

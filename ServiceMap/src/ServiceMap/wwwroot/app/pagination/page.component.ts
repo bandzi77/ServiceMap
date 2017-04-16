@@ -3,7 +3,8 @@ import { PageService } from './page.service'
 
 @Component({
     selector: 'page-app',
-    templateUrl: 'app/pagination/page.component.html'
+    templateUrl: 'app/pagination/page.component.html',
+     styleUrls: ['app/pagination/page.component.css']
 })
 
 export class PageComponent implements OnInit {
