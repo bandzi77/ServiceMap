@@ -20,6 +20,10 @@
         body {
             padding-bottom: 70px;
         }
+
+        li {
+            font-size: large;
+        }
     </style>
 </head>
 <body>
@@ -42,25 +46,23 @@
     <div>
         <nav class="navbar navbar-default" style="background-color:white; border-bottom-color:darkorange;">
             <div class="container-fluid">
-                <!--  -
-                <div class="navbar-collapse collapse">-->
-                <ul class="nav navbar-nav navbar-left">
-                    <li>
-                        <a href="http://www.tnt.com/express/pl_pl/site/home.html">
-                            <img alt="TNT" src="~/app/assets/images/logo.svg" style="width: 98px; height: 35px;" />
-                        </a>
+                <!--  <div class="navbar-collapse collapse">-->
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="http://www.tnt.com/express/pl_pl/site/home.html">
+                        <img alt="TNT" src="~/app/assets/images/logo.svg" style="width: 98px; height: 35px;" />
+                    </a>
+                </div>
+                <ul class="nav navbar-nav">
+                    <li style="color:slategrey; white-space:nowrap" class="navbar-text">
+                        Mapa Serwisowa
                     </li>
                 </ul>
-                <ul class="nav navbar-nav  navbar-header">
-                    <li><h3 style="color:slategrey; white-space:nowrap">Mapa Serwisowa</h3> </li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
+                <ul class="navbar-right">
                     <li class="btn btn-lg">
-                        <a href="@Url.Action("Login","Account")">Zaloguj</a>
+                        <a href="@Url.Action("Login","Account",new { returnUrl=""})">Zaloguj</a>
                     </li>
                 </ul>
             </div>
-            @*</div>*@
         </nav>
     </div>
 
