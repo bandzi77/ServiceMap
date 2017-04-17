@@ -35,29 +35,6 @@ var AppComponent = (function () {
             .do(this._logData)
             .catch(this.handleError);
     };
-    AppComponent.prototype.onLogOut = function () {
-        console.log('Wylogowanie u�ytkownika');
-        this.logOut()
-            .subscribe(
-        //  TODO - DO POPRAWY
-        function () { return location.reload(); });
-        //data => data,
-        //    error => console.error(<any>error));
-    };
-    AppComponent.prototype.logOut = function () {
-        //let headers = new Headers({ 'Content-Type': 'application/json' });
-        //let options = new RequestOptions({ headers: headers });
-        //let body = JSON.stringify({n:"t"});
-        //return this._http.post(apiUrl.logout, body, options)
-        //    //.map(this.extractData)
-        //    .map(res => <void>res.json())
-        //    .do(this.logData)
-        //    .catch(this.handleError);
-        return this._http.get(environment_1.apiUrl.logout)
-            .map(function (res) { return res.json(); })
-            .do(this._logData)
-            .catch(this.handleError);
-    };
     AppComponent.prototype.handleError = function (error) {
         // In a real world app, we might use a remote logging infrastructure
         var errMsg;

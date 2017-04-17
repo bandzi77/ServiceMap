@@ -16,7 +16,7 @@ namespace ServiceMap.Common
         {
             this.configuration = configuration;
         }
-        public async Task SendEmailAsync(string formName, string toEmail, string subject, string message)
+        public async void SendEmailAsync(string formName, string toEmail, string subject, string message)
         {
             var host = configuration["Data:SMTP:host"];
             int port; 

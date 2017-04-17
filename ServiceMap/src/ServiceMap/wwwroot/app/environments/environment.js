@@ -8,6 +8,5 @@ exports.environment = {
 };
 exports.apiUrl = {
     getpermissions: 'api/App',
-    logout: 'api/App/GetLogout'
 };
 //# sourceMappingURL=environment.js.map

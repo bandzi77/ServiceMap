@@ -47,6 +47,13 @@ namespace ServiceMap.Controllers
         }
 
 
+        [Authorize]
+        public async Task<IActionResult> Logout()
+        {
+            await signInManager.SignOutAsync();
+            return RedirectToAction("Login", "Account");
+        }
+
         [AllowAnonymous]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -89,29 +96,32 @@ namespace ServiceMap.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ForgotPassword(string email)
         {
-            //TODO
-
             if (ModelState.IsValid)
             {
-                var user = await userManager.FindByEmailAsync(email.ToUpper());
-                if (user != null)
-                {
-                    //var fromEmail = currentUser.GetUser(User).Result.NormalizedEmail;
-
-                    // Send an email with this linkuserId = user.Id,
-                    var token = await userManager.GeneratePasswordResetTokenAsync(user);
-                    var callbackUrl = Url.Action(nameof(ResetPassword), "Account", new { email = email.ToUpper(), token = token }, protocol: HttpContext.Request.Scheme);
-                    //await _emailSender.SendEmailAsync(model.Email, "Reset Password",
-                    //   $"Please reset your password by clicking here: <a href='{callbackUrl}'>link</a>");
-                    //   return View("ForgotPasswordConfirmation"); < a href = '{callbackUrl}' > link </ a >
-
-                    await emailService.SendEmailAsync("No replay", email, ConstsData.ResetLinkPasswordSubject, ConstsData.ResetLinkPasswordMsg + $"{callbackUrl}");
-                }
+                await SendResetLink(email);
             }
             string message = $"Na wskazany adres email \"{email}\" został wysłany link pozwalający na zresetowanie hasła";
             return RedirectToAction("InfoPanel", "Account", new { message });
         }
 
+
+        private async Task SendResetLink(string email)
+        {
+            var user = await userManager.FindByEmailAsync(email.ToUpper());
+            if (user != null)
+            {
+                //var fromEmail = currentUser.GetUser(User).Result.NormalizedEmail;
+
+                // Send an email with this linkuserId = user.Id,
+                var token = await userManager.GeneratePasswordResetTokenAsync(user);
+                var callbackUrl = Url.Action(nameof(ResetPassword), "Account", new { email = email.ToUpper(), token = token }, protocol: HttpContext.Request.Scheme);
+                //await _emailSender.SendEmailAsync(model.Email, "Reset Password",
+                //   $"Please reset your password by clicking here: <a href='{callbackUrl}'>link</a>");
+                //   return View("ForgotPasswordConfirmation"); < a href = '{callbackUrl}' > link </ a >
+
+                emailService.SendEmailAsync("No replay", email, ConstsData.ResetLinkPasswordSubject, ConstsData.ResetLinkPasswordMsg + $"{callbackUrl}");
+            }
+        }
 
         [AllowAnonymous]
         public IActionResult InfoPanel(string message)

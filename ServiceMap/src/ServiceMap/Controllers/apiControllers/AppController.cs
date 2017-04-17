@@ -38,17 +38,5 @@ namespace ServiceMap.Controllers.apiControllers
 
             return Ok(issuperuser);
         }
-
-        // TODO na POST i redirect przygotować
-        [Authorize]
-        //[ValidateAntiForgeryToken]
-        [HttpGet("GetLogout")]
-        public async Task<IActionResult> GetLogout()
-        {
-            await signInManager.SignOutAsync();
-
-            return Ok(new {succes= true });
-            //return RedirectToAction("Index", "Home");
-        }
     }
 }

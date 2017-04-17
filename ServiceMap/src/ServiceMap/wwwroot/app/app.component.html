@@ -7,11 +7,10 @@
                 <!--<li *ngIf="isSuperusers"><a [routerLink]="['/welcome']">Konta Użytkowników[queryParams]="{ _id:0 }</a></li>-->
                 <li [routerLinkActive]="['active']" *ngIf="isSuperUser"><a [routerLink]="['/adduser']" [queryParams]="{ _id:0 }">Dodaj Użytkownika</a></li>
             </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li><a (click)="onLogOut()">Wyloguj</a></li>
-            </ul>
+            <a  href="Account/Logout" class="navbar-link navbar-text navbar-right" style="padding-right:15px">
+                <i class="fa fa-sign-out" aria-hidden="true"></i>  Wyloguj
+            </a>
         </div>
-        <!--</div>-->
 </nav>
 
 <div class="container" style="height:85%">

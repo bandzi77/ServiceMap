@@ -36,34 +36,6 @@ export class AppComponent implements OnInit {
             .catch(this.handleError);
     }
 
-
-    private onLogOut() {
-        console.log('Wylogowanie u¿ytkownika');
-        this.logOut()
-            .subscribe(
-                //  TODO - DO POPRAWY
-            () => location.reload()
-            );
-        //data => data,
-        //    error => console.error(<any>error));
-    }
-
-    private logOut(): Observable<void> {
-        //let headers = new Headers({ 'Content-Type': 'application/json' });
-        //let options = new RequestOptions({ headers: headers });
-        //let body = JSON.stringify({n:"t"});
-
-        //return this._http.post(apiUrl.logout, body, options)
-        //    //.map(this.extractData)
-        //    .map(res => <void>res.json())
-        //    .do(this.logData)
-        //    .catch(this.handleError);
-        return this._http.get(apiUrl.logout)
-            .map(res => <void>res.json())
-            .do(this._logData)
-            .catch(this.handleError);
-    }
-
     private handleError(error: Response | any) {
         // In a real world app, we might use a remote logging infrastructure
         let errMsg: string;

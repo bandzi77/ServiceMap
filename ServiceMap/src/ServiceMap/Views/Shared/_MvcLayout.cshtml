@@ -42,13 +42,12 @@
             </div>
         </div>
         <div>*@
-
     <div>
         <nav class="navbar navbar-default" style="background-color:white; border-bottom-color:darkorange;">
             <div class="container-fluid">
                 <!--  <div class="navbar-collapse collapse">-->
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="http://www.tnt.com/express/pl_pl/site/home.html">
+                <div class="navbar-header" style="padding:10px;">
+                    <a  href="http://www.tnt.com/express/pl_pl/site/home.html">
                         <img alt="TNT" src="~/app/assets/images/logo.svg" style="width: 98px; height: 35px;" />
                     </a>
                 </div>
@@ -57,16 +56,14 @@
                         Mapa Serwisowa
                     </li>
                 </ul>
-                <ul class="navbar-right">
-                    <li class="btn btn-lg">
-                        <a href="@Url.Action("Login","Account",new { returnUrl=""})">Zaloguj</a>
-                    </li>
-                </ul>
+                <p class="navbar-text navbar-right">
+                    <a href="@Url.Action("Login","Account",new { returnUrl=""})" class="navbar-link" style="padding-right:15px">
+                        <i class="fa fa-sign-in" aria-hidden="true"></i>  Zaloguj
+                    </a>
+                </p>
             </div>
         </nav>
     </div>
-
-
 
     @RenderBody()
     @RenderSection("scripts", required: false)

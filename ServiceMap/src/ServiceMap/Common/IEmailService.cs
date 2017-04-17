@@ -7,6 +7,6 @@ namespace ServiceMap.Common
 {
    public interface IEmailService
     {
-        Task SendEmailAsync(string formName, string toEmail, string subject, string message);
+        void SendEmailAsync(string formName, string toEmail, string subject, string message);
     }
 }
