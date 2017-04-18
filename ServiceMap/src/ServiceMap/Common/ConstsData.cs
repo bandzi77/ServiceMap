@@ -7,6 +7,7 @@ namespace ServiceMap.Common
 {
     public class ConstsData
     {
+        // Resetowanie hasła
         public static readonly string PasswordForNewUserSubject = "TNT - Twoje hasło";
         public static readonly string PasswordForNewUserMsg = "Drogi Użytkowniku!\n\n   Twoje hasło do aplikacji w systemie TNT to: ";
         public static readonly string ResetLinkPasswordSubject = "Reset hasła";
@@ -14,7 +15,6 @@ namespace ServiceMap.Common
         public static readonly string ResetLinkWrongEmail = "1. Wystąpił błąd podczas resetowania hasła";
         public static readonly string ResetLinkWrongToken = "2. Wystąpił błąd podczas resetowania hasła";
         
-
         public const string EmailValidationMsg = "Niepoprawny format adresu email";
         public const string EmailRequiredMsg = "Email jest wymagany";
         public const string EmailRegExpMsg = "Dopuszczalne znaki specjalne w email prefix: '.' '_' '%' '+' '-'";
@@ -27,5 +27,11 @@ namespace ServiceMap.Common
         public const string TokenValidationMsg = "Niepopawny link odzyskiwania hasła";
         public static readonly string DifferencesPasswordMsg = "Podane hasła są różne";
 
+        // Dodawanie użytkownika
+        public static readonly string UserModelInvalid = "3. Wystąpił błąd podczas dodawania nowego użytkownika";
+        public static readonly string UserCreateIdentityError = "4. Wystąpił błąd podczas dodawania nowego użytkownika";
+        public static readonly string UserCreateAnotherError = "5. Wystąpił błąd podczas dodawania nowego użytkownika";
+        public static readonly string UserCreateSuccess = "6. Użytkownik został dodany z sukcesem";
+        public static readonly string UserAlreadyExists = "7. Podany adres email istnieje już w aplikacji";
     }
 }

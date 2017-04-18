@@ -10,6 +10,7 @@ using ServiceMap.Models.apiModels;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using ServiceMap.Common;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 //UserManager<AppUser> userMgr, RoleManager<IdentityRole> roleMgr 
@@ -56,18 +57,18 @@ namespace ServiceMap.Controllers.apiControllers
 
             var _result = _users
                 .Select(x => new User()
-            {
-                _id = x.Id,
-                Email = x.Email,
-                LimitOfRequestsPerDay = x.LimitOfRequestsPerDay,
-                NumberOfRequestsPerDay = x.NumberOfRequestsPerDay,
-                IsSuperUser = x.Roles.Any(y => y.RoleId == userRole.Id),
-                IsLocked = x.LockoutEnd > DateTime.Now && x.LockoutEnabled
-            }).AsQueryable();
+                {
+                    _id = x.Id,
+                    Email = x.Email,
+                    LimitOfRequestsPerDay = x.LimitOfRequestsPerDay,
+                    NumberOfRequestsPerDay = x.NumberOfRequestsPerDay,
+                    IsSuperUser = x.Roles.Any(y => y.RoleId == userRole.Id),
+                    IsLocked = x.LockoutEnd > DateTime.Now && x.LockoutEnabled
+                }).AsQueryable();
 
             if (showLockedOnly)
             {
-                _result= _result.Where(x => x.IsLocked == showLockedOnly);
+                _result = _result.Where(x => x.IsLocked == showLockedOnly);
             }
             var t = _result.OrderBy(x => x.Email).ToList();
             t.AddRange(t);
@@ -86,24 +87,32 @@ namespace ServiceMap.Controllers.apiControllers
 
         // POST api/values
         [HttpPost]
-        public async Task<bool> Post([FromBody] User user)
+        public async Task<IActionResult> Post([FromBody] User user)
         {
-            bool _result = false;
+            IdentityResult result = null;
+
+            var result_ = new { success = false, message = ConstsData.UserModelInvalid };
+
             if (ModelState.IsValid && user._id == "0")
             {
-
                 if (await userManager.FindByEmailAsync(user.Email.ToUpper()) == null)
                 {
+
                     if (await roleManager.FindByNameAsync(roleSuperUser) == null)
                     {
-                        await roleManager.CreateAsync(new IdentityRole(roleSuperUser));
+                        result = await roleManager.CreateAsync(new IdentityRole(roleSuperUser));
 
                     }
 
                     if (await roleManager.FindByNameAsync(roleUser) == null)
                     {
-                        await roleManager.CreateAsync(new IdentityRole(roleUser));
+                        result = await roleManager.CreateAsync(new IdentityRole(roleUser));
+                    }
 
+                    if (result != null && !result.Succeeded)
+                    {
+                        result_ = new { success = false, message = ConstsData.UserCreateAnotherError };
+                        return Ok(result_);
                     }
 
                     AppUser new_user = new AppUser
@@ -116,23 +125,41 @@ namespace ServiceMap.Controllers.apiControllers
                         NumberOfRequestsPerDay = user.NumberOfRequestsPerDay
                     };
 
-                    IdentityResult result = await userManager.CreateAsync(new_user, user.Password);
+                    result = await userManager.CreateAsync(new_user, user.Password);
 
                     if (result.Succeeded)
                     {
                         if (user.IsSuperUser)
                         {
-                            await userManager.AddToRoleAsync(new_user, roleSuperUser);
+                            result = await userManager.AddToRoleAsync(new_user, roleSuperUser);
                         }
                         else
                         {
-                            await userManager.AddToRoleAsync(new_user, roleUser);
+                            result = await userManager.AddToRoleAsync(new_user, roleUser);
+                        }
+
+                        if (result.Succeeded)
+                        {
+                            result_ = new { success = true, message = ConstsData.UserCreateSuccess };
+                        }
+                        else
+                        {
+                            await userManager.DeleteAsync(new_user);
+                            result_ = new { success = false, message = ConstsData.UserCreateAnotherError };
                         }
                     }
-                    return result.Succeeded;
+                    else
+                    {
+                        result_ = new { success = false, message = ConstsData.UserCreateIdentityError };
+                    }
+                }
+                else
+                {
+                    result_ = new { success = false, message = ConstsData.UserAlreadyExists };
                 }
             }
-            return _result;
+
+            return Ok(result_);
         }
 
         // PUT api/values/5
