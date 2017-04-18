@@ -3,7 +3,8 @@
     state,
     style,
     transition,
-    animate, Component, OnInit, OnDestroy
+    animate, Component, OnInit, OnDestroy,
+    ViewContainerRef
 } from '@angular/core';
 import { FormControl, FormBuilder, FormGroup, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -13,6 +14,7 @@ import 'rxjs/add/operator/debounceTime';
 import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
 import { Location } from '@angular/common';
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 //import { GenericValidator } from '../shared/generic-validator';
 
 @Component({
@@ -63,11 +65,16 @@ export class UserComponent implements OnInit, OnDestroy {
         maxlength: 'Hasło jest za długie.'
     };
 
-    constructor(private fb: FormBuilder,
+    constructor(
+        public toastr: ToastsManager,
+        vcr: ViewContainerRef,
+        private fb: FormBuilder,
         private route: ActivatedRoute,
         private router: Router,
         private userService: UserService,
-        private location: Location) { }
+        private location: Location) {
+        this.toastr.setRootViewContainerRef(vcr);
+    }
 
     ngOnInit(): void {
         this.userForm = this.fb.group({
@@ -104,8 +111,8 @@ export class UserComponent implements OnInit, OnDestroy {
                     email: String(params['email']),
                     password: '',
                     limitOfRequestsPerDay: Number(params['limitOfRequestsPerDay']),
-                    isSuperUser: String(params['isSuperUser'])==="true",
-                    isLocked: String(params['isLocked'])==="true"
+                    isSuperUser: String(params['isSuperUser']) === "true",
+                    isLocked: String(params['isLocked']) === "true"
                 }
                 this.onUserRetrieved(user);
             }
@@ -117,7 +124,7 @@ export class UserComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-           this.sub.unsubscribe();
+        this.sub.unsubscribe();
     }
 
     onUserRetrieved(user: IUser): void {
@@ -185,11 +192,9 @@ export class UserComponent implements OnInit, OnDestroy {
     private onEyeEvent(event: MouseEvent): void {
         if (event.type === 'mousedown' && event.button === 0 && this.user._id === "0") {
             this.inputType = this._inputType.keydown;
-            //this.dupa = 'active';
         }
         if (((event.type === 'mouseup' && event.button === 0) || event.type === 'mouseleave') && this.user._id === "0") {
             this.inputType = this._inputType.keyup;
-            //this.dupa = 'inactive';
         }
     }
 
@@ -227,12 +232,17 @@ export class UserComponent implements OnInit, OnDestroy {
         console.log('Saved: ' + JSON.stringify(this.userForm.value));
     }
 
+    private showSuccess() {
+        this.toastr.success('You are awesome!', 'Success!');
+    }
     onSaveComplete(): void {
         // Reset the form to clear the flags
-        this.userForm.reset();
+       // this.userForm.reset();
         // TODO
         //this.router.navigate(['/userlist']);
-        this.onBack()
+        //this.onBack()
+
+        this.showSuccess();
     }
 }
 

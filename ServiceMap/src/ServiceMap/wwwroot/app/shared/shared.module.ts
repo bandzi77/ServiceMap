@@ -1,10 +1,13 @@
-﻿import { NgModule } from '@angular/core';
+﻿import { NgModule, Provider } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { BusyModule, BusyConfig } from 'angular2-busy';
 import { ModalModule, PopoverModule } from 'ng2-bootstrap';
 import { PageModule } from '../pagination/page.module';
 import { LgModalComponent } from './lgModal.component';
+import { ToastModule, ToastOptions } from 'ng2-toastr/ng2-toastr';
+import { CustomOption } from './toastr-custom-option';
+
 
 @NgModule({
     declarations: [
@@ -15,9 +18,10 @@ import { LgModalComponent } from './lgModal.component';
         BusyModule,
         FormsModule,
         LgModalComponent,
-        ModalModule, 
+        ModalModule,
         PageModule,
-        PopoverModule
+        PopoverModule,
+        ToastModule
     ],
     imports: [
         CommonModule,
@@ -29,8 +33,15 @@ import { LgModalComponent } from './lgModal.component';
             })
         ),
         ModalModule.forRoot(),
-        PopoverModule.forRoot()
+        PopoverModule.forRoot(),
+        ToastModule.forRoot()
     ],
+    providers: [
+        {
+            provide: ToastOptions,
+            useClass: CustomOption
+        }]
+
 })
 
 export class SharedModule {
