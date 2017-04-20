@@ -83,14 +83,6 @@ namespace ServiceMap.Controllers.apiControllers
             return Ok(result);
         }
 
-        //// GET api/values/5
-        //[HttpGet("{id}")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
-
-        // POST api/values
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] User user)
         {
@@ -100,79 +92,80 @@ namespace ServiceMap.Controllers.apiControllers
 
             if (ModelState.IsValid && user._id == "0")
             {
-                if (await userManager.FindByEmailAsync(user.Email.ToUpper()) == null)
+                // Sprawdza czy taki użytkownik już istnieje
+                if (await userManager.FindByEmailAsync(user.Email.ToUpper()) != null)
                 {
+                    result = new { success = false, message = ConstsData.UserAlreadyExists };
+                    return Ok(result);
+                }
 
-                    if (await roleManager.FindByNameAsync(roleSuperUser) == null)
-                    {
-                        resultIdent = await roleManager.CreateAsync(new IdentityRole(roleSuperUser));
-                    }
+                // Tworzy role jeśli ich nie ma w systemie - rozważyć usięnięcie tego kawałka kodu
+                if (await roleManager.FindByNameAsync(roleSuperUser) == null)
+                {
+                    resultIdent = await roleManager.CreateAsync(new IdentityRole(roleSuperUser));
+                }
 
-                    if (await roleManager.FindByNameAsync(roleUser) == null)
-                    {
-                        resultIdent = await roleManager.CreateAsync(new IdentityRole(roleUser));
-                    }
+                if (await roleManager.FindByNameAsync(roleUser) == null)
+                {
+                    resultIdent = await roleManager.CreateAsync(new IdentityRole(roleUser));
+                }
 
-                    if (resultIdent != null && !resultIdent.Succeeded)
-                    {
-                        result = new { success = false, message = ConstsData.UserCreateAnotherError };
-                        return Ok(result);
-                    }
+                if (resultIdent != null && !resultIdent.Succeeded)
+                {
+                    result = new { success = false, message = ConstsData.UserCreateAnotherError };
+                    return Ok(result);
+                }
 
-                    AppUser newUser = new AppUser
-                    {
-                        UserName = user.Email.ToUpper(),
-                        Email = user.Email.ToUpper(),
-                        AccessFailedCount = 5,
-                        LockoutEnd = user.IsLocked ? DateTimeOffset.MaxValue : (DateTimeOffset?)null,
-                        LimitOfRequestsPerDay = user.LimitOfRequestsPerDay,
-                        NumberOfRequestsPerDay = user.NumberOfRequestsPerDay
-                    };
+                // Tworzenie użytkownika
+                AppUser newUser = new AppUser
+                {
+                    UserName = user.Email.ToUpper(),
+                    Email = user.Email.ToUpper(),
+                    AccessFailedCount = 5,
+                    LockoutEnd = user.IsLocked ? DateTimeOffset.MaxValue : (DateTimeOffset?)null,
+                    LimitOfRequestsPerDay = user.LimitOfRequestsPerDay,
+                    NumberOfRequestsPerDay = user.NumberOfRequestsPerDay
+                };
 
-                    resultIdent = await userManager.CreateAsync(newUser, user.Password);
+                resultIdent = await userManager.CreateAsync(newUser, user.Password);
 
-                    if (resultIdent.Succeeded)
-                    {
-                        if (user.IsSuperUser)
-                        {
-                            resultIdent = await userManager.AddToRoleAsync(newUser, roleSuperUser);
-                        }
-                        else
-                        {
-                            resultIdent = await userManager.AddToRoleAsync(newUser, roleUser);
-                        }
+                if (!resultIdent.Succeeded)
+                {
+                    result = new { success = false, message = ConstsData.UserCreateIdentityError };
+                    return Ok(result);
+                }
 
-                        if (resultIdent.Succeeded)
-                        {
-                            SendPasswordToUser(user);
-                            result = new { success = true, message = ConstsData.UserCreateSuccess };
-                        }
-                        else
-                        {
-                            await userManager.DeleteAsync(newUser);
-                            result = new { success = false, message = ConstsData.UserCreateAnotherError };
-                        }
-                    }
-                    else
-                    {
-                        result = new { success = false, message = ConstsData.UserCreateIdentityError };
-                    }
+                // Dodawanie do roli
+                if (user.IsSuperUser)
+                {
+                    resultIdent = await userManager.AddToRoleAsync(newUser, roleSuperUser);
                 }
                 else
                 {
-                    result = new { success = false, message = ConstsData.UserAlreadyExists };
+                    resultIdent = await userManager.AddToRoleAsync(newUser, roleUser);
+                }
+
+                // Zwraca wynik końcowy operacji
+                if (resultIdent.Succeeded)
+                {
+                    SendPasswordToUser(user);
+                    result = new { success = true, message = ConstsData.UserCreateSuccess };
+                }
+                else
+                {
+                    await userManager.DeleteAsync(newUser);
+                    result = new { success = false, message = ConstsData.UserCreateAnotherError };
                 }
             }
-
-           return Ok(result);
+            return Ok(result);
         }
 
         private void SendPasswordToUser(User newUser)
         {
             var fromEmail = currentUser.GetUser(User).Result.NormalizedEmail;
-            
-            emailService.SendEmailAsync("TNT SM", "mariusz-hyla@wp.pl", newUser.Email, 
-                ConstsData.PasswordForNewUserSubject, 
+
+            emailService.SendEmailAsync("TNT SM", "mariusz-hyla@wp.pl", newUser.Email,
+                ConstsData.PasswordForNewUserSubject,
                 ConstsData.PasswordForNewUserMsg + $"{newUser.Password}" +
                 ConstsData.PasswordForNewUserQueryLimit + $"{newUser.LimitOfRequestsPerDay}");
         }
