@@ -19,6 +19,12 @@ th, td {
 .sm-last-th-with {
     width:150px;
 }
+.sm-break-th {
+    min-width:120px; width:120px; white-space:pre;
+}
+.sm-break-td {
+    min-width:120px; width:120px;
+}
 
 /*@font-face {
   font-family: 'FontAwesome';

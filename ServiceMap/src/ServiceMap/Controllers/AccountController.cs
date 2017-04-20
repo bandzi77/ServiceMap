@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using ServiceMap.Models.apiModels;
 using ServiceMap.Common;
 using System.ComponentModel.DataAnnotations;
+using System.Net;
 
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
@@ -110,7 +111,7 @@ namespace ServiceMap.Controllers
             var user = await userManager.FindByEmailAsync(email.ToUpper());
             if (user != null)
             {
-                var fromEmail = currentUser.GetUser(User).Result.NormalizedEmail;
+                //var fromEmail = currentUser.GetUser(User).Result.NormalizedEmail;
                 var token = await userManager.GeneratePasswordResetTokenAsync(user);
                 var callbackUrl = Url.Action(nameof(ResetPassword), "Account", new { email = email.ToUpper(), token = token }, protocol: HttpContext.Request.Scheme);
 
@@ -169,10 +170,12 @@ namespace ServiceMap.Controllers
 
 
         [AllowAnonymous]
-        public IActionResult AccessDenied()
+        public async Task<IActionResult> AccessDenied()
         {
-         //   string message = $"Nie ma takiej strony";
-            return RedirectToAction("Logout", "Account");
+            // Do zastanowienia nad inną obsługą.
+            HttpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+            await signInManager.SignOutAsync();
+            return Unauthorized();
         }
 
         // POST: /Account/ForgotPassword

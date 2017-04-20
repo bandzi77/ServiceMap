@@ -18,8 +18,8 @@ export class ServiceTntListComponent implements OnInit {
     imageWidth: number = 50;
     imageMargin: number = 2;
     listFilter: string;
-    postCode: string='';
-    cityName: string='';
+    postCode: string = '';
+    cityName: string = '';
     servicesTnt: IServiceTnt[];
     depotTnt: IDepotDetails[];
     paging: IPage[];
@@ -28,10 +28,6 @@ export class ServiceTntListComponent implements OnInit {
     @ViewChild('lgModal') lgModalRef: LgModalComponent;
 
     constructor(private _serviceTntService: ServicesTntService, private _route: ActivatedRoute) {
-    }
-
-    searchServicesTnt(): void {
-
     }
 
     ngOnInit(): void {
@@ -63,10 +59,8 @@ export class ServiceTntListComponent implements OnInit {
     }
 
     onPageClicked(page: number) {
-        //this.currentPage = page;
         let filtr = this._createServiceFilter(page);
         this._getData(filtr);
-        //alert("Kliknąłeś stronkę: " + page);
     }
 
     _createServiceFilter(page?: number): IServiceFilter {
@@ -81,7 +75,7 @@ export class ServiceTntListComponent implements OnInit {
     }
 
     onClick(item: any) {
-        let filtr: IDepotDetailsFilter = { depotCode:item };
+        let filtr: IDepotDetailsFilter = { depotCode: item };
         this.busyIndicator = this._serviceTntService.getDepotDetails(filtr).subscribe(result => {
             this.depotTnt = result.depotDetails;
             this.lgModalRef.show();

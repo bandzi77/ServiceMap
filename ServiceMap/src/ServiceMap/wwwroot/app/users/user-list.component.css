@@ -10,6 +10,7 @@ th {
 
 tbody {
   border: 1px solid slategrey;
+  border-top: 0px;
   height:100%;
 }
 
@@ -25,9 +26,15 @@ tbody {
     width: 150px;
 }
 
-.sm-email-col-width{
-    width:250px;
+.sm-email-col-width-th{
+    min-width:255.2px !important;
+    width:255.2px !important;
 }
+.sm-email-col-width-td{
+    min-width:254px !important;
+    width:254px !important;
+}
+
 .sm-IsSuperUser-col-width{
     width:180px;
 }

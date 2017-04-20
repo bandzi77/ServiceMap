@@ -39,7 +39,7 @@
     <table class="table table-hover table-striped table-condensed sm-max-height">
         <thead>
             <tr>
-                <th><div class="sm-email-col-width">Email</div></th>
+                <th><div class="sm-email-col-width-th">Email</div></th>
                 <th><div class="sm-common-width">Limit zapytań</div></th>
                 <th><div class="sm-common-width">Liczba zapytań</div></th>
                 <th><div class="sm-IsSuperUser-col-width">Konto użytkownika TNT</div></th>
@@ -51,7 +51,7 @@
         <!--*ngIf="users && users.length"-->
         <tbody class="sm-max-height">
             <tr *ngFor="let user of users">
-                <td><div class="sm-wrap-tekst sm-email-col-width">{{user.email | lowercase}}</div></td>
+                <td><div class="sm-wrap-tekst sm-email-col-width-td">{{user.email | lowercase}}</div></td>
                 <td><div class="sm-wrap-tekst sm-common-width">{{user.limitOfRequestsPerDay}}</div></td>
                 <td><div class="sm-wrap-tekst sm-common-width">{{user.numberOfRequestsPerDay}}</div></td>
                 <td>

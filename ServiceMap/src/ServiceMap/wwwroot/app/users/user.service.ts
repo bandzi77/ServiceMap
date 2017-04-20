@@ -85,6 +85,7 @@ export class UserService {
         if (error instanceof Response) {
             errMsg = `${error.status} - ${error.statusText || ''}`;
 
+            // Wylogowanie użytkownika poprzez odświeżenie strony- do dalszej analizy
             if (error.status === 401) {
                 location.reload();
                 return Observable.throw(errMsg);

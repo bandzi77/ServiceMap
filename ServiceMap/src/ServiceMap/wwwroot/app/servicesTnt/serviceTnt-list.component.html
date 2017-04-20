@@ -53,17 +53,17 @@
                             <th>EX10</th>
                             <th>EX12</th>
                             <th>Priority</th>
-                            <th style="min-width:150px; width:150px;">Wieczorne dostarczenie</th>
-                            <th>Standard Delivery OD</th>
-                            <th>Standard Delivery DO</th>
-                            <th>Pick up domestic zgl</th>
+                            <th class="sm-break-th">Wieczorne<br>dostarczenie</th>
+                            <th class="sm-break-th">Standard<br>Delivery OD</th>
+                            <th class="sm-break-th">Standard<br>Delivery DO</th>
+                            <th class="sm-break-th">Pick up<br>domestic zgl</th>
                             <th style="min-width:200px; white-space:pre">DateTimePick up<br>eksport sm zgl</th>
-                            <th style="min-width:220px; white-space:pre">Samochod z winda<br>dostepny w standardzie</th>
+                            <th style="min-width:200px; white-space:pre">Samochod z winda<br>dostepny w standardzie</th>
 
-                            <th>Diplomat next day</th>
-                            <th>Serwis podmiejski</th>
-                            <th>Pick up domestic czas</th>
-                            <th>Pick up eksport sm czas</th>
+                            <th class="sm-break-th">Diplomat next<br>day</th>
+                            <th class="sm-break-th">Serwis<br>podmiejski</th>
+                            <th style="white-space:pre">Pick up domestic<br>czas</th>
+                            <th style="white-space:pre">Pick up eksport<br>sm czas</th>
                             <th class="sm-last-th-with">Serwis miejski</th>
                         </tr>
                     </thead>
@@ -102,22 +102,22 @@
                             </td>
 
                             <td>{{serviceTnt.priority}}</td>
-                            <td style="min-width:150px;">
+                            <td class="sm-break-td">
                                 <span *ngIf="serviceTnt.wieczorneDostarczenie"><i class="fa fa-check-square-o fa-1x" aria-hidden="true"></i></span>
                                 <span *ngIf="!serviceTnt.wieczorneDostarczenie"><i class="fa fa-square-o fa-1x" aria-hidden="true"></i></span>
                             </td>
 
-                            <td>{{serviceTnt.standardDeliveryOd}}</td>
-                            <td>{{serviceTnt.standardDeliveryDo}}</td>
-                            <td>{{serviceTnt.pickUpDomesticZgl}}</td>
+                            <td class="sm-break-td">{{serviceTnt.standardDeliveryOd}}</td>
+                            <td class="sm-break-td">{{serviceTnt.standardDeliveryDo}}</td>
+                            <td class="sm-break-td">{{serviceTnt.pickUpDomesticZgl}}</td>
                             <td style="min-width:200px;">{{serviceTnt.dateTimePickUpEksportSmZgl}}</td>
-                            <td style="min-width:220px;">
+                            <td style="min-width:200px;">
                                 <span *ngIf="serviceTnt.samochodZwindaDostepnyWstandardzie"><i class="fa fa-check-square-o fa-1x" aria-hidden="true"></i></span>
                                 <span *ngIf="!serviceTnt.samochodZwindaDostepnyWstandardzie"><i class="fa fa-square-o fa-1x" aria-hidden="true"></i></span>
                             </td>
 
-                            <td>{{serviceTnt.diplomatNextDay}}</td>
-                            <td>
+                            <td class="sm-break-td">{{serviceTnt.diplomatNextDay}}</td>
+                            <td class="sm-break-td">
                                 <span *ngIf="serviceTnt.serwisPodmiejski"><i class="fa fa-check-square-o fa-1x" aria-hidden="true"></i></span>
                                 <span *ngIf="!serviceTnt.serwisPodmiejski"><i class="fa fa-square-o fa-1x" aria-hidden="true"></i></span>
                             </td>

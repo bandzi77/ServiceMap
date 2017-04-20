@@ -82,6 +82,20 @@ namespace ServiceMap
                         }
                         return Task.FromResult(0);
                     }
+                    // Do zastanowienia nad inną obsługą.
+                    //OnRedirectToAccessDenied = ctx =>
+                    //{
+                    //    if (ctx.Request.Path.StartsWithSegments("/api") &&
+                    //        ctx.Response.StatusCode == (int)HttpStatusCode.OK)
+                    //    {
+                    //        ctx.Response.StatusCode = (int)HttpStatusCode.Forbidden;
+                    //    }
+                    //    else
+                    //    {
+                    //        ctx.Response.Redirect(ctx.RedirectUri);
+                    //    }
+                    //    return Task.FromResult(0);
+                    //}
                 };
 
                 //opts.Cookies.ApplicationCookie.Events = new CookieAuthenticationEvents

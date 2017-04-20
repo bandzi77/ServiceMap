@@ -198,7 +198,6 @@ export class UserComponent implements OnInit, OnDestroy {
     deleteUser(): void {
         if (this.user._id === "0") {
             // Don't delete, it was never saved.
-            //this.onSaveComplete();
             this.userForm.reset();
         } else {
             if (confirm(`Czy chcesz usunąć użytkownika: ${this.user.email}?`)) {
