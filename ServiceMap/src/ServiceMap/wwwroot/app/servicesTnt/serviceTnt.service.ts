@@ -30,10 +30,10 @@ export class ServicesTntService {
     searchServicesTnt(serviceFilter: IServiceFilter): Observable<IServiceTntResult> {
         let searchParams = new URLSearchParams();
         let currentPage;
-       
+
         searchParams.set('postCode', serviceFilter.postCode);
         searchParams.set('cityName', serviceFilter.cityName);
-        searchParams.set('currentPage', ""+serviceFilter.currentPage);
+        searchParams.set('currentPage', "" + serviceFilter.currentPage);
 
         return this._http.get(this._serchServicesUrl, { search: searchParams })
             .map(this.extractData)
@@ -56,13 +56,29 @@ export class ServicesTntService {
     private handleError(error: Response | any) {
         // In a real world app, we might use a remote logging infrastructure
         let errMsg: string;
+        let err: any;
         if (error instanceof Response) {
-            const body = error.json() || '';
-            const err = body.error || JSON.stringify(body);
-            errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
+            errMsg = `${error.status} - ${error.statusText || ''}`;
+
+            if (error.status === 401) {
+                location.reload();
+                return Observable.throw(errMsg);
+            }
+
+            try {
+                const body = error.json() || '';
+                err = body.error || JSON.stringify(body);
+            }
+            catch (e) {
+                err = ' More info: ' + e.stack;
+            }
+            finally {
+                errMsg = errMsg+`${err ||'brak'}`;
+            }
         } else {
             errMsg = error.message ? error.message : error.toString();
         }
+
         console.error(errMsg);
         return Observable.throw(errMsg);
     }

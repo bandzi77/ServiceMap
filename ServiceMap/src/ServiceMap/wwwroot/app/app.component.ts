@@ -15,7 +15,7 @@ import 'rxjs/add/observable/throw';
     styleUrls: ['/app.component.css']
 })
 export class AppComponent implements OnInit {
-    public isSuperUser: boolean = false;
+    public isSuperUser: boolean;
     errorMsg: string;
 
     constructor(private _http: Http,

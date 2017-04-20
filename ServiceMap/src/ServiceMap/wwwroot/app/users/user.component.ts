@@ -16,6 +16,7 @@ import { Observable } from 'rxjs/Observable';
 import { Location } from '@angular/common';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 //import { GenericValidator } from '../shared/generic-validator';
+import { IResult } from '../shared/common';
 
 @Component({
     selector: 'cr-user',
@@ -51,6 +52,7 @@ export class UserComponent implements OnInit, OnDestroy {
     passwordRegEx: string = '(?=.*\\d)(?=.*[a-zA-Z])(?=.+[_\\!\\@\\#\\$\\%\\^\\&\\*\\(\\)\\+\\-\\=])(?!.*\\s).{8,12}'
     patternEmailTnt: string = 'Niepoprawny adres email z domeny tnt.com.';
     patternEmail: string = 'Niepoprawny adres email.';
+    result: IResult;
 
     private emailValidationMessages = {
         required: 'Email jest wymagany.',
@@ -135,12 +137,7 @@ export class UserComponent implements OnInit, OnDestroy {
         }
 
         if (this.user._id === "0") {
-            this.userForm.reset();
-            this.userForm.patchValue({
-                _id: "0",
-                isSuperUser: false,
-                isLocked: false
-            });
+            this.resetForm();
             this.pageTitle = 'Dodaj nowego użytkownika';
         } else {
             this.pageTitle = `Edytuj użytkownika: ${this.user.email}`;
@@ -201,12 +198,14 @@ export class UserComponent implements OnInit, OnDestroy {
     deleteUser(): void {
         if (this.user._id === "0") {
             // Don't delete, it was never saved.
-            this.onSaveComplete();
+            //this.onSaveComplete();
+            this.userForm.reset();
         } else {
             if (confirm(`Czy chcesz usunąć użytkownika: ${this.user.email}?`)) {
                 this.userService.deleteUser(this.user._id)
-                    .subscribe(
-                    () => this.onSaveComplete(),
+                    .subscribe(result => {
+                        this.onSaveComplete(result, this.user);
+                    },
                     (error: any) => this.errorMessage = <any>error
                     );
             }
@@ -219,12 +218,14 @@ export class UserComponent implements OnInit, OnDestroy {
             let p = Object.assign({}, this.user, this.userForm.value);
 
             this.userService.saveUser(p)
-                .subscribe(
-                () => this.onSaveComplete(),
+                .subscribe(result => {
+                    this.onSaveComplete(result, this.user);
+                },
                 (error: any) => this.errorMessage = <any>error
                 );
         } else if (!this.userForm.dirty) {
-            this.onSaveComplete();
+            // nic nie rób
+            // this.onSaveComplete();
         }
 
 
@@ -235,16 +236,44 @@ export class UserComponent implements OnInit, OnDestroy {
     private showSuccess() {
         this.toastr.success('You are awesome!', 'Success!');
     }
-    onSaveComplete(): void {
+
+    //onSaveUser(res:IResult): void {
+    //    if 
+    //}
+
+    private onSaveComplete(res: IResult, user: IUser): void {
         // Reset the form to clear the flags
-       // this.userForm.reset();
+        // this.userForm.reset();
         // TODO
         //this.router.navigate(['/userlist']);
         //this.onBack()
+        if (res.success) {
+            this.resetForm();
+            if (user._id === "0") {
+                this.toastr.success(res.message, 'Success!');
+            }
+            else {
+                this.onBack();
+            }
+        } else {
+            this.toastr.error(res.message, 'Błąd!');
+        }
 
-        this.showSuccess();
+        //this.showSuccess();
     }
+
+    private resetForm(): void {
+        this.userForm.reset();
+        this.userForm.patchValue({
+            _id: "0",
+            isSuperUser: false,
+            isLocked: false
+        });
+    }
+
 }
+
+
 
 function checkRange(min: number, max: number): ValidatorFn {
     return (c: AbstractControl): { [key: string]: boolean } | null => {

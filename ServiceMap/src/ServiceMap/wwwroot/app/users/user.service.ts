@@ -6,8 +6,8 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
-
-import { IUser, IUserFilter,IUserResult } from './user';
+import { IUser, IUserFilter, IUserResult } from './user';
+import { IResult } from '../shared/common';
 
 @Injectable()
 export class UserService {
@@ -19,7 +19,7 @@ export class UserService {
         let searchParams = new URLSearchParams();
         searchParams.set('email', userFilter.email);
         searchParams.set('showLockedOnly', String(userFilter.showLockedOnly));
-      
+
         return this.http.get(this.baseUrl, { search: searchParams })
             .map(this._extractData)
             .do(data => console.log('getUsers' + JSON.stringify(data)))
@@ -27,7 +27,7 @@ export class UserService {
     }
 
     getUser(user: IUser): Observable<IUser> {
-        if (user._id==="0") {
+        if (user._id === "0") {
             return Observable.of(this.initializeUser());
             // return Observable.create((observer: any) => {
             //     observer.next(this.initializeProduct());
@@ -37,17 +37,18 @@ export class UserService {
         return Observable.of(user);
     }
 
-    deleteUser(_id: string): Observable<Response> {
+    deleteUser(_id: string): Observable<IResult> {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
         const url = `${this.baseUrl}/${_id}`;
         return this.http.delete(url, options)
+            .map(this._extractData)
             .do(data => console.log('deleteUser: ' + JSON.stringify(data)))
             .catch(this._handleError);
     }
 
-    saveUser(user: IUser): Observable<IUser> {
+    saveUser(user: IUser): Observable<IResult> {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
@@ -57,17 +58,17 @@ export class UserService {
         return this._updateUser(user, options);
     }
 
-    private _addUser(user: IUser, options: RequestOptions): Observable<IUser> {
+    private _addUser(user: IUser, options: RequestOptions): Observable<IResult> {
         return this.http.post(this.baseUrl, user, options)
             .map(this._extractData)
             .do(data => console.log('addUser: ' + JSON.stringify(data)))
             .catch(this._handleError);
     }
 
-    private _updateUser(user: IUser, options: RequestOptions): Observable<IUser> {
+    private _updateUser(user: IUser, options: RequestOptions): Observable<IResult> {
         const url = `${this.baseUrl}/${user._id}`;
         return this.http.put(url, user, options)
-            .map(() => user)
+            .map(this._extractData)
             .do(data => console.log('updateUser: ' + JSON.stringify(data)))
             .catch(this._handleError);
     }
@@ -77,23 +78,55 @@ export class UserService {
         return body || {};
     }
 
-    private _handleError(error: Response): Observable<any> {
-        // in a real world app, we may send the server to some remote logging infrastructure
-        // instead of just logging it to the console
-        console.error(error);
-        return Observable.throw(error.json().error || 'Server error');
+    private _handleError(error: Response | any) {
+        // In a real world app, we might use a remote logging infrastructure
+        let errMsg: string;
+        let err: any;
+        if (error instanceof Response) {
+            errMsg = `${error.status} - ${error.statusText || ''}`;
+
+            if (error.status === 401) {
+                location.reload();
+                return Observable.throw(errMsg);
+            }
+
+            try {
+                const body = error.json() || '';
+                err = body.error || JSON.stringify(body);
+            }
+            catch (e) {
+                err = ' More info: ' + e.stack;
+            }
+            finally {
+                errMsg = errMsg + `${err || 'brak'}`;
+            }
+        } else {
+            errMsg = error.message ? error.message : error.toString();
+        }
+
+        console.error(errMsg);
+        return Observable.throw(errMsg);
     }
+
 
     initializeUser(): IUser {
         // Return an initialized object
         return {
             _id: "0",
             email: null,
-            password:null,
+            password: null,
             limitOfRequestsPerDay: null,
             numberOfRequestsPerDay: null,
-            isSuperUser:false,
+            isSuperUser: false,
             isLocked: false
         };
     }
+
+   //private _handleError(error: Response): Observable<any> {
+    //         if (error.status === 401) {
+    //        location.reload();
+    //    }
+    //    console.error(error);
+    //    return Observable.throw(error.json().error || 'Server error');
+    //}
 }

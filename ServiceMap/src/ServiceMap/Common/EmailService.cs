@@ -16,10 +16,10 @@ namespace ServiceMap.Common
         {
             this.configuration = configuration;
         }
-        public async void SendEmailAsync(string formName, string toEmail, string subject, string message)
+        public async void SendEmailAsync(string formName, string CcEmail, string toEmail, string subject, string message)
         {
             var host = configuration["Data:SMTP:host"];
-            int port; 
+            int port;
             int.TryParse(configuration["Data:SMTP:port"], out port);
             var emailTnt = configuration["Data:SMTP:email"];
             var passwordTnt = configuration["Data:SMTP:password"];
@@ -27,6 +27,9 @@ namespace ServiceMap.Common
             var emailMessage = new MimeMessage();
 
             emailMessage.From.Add(new MailboxAddress(formName, emailTnt));
+            if(!String.IsNullOrWhiteSpace(CcEmail))
+            { emailMessage.Cc.Add(new MailboxAddress("", CcEmail));
+            }
             //emailMessage.ReplyTo.Add(new MailboxAddress("", "mariusz-hyla@wp.pl"));
             emailMessage.To.Add(new MailboxAddress("", toEmail));
             emailMessage.Subject = subject;

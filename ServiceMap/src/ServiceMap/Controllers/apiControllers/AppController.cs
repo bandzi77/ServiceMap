@@ -35,7 +35,6 @@ namespace ServiceMap.Controllers.apiControllers
             {
                 issuperuser = true;
             }
-
             return Ok(issuperuser);
         }
     }

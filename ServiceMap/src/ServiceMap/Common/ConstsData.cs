@@ -8,8 +8,9 @@ namespace ServiceMap.Common
     public class ConstsData
     {
         // Resetowanie hasła
-        public static readonly string PasswordForNewUserSubject = "TNT - Twoje hasło";
-        public static readonly string PasswordForNewUserMsg = "Drogi Użytkowniku!\n\n   Twoje hasło do aplikacji w systemie TNT to: ";
+        public static readonly string PasswordForNewUserSubject = "TNT - Konto SM";
+        public static readonly string PasswordForNewUserMsg = "Drogi Użytkowniku!\n\n   Zostało założone dla Ciebie konto w systemie TNT.\n   Dane konta:\n      Hasło: ";
+        public static readonly string PasswordForNewUserQueryLimit = "\n      Limit zapytań w dniu: ";
         public static readonly string ResetLinkPasswordSubject = "Reset hasła";
         public static readonly string ResetLinkPasswordMsg = "Drogi Użytkowniku!\n\n    Poniżej znajdziesz link pozwalający na zresetowanie hasła w aplikacji Mapa Serwisowa:\n\n ";
         public static readonly string ResetLinkWrongEmail = "1. Wystąpił błąd podczas resetowania hasła";
@@ -27,11 +28,19 @@ namespace ServiceMap.Common
         public const string TokenValidationMsg = "Niepopawny link odzyskiwania hasła";
         public static readonly string DifferencesPasswordMsg = "Podane hasła są różne";
 
-        // Dodawanie użytkownika
+        // Dodawanie/Edycja użytkownika
         public static readonly string UserModelInvalid = "3. Wystąpił błąd podczas dodawania nowego użytkownika";
         public static readonly string UserCreateIdentityError = "4. Wystąpił błąd podczas dodawania nowego użytkownika";
         public static readonly string UserCreateAnotherError = "5. Wystąpił błąd podczas dodawania nowego użytkownika";
-        public static readonly string UserCreateSuccess = "6. Użytkownik został dodany z sukcesem";
-        public static readonly string UserAlreadyExists = "7. Podany adres email istnieje już w aplikacji";
+        public static readonly string UserCreateSuccess = "6. Użytkownik został zapisany";
+        public static readonly string UserAlreadyExists = "7. Podany adres email istnieje już w systemie";
+        public static readonly string DeleteUserSuccess = "8. Użytkownik został usunięty z systemu";
+        public static readonly string DeleteUserError = "9. Błąd podczas usuwania użytkownika z systemu";
+        public static readonly string UpdateUserSuccess = "10. Dane użytkownika zostały zaaktualizowane";
+        public static readonly string UpdateUserError = "11. Błąd podczas aktualizacji danych, spróbj ponownie";
+        public static readonly string UpdateUserNotExists = "12. Błąd podczas aktualizacji danych, spróbj ponownie";
+        public static readonly string UpdateUserIdentity = "13. Błąd podczas aktualizacji danych, spróbj ponownie";
+        public static readonly string UpdateUserResetAccessFailed = "14. Błąd podczas aktualizacji danych, spróbj ponownie";
+        public static readonly string UpdateUserRoleIdentity = "15. Błąd podczas aktualizacji danych, spróbj ponownie";
     }
 }

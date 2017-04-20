@@ -59,6 +59,30 @@ namespace ServiceMap
                 opts.Cookies.ApplicationCookie.CookieHttpOnly = true;
                 opts.Cookies.ApplicationCookie.SlidingExpiration = true;
 
+                opts.Cookies.ApplicationCookie.LoginPath = new PathString("/Account/Login");
+                opts.Cookies.ApplicationCookie.LogoutPath = new PathString("/Account/Logout");
+                opts.Cookies.ApplicationCookie.AccessDeniedPath = new PathString("/Account/AccessDenied");
+                opts.Cookies.ApplicationCookie.AutomaticAuthenticate = true;
+                opts.Cookies.ApplicationCookie.AutomaticChallenge = true;
+                opts.Cookies.ApplicationCookie.AuthenticationScheme = Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationDefaults.AuthenticationScheme;
+                opts.Cookies.ApplicationCookie.ReturnUrlParameter = Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationDefaults.ReturnUrlParameter;
+
+                opts.Cookies.ApplicationCookie.Events = new CookieAuthenticationEvents
+                {
+                    OnRedirectToLogin = ctx =>
+                    {
+                        if (ctx.Request.Path.StartsWithSegments("/api") &&
+                            ctx.Response.StatusCode == (int)HttpStatusCode.OK)
+                        {
+                            ctx.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                        }
+                        else
+                        {
+                            ctx.Response.Redirect(ctx.RedirectUri);
+                        }
+                        return Task.FromResult(0);
+                    }
+                };
 
                 //opts.Cookies.ApplicationCookie.Events = new CookieAuthenticationEvents
                 //{
@@ -112,6 +136,14 @@ namespace ServiceMap
             app.UseStaticFiles();
             app.UseIdentity();
             AppIdentityDbContext.CreateAdminAccount(app.ApplicationServices, Configuration).Wait();
+            //app.UseCookieAuthentication(new CookieAuthenticationOptions()
+            //{
+            //    AuthenticationScheme = "MyCookieMiddlewareInstance",
+            //    LoginPath = new PathString("/Account/Login/"),
+            //    AccessDeniedPath = new PathString("/Account/Forbidden/"),
+            //    AutomaticAuthenticate = true,
+            //    AutomaticChallenge = true
+            //});
 
             app.UseMvc(routes =>
             {
@@ -126,7 +158,15 @@ namespace ServiceMap
 
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Home}/{action=Index}");
+
+                //routes.MapRoute(
+                // name: "login",
+                // template: "{controller=Account}/{action=Login}/{returnUrl}");
+
+                //routes.MapRoute(
+                //name: "logout",
+                //template: "{controller=Account}/{action=Logout}");
 
 
                 //routes.MapRoute(
@@ -134,8 +174,8 @@ namespace ServiceMap
                 //template: "{controller=Account}/{action=ForgotPassword}");
 
                 routes.MapSpaFallbackRoute(
-                    name: "spa-fallback",
-                    defaults: new { controller = "Home", action = "Index" });
+                        name: "spa-fallback",
+                        defaults: new { controller = "Home", action = "Index" });
 
                 //routes.MapWebApiRoute("defaultApi",
                 //                    "api/{controller}/{id?}");

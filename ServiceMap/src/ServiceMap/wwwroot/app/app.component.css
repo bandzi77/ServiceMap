@@ -16,13 +16,6 @@ table {
     margin-bottom: 5px !important; /*nadpisuje bootstrapowy styl 20px*/
 }
 
-tbody {
-    display: block;
-    overflow-y: auto;
-    overflow-x: hidden;
-    border: 1px solid #ccc;
-}
-
 th {
     color: white;
     background-color: slategrey;
@@ -37,6 +30,12 @@ th {
     th:last-child {
         border-radius: 0 5px 0 0;
     }
+
+tbody {
+    display: block;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
 
 tr {
     display: block;

@@ -21,7 +21,6 @@ var AppComponent = (function () {
     function AppComponent(_http, location) {
         this._http = _http;
         this.location = location;
-        this.isSuperUser = false;
     }
     ;
     AppComponent.prototype.ngOnInit = function () {

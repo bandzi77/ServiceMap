@@ -47,7 +47,7 @@ namespace ServiceMap.Controllers
         }
 
 
-        [Authorize]
+        [AllowAnonymous]
         public async Task<IActionResult> Logout()
         {
             await signInManager.SignOutAsync();
@@ -110,16 +110,15 @@ namespace ServiceMap.Controllers
             var user = await userManager.FindByEmailAsync(email.ToUpper());
             if (user != null)
             {
-                //var fromEmail = currentUser.GetUser(User).Result.NormalizedEmail;
-
-                // Send an email with this linkuserId = user.Id,
+                var fromEmail = currentUser.GetUser(User).Result.NormalizedEmail;
                 var token = await userManager.GeneratePasswordResetTokenAsync(user);
                 var callbackUrl = Url.Action(nameof(ResetPassword), "Account", new { email = email.ToUpper(), token = token }, protocol: HttpContext.Request.Scheme);
+
                 //await _emailSender.SendEmailAsync(model.Email, "Reset Password",
                 //   $"Please reset your password by clicking here: <a href='{callbackUrl}'>link</a>");
                 //   return View("ForgotPasswordConfirmation"); < a href = '{callbackUrl}' > link </ a >
 
-                emailService.SendEmailAsync("No replay", email, ConstsData.ResetLinkPasswordSubject, ConstsData.ResetLinkPasswordMsg + $"{callbackUrl}");
+                emailService.SendEmailAsync("No replay", null, email, ConstsData.ResetLinkPasswordSubject, ConstsData.ResetLinkPasswordMsg + $"{callbackUrl}");
             }
         }
 
@@ -172,7 +171,8 @@ namespace ServiceMap.Controllers
         [AllowAnonymous]
         public IActionResult AccessDenied()
         {
-            return View();
+         //   string message = $"Nie ma takiej strony";
+            return RedirectToAction("Logout", "Account");
         }
 
         // POST: /Account/ForgotPassword
