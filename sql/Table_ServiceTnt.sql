@@ -1,17 +1,17 @@
 USE [FARMAX_SQLSRV]
 GO
 
-/****** Object:  Table [dbo].[TEST]    Script Date: 10.05.2017 23:04:02 ******/
+/****** Object:  Table [dbo].[ServiceTnt]    Script Date: 12.05.2017 23:33:50 ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE TABLE [dbo].[TEST](
+CREATE TABLE [dbo].[ServiceTnt](
 	[Town] [nvarchar](60) NULL,
-	[FromPostcode] [nvarchar](6) NULL,
-	[To_Postcode] [nvarchar](6) NULL,
+	[From_Postcode] [int] NULL,
+	[To_Postcode] [int] NULL,
 	[Depot_code-1a] [nvarchar](max) NULL,
 	[Sobota] [bit] NOT NULL,
 	[EX9] [bit] NOT NULL,
@@ -28,9 +28,17 @@ CREATE TABLE [dbo].[TEST](
 	[Serwis_podmiejski] [bit] NULL,
 	[Pick-up_domestic_czas] [real] NULL,
 	[Pick-up_eksport_sm_czas] [real] NULL,
-	[Serwis_miejski] [bit] NULL
+	[Serwis_miejski] [bit] NULL,
+	[InsertDate] [date] NOT NULL,
+	[InsertTime] [time](0) NOT NULL
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
+GO
+
+ALTER TABLE [dbo].[ServiceTnt] ADD  CONSTRAINT [DF_ServiceTnt_DateInsert]  DEFAULT (getdate()) FOR [InsertDate]
+GO
+
+ALTER TABLE [dbo].[ServiceTnt] ADD  CONSTRAINT [DF_ServiceTnt_InsertTime]  DEFAULT (getdate()) FOR [InsertTime]
 GO
 
 
