@@ -122,8 +122,6 @@ namespace ServiceMap
             services.AddTransient<IUserService, UserService>();
             services.AddSingleton<IEmailService, EmailService>();
 
-
-
             //   services.AddTransient<IServiceProvider, ServiceCollection>();
             //services.AddTransient<IConfiguration, ConfigureServices>();
             services.AddMvc();
@@ -182,7 +180,6 @@ namespace ServiceMap
                 //name: "logout",
                 //template: "{controller=Account}/{action=Logout}");
 
-
                 //routes.MapRoute(
                 //name: "forgotPassword",
                 //template: "{controller=Account}/{action=ForgotPassword}");
@@ -190,10 +187,6 @@ namespace ServiceMap
                 routes.MapSpaFallbackRoute(
                         name: "spa-fallback",
                         defaults: new { controller = "Home", action = "Index" });
-
-                //routes.MapWebApiRoute("defaultApi",
-                //                    "api/{controller}/{id?}");
-
             });
         }
     }
