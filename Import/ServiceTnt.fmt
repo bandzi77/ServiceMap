@@ -1,0 +1,22 @@
+13.0
+20
+1       SQLCHAR             0       120     "\t"     1     Town                                                                               Polish_CI_AS
+2       SQLCHAR             0       12      "\t"     2     From_Postcode                                                                      ""
+3       SQLCHAR             0       12      "\t"     3     To_Postcode                                                                        ""
+4       SQLCHAR             0       0       "\t"     4     Depot_code-1a                                                                      Polish_CI_AS
+5       SQLCHAR             0       1       "\t"     5     Sobota                                                                             ""
+6       SQLCHAR             0       1       "\t"     6     EX9                                                                                ""
+7       SQLCHAR             0       1       "\t"     7     EX10                                                                               ""
+8       SQLCHAR             0       1       "\t"     8     EX12                                                                               ""
+9       SQLCHAR             0       19      "\t"     9     Priority                                                                           ""
+10      SQLCHAR             0       1       "\t"     10    Wieczorne_dostarczenie                                                             ""
+11      SQLCHAR             0       19      "\t"     11    Standard_Delivery_OD                                                               ""
+12      SQLCHAR             0       19      "\t"     12    Standard_Delivery_DO                                                               ""
+13      SQLCHAR             0       19      "\t"     13    Pick-up_domestic_zgl                                                               ""
+14      SQLCHAR             0       19      "\t"     14    Pick-up_eksport_sm_zgl                                                             ""
+15      SQLCHAR             0       1       "\t"     15    Samochod_z_winda_dostepny_w_standardzie                                            ""
+16      SQLCHAR             0       19      "\t"     16    Diplomat_next_day                                                                  ""
+17      SQLCHAR             0       1       "\t"     17    Serwis_miejski                                                                     ""
+18      SQLCHAR             0       1       "\t"     18    Serwis_podmiejski                                                                  ""
+19      SQLCHAR             0       30      "\t"     19    Pick-up_domestic_czas                                                              ""
+20      SQLCHAR             0       30      "\r\n"     20    Pick-up_eksport_sm_czas                                                            ""

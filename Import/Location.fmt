@@ -1,0 +1,11 @@
+13.0
+9
+1       SQLCHAR             0       20      "\t"     1     DepotCode                                                        ""
+2       SQLCHAR             0       0       "\t"     2     Addresses_Town                                                   ""
+3       SQLCHAR             0       12      "\t"     3     Addresses_Postcode                                               ""
+4       SQLCHAR             0       0       "\t"     4     Addresses_Street                                                 ""
+5       SQLCHAR             0       0       "\t"     5     InternationalPackageHours_Info                                   ""
+6       SQLCHAR             0       0       "\t"     6     DomesticPackageHours_Info                                        ""
+7       SQLCHAR             0       0       "\t"     7     SaturdayPackageHours_Info                                        ""
+8       SQLCHAR             0       0       "\t"     8     PassportPickupHours_Info                                         ""
+9       SQLCHAR             0       0       "\r\n"     9     WeekPackageHours_Info                                            ""

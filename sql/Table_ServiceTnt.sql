@@ -1,7 +1,7 @@
 USE [FARMAX_SQLSRV]
 GO
 
-/****** Object:  Table [dbo].[ServiceTnt]    Script Date: 12.05.2017 23:33:50 ******/
+/****** Object:  Table [dbo].[ServiceTnt]    Script Date: 13.05.2017 13:58:53 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -25,10 +25,10 @@ CREATE TABLE [dbo].[ServiceTnt](
 	[Pick-up_eksport_sm_zgl] [time](0) NULL,
 	[Samochod_z_winda_dostepny_w_standardzie] [bit] NULL,
 	[Diplomat_next_day] [time](0) NULL,
+	[Serwis_miejski] [bit] NULL,
 	[Serwis_podmiejski] [bit] NULL,
 	[Pick-up_domestic_czas] [real] NULL,
 	[Pick-up_eksport_sm_czas] [real] NULL,
-	[Serwis_miejski] [bit] NULL,
 	[InsertDate] [date] NOT NULL,
 	[InsertTime] [time](0) NOT NULL
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
