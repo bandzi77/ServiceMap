@@ -1,7 +1,7 @@
 ﻿import { IPage } from '../pagination/page';
 
 export interface IServiceTnt {
-    depotCode1a: string;
+    depotCode: string;
     town: string;
     fromPostcode: string;
     toPostcode: string;
@@ -10,17 +10,17 @@ export interface IServiceTnt {
     ex10: boolean;
     ex12: boolean;
     priority: string;
-    wieczorneDostarczenie: boolean;
+    wieczorneDostarczenie?: boolean;
     standardDeliveryOd: string;
     standardDeliveryDo: string;
     pickUpDomesticZgl: string;
     dateTimePickUpEksportSmZgl: string
     samochodZwindaDostepnyWstandardzie?: boolean;
     diplomatNextDay: string;
+    serwisMiejski?: boolean;
     serwisPodmiejski?: boolean;
     pickUpDomesticCzas: string;
     pickUpEksportSmCzas: string;
-    serwisMiejski?: boolean;
 }
 export interface IServiceFilter {
     postCode: string;

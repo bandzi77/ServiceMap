@@ -49,7 +49,7 @@ namespace ServiceMap.Models.apiModels
                 {
                     UserName = email,
                     Email = email,
-                    AccessFailedCount = 5
+                    AccessFailedCount = 10
                 };
 
                 IdentityResult result = await userManager.CreateAsync(user, password);

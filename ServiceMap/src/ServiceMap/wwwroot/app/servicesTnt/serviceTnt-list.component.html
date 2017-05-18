@@ -72,11 +72,11 @@
                         <tr *ngFor="let serviceTnt of servicesTnt | productFilter : listFilter">
                             <td>
 
-                                <a (click)="onClick(serviceTnt.depotCode1a, lgModal)">
-                                    {{serviceTnt.depotCode1a}}
+                                <a (click)="onClick(serviceTnt.depotCode, lgModal)">
+                                    {{serviceTnt.depotCode}}
                                 </a>
                                 <!--<a [routerLink]="['/serviceTnt',serviceTnt.productId]">
-                                    {{serviceTnt.depotCode1a}}
+                                    {{serviceTnt.depotCode}}
                                 </a>-->
                             </td>
                             <td style="min-width:350px;max-width:350px;">{{serviceTnt.town}}</td>

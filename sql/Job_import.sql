@@ -1,11 +1,11 @@
 USE [msdb]
 GO
 
-/****** Object:  Job [ServiceMap Import Data]    Script Date: 13.05.2017 14:00:01 ******/
+/****** Object:  Job [ServiceMap Import Data]    Script Date: 18.05.2017 22:29:01 ******/
 BEGIN TRANSACTION
 DECLARE @ReturnCode INT
 SELECT @ReturnCode = 0
-/****** Object:  JobCategory [[Uncategorized (Local)]]    Script Date: 13.05.2017 14:00:01 ******/
+/****** Object:  JobCategory [[Uncategorized (Local)]]    Script Date: 18.05.2017 22:29:01 ******/
 IF NOT EXISTS (SELECT name FROM msdb.dbo.syscategories WHERE name=N'[Uncategorized (Local)]' AND category_class=1)
 BEGIN
 EXEC @ReturnCode = msdb.dbo.sp_add_category @class=N'JOB', @type=N'LOCAL', @name=N'[Uncategorized (Local)]'
@@ -25,7 +25,7 @@ EXEC @ReturnCode =  msdb.dbo.sp_add_job @job_name=N'ServiceMap Import Data',
 		@category_name=N'[Uncategorized (Local)]', 
 		@owner_login_name=N'DESKTOP-KR3KFBT\mh_user', @job_id = @jobId OUTPUT
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
-/****** Object:  Step [Download files from ftp]    Script Date: 13.05.2017 14:00:02 ******/
+/****** Object:  Step [Download files from ftp]    Script Date: 18.05.2017 22:29:01 ******/
 EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'Download files from ftp', 
 		@step_id=1, 
 		@cmdexec_success_code=0, 
@@ -39,7 +39,7 @@ EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'Download
 		@command=N'D:\import\mrowa.cmd', 
 		@flags=0
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
-/****** Object:  Step [ImportServicesTnt]    Script Date: 13.05.2017 14:00:02 ******/
+/****** Object:  Step [ImportServicesTnt]    Script Date: 18.05.2017 22:29:01 ******/
 EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'ImportServicesTnt', 
 		@step_id=2, 
 		@cmdexec_success_code=0, 
@@ -102,25 +102,25 @@ BEGIN
 			DELETE FROM [dbo].[ServiceTnt];
 			INSERT INTO [dbo].[ServiceTnt]
 				 ([Town]
-				  ,[From_Postcode]
-				  ,[To_Postcode]
-				  ,[Depot_code-1a]
+				  ,[FromPostcode]
+				  ,[ToPostcode]
+				  ,[Depotcode]
 				  ,[Sobota]
 				  ,[EX9]
 				  ,[EX10]
 				  ,[EX12]
 				  ,[Priority]
-				  ,[Wieczorne_dostarczenie]
-				  ,[Standard_Delivery_OD]
-				  ,[Standard_Delivery_DO]
-				  ,[Pick-up_domestic_zgl]
-				  ,[Pick-up_eksport_sm_zgl]
-				  ,[Samochod_z_winda_dostepny_w_standardzie]
-				  ,[Diplomat_next_day]
-				  ,[Serwis_miejski]
-				  ,[Serwis_podmiejski]
-				  ,[Pick-up_domestic_czas]
-				  ,[Pick-up_eksport_sm_czas]
+				  ,[WieczorneDostarczenie]
+				  ,[StandardDeliveryOd]
+				  ,[StandardDeliveryDo]
+				  ,[PickUpDomesticZgl]
+				  ,[DateTimePickUpEksportSmZgl]
+				  ,[SamochodZwindaDostepnyWstandardzie]
+				  ,[DiplomatNextDay]
+				  ,[SerwisMiejski]
+				  ,[SerwisPodmiejski]
+				  ,[PickUpDomesticCzas]
+				  ,[PickUpEksportSmCzas]
 				 )
 			SELECT [Town]
 					,try_parse(replace([From_Postcode],''-'','''')  as int)
@@ -171,10 +171,10 @@ BEGIN
     PRINT ''Brak danych do importu'';
 	THROW 51000, ''Brak danych do importu'', 1;  
 END;', 
-		@database_name=N'FARMAX_SQLSRV', 
+		@database_name=N'ServiceMap', 
 		@flags=0
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
-/****** Object:  Step [ImportLocation]    Script Date: 13.05.2017 14:00:02 ******/
+/****** Object:  Step [ImportLocation]    Script Date: 18.05.2017 22:29:01 ******/
 EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'ImportLocation', 
 		@step_id=3, 
 		@cmdexec_success_code=0, 
@@ -273,22 +273,22 @@ BEGIN
     PRINT ''Brak danych do importu'';
 	THROW 51000, ''Brak danych do importu'', 1;  
 END;', 
-		@database_name=N'FARMAX_SQLSRV', 
+		@database_name=N'ServiceMap', 
 		@flags=0
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
 EXEC @ReturnCode = msdb.dbo.sp_update_job @job_id = @jobId, @start_step_id = 1
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
 EXEC @ReturnCode = msdb.dbo.sp_add_jobschedule @job_id=@jobId, @name=N'Kopiuj', 
 		@enabled=1, 
-		@freq_type=32, 
-		@freq_interval=2, 
-		@freq_subday_type=4, 
+		@freq_type=4, 
+		@freq_interval=1, 
+		@freq_subday_type=1, 
 		@freq_subday_interval=1, 
 		@freq_relative_interval=1, 
-		@freq_recurrence_factor=1, 
+		@freq_recurrence_factor=0, 
 		@active_start_date=20170422, 
 		@active_end_date=99991231, 
-		@active_start_time=0, 
+		@active_start_time=202000, 
 		@active_end_time=235959, 
 		@schedule_uid=N'2f4359a7-cb96-45a9-a1fb-787f8670cf82'
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback

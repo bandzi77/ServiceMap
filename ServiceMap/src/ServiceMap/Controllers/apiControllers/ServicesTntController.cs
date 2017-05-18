@@ -165,7 +165,7 @@ namespace ServiceMap.Controllers.apiControllers
             {
                 new ServiceTnt()
                 {
-                     DepotCode1a = "GDN",
+                     DepotCode = "GDN",
                      Town =  "ABISYNIA",
                      FromPostcode = "83-440",
                      ToPostcode = "83-440",
@@ -182,14 +182,14 @@ namespace ServiceMap.Controllers.apiControllers
                      SamochodZwindaDostepnyWstandardzie = false,
                      DiplomatNextDay =   new TimeSpan(12,0,0),
                      SerwisPodmiejski = false,
-                     PickUpDomesticCzas = "02.maj",
-                     PickUpEksportSmCzas = "2",
+                     PickUpDomesticCzas = 2.5f,
+                     PickUpEksportSmCzas = 2,
                      SerwisMiejski = null
                 },
 
                 new ServiceTnt()
                 {
-                     DepotCode1a = "GDN",
+                     DepotCode = "GDN",
                      Town =  "Gdańsk",
                      FromPostcode = "83-440",
                      ToPostcode = "83-440",
@@ -206,13 +206,13 @@ namespace ServiceMap.Controllers.apiControllers
                      SamochodZwindaDostepnyWstandardzie = false,
                      DiplomatNextDay =   new TimeSpan(12,0,0),
                      SerwisPodmiejski = false,
-                     PickUpDomesticCzas = "02.maj",
-                     PickUpEksportSmCzas = "2",
+                     PickUpDomesticCzas = 2.5f,
+                     PickUpEksportSmCzas = 2,
                      SerwisMiejski = null
                 },
                 new ServiceTnt()
                 {
-                     DepotCode1a = "KRA",
+                     DepotCode = "KRA",
                      Town =  "Kraków",
                      FromPostcode = "83-440",
                      ToPostcode = "83-440",
@@ -229,13 +229,13 @@ namespace ServiceMap.Controllers.apiControllers
                      SamochodZwindaDostepnyWstandardzie = false,
                      DiplomatNextDay =   new TimeSpan(12,0,0),
                      SerwisPodmiejski = false,
-                     PickUpDomesticCzas = "02.maj",
-                     PickUpEksportSmCzas = "2",
+                     PickUpDomesticCzas = 2.5f,
+                     PickUpEksportSmCzas = 2,
                      SerwisMiejski = null
                 },
                  new ServiceTnt()
                 {
-                     DepotCode1a = "WAW",
+                     DepotCode = "WAW",
                      Town =  "WARSZAWA",
                      FromPostcode = "83-440",
                      ToPostcode = "83-440",
@@ -252,8 +252,8 @@ namespace ServiceMap.Controllers.apiControllers
                      SamochodZwindaDostepnyWstandardzie = false,
                      DiplomatNextDay =   new TimeSpan(12,0,0),
                      SerwisPodmiejski = false,
-                     PickUpDomesticCzas = "02.maj",
-                     PickUpEksportSmCzas = "2",
+                     PickUpDomesticCzas = 2.5f,
+                     PickUpEksportSmCzas = 2,
                      SerwisMiejski = null
                 }
             };
