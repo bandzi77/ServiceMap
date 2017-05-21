@@ -33,3 +33,5 @@ _ReSharper*/
 .vs/
 #Nuget packages folder
 packages/
+DB/ServiceMap.mdf
+DB/ServiceMap_log.ldf

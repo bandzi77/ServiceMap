@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ServiceMap.Models.apiModels;
-using ServiceMap.Models.ServiceTnt;
+using ServiceMap.Models.Service_Tnt;
 using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
@@ -23,22 +23,27 @@ namespace ServiceMap.Controllers.apiControllers
         //}
 
         // GET api/values/5
+        private IServiceTntRepository servicesTnt;
+
+        public ServicesTntController(IServiceTntRepository servTnt)
+        { servicesTnt = servTnt; }
+
         [HttpGet("GetServices")]
         public IActionResult GetServices([FromQuery] ServiceFilter sfilter)
         {
             var paging = new { totalCount = 3, pageSize = 3 };
-            //x => x.productId >= (currentPage ?? 1)
+            ////x => x.productId >= (currentPage ?? 1)
 
-            var serviceTnt = getMockData().ToList();
+            //var serviceTnt = getMockData().ToList();
 
-            for (int i = 0; i < 3; i++)
-            {
-                serviceTnt.AddRange(serviceTnt);
-            }
+            //for (int i = 0; i < 3; i++)
+            //{
+            //    serviceTnt.AddRange(serviceTnt);
+            //}
+            var res = servicesTnt.ServicesTnt.ToList();
+          //  serviceTnt = serviceTnt.Where(x => x.Town.StartsWith(sfilter?.CityName ?? "", StringComparison.OrdinalIgnoreCase)).Select(x => x).ToList();
 
-            serviceTnt= serviceTnt.Where(x => x.Town.StartsWith(sfilter?.CityName??"", StringComparison.OrdinalIgnoreCase)).Select(x=>x).ToList();
-
-            var result = new { serviceTnt = serviceTnt, paging = paging };
+            var result = new { serviceTnt = res, paging = paging };
             return Ok(result);
 
         }
@@ -70,7 +75,7 @@ namespace ServiceMap.Controllers.apiControllers
         //{
         //}
 
-     
+
 
         private List<DepotDetails> getMockDepotDetails()
         {

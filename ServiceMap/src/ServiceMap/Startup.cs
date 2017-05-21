@@ -16,7 +16,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Net;
 using Microsoft.AspNetCore.Identity;
 using ServiceMap.Common;
-
+using ServiceMap.Models.Service_Tnt;
 namespace ServiceMap
 {
     public class Startup
@@ -38,9 +38,11 @@ namespace ServiceMap
         public void ConfigureServices(IServiceCollection services)
         {
             // TODO str 214
+            services.AddDbContext<ApplicationDbContext>(options =>
+            options.UseSqlServer(Configuration["Data:ConnectionStrings:DbServiceMap"]));
             services.AddDbContext<AppIdentityDbContext>(options =>
             options.UseSqlServer(Configuration["Data:ConnectionStrings:DbServiceMapIndentity"]));
-
+        
             services.AddIdentity<AppUser, IdentityRole>(opts =>
             {
                 opts.User.RequireUniqueEmail = true;
@@ -121,7 +123,7 @@ namespace ServiceMap
             services.AddScoped<UserManager<AppUser>>();
             services.AddTransient<IUserService, UserService>();
             services.AddSingleton<IEmailService, EmailService>();
-
+            services.AddTransient<IServiceTntRepository, ServiceTntRepository>();
             //   services.AddTransient<IServiceProvider, ServiceCollection>();
             //services.AddTransient<IConfiguration, ConfigureServices>();
             services.AddMvc();

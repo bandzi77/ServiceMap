@@ -9,10 +9,12 @@ namespace ServiceMap.Common
     {
         // Resetowanie hasła
         public static readonly string PasswordForNewUserSubject = "TNT - Konto SM";
-        public static readonly string PasswordForNewUserMsg = "Drogi Użytkowniku!\n\n   Zostało założone dla Ciebie konto w systemie TNT.\n   Dane konta:\n      Hasło: ";
-        public static readonly string PasswordForNewUserQueryLimit = "\n      Limit zapytań w dniu: ";
+        public static readonly string PasswordForNewUserMsg = "<p>Drogi Użytkowniku!<br>  <p>Zostało założone dla Ciebie konto w systemie TNT.<br>   <p>Dane konta:<br>      Hasło: ";
+        public static readonly string PasswordForNewUserQueryLimit = "<p>Limit zapytań w ciągu dnia: ";
         public static readonly string ResetLinkPasswordSubject = "Reset hasła";
-        public static readonly string ResetLinkPasswordMsg = "Drogi Użytkowniku!\n\n    Poniżej znajdziesz link pozwalający na zresetowanie hasła w aplikacji Mapa Serwisowa:\n\n ";
+        public static readonly string ResetLinkPasswordMsg = "<p>Drogi Użytkowniku!<br>    <p>Poniżej znajdziesz link pozwalający na zresetowanie hasła w aplikacji Mapa Serwisowa:<br>";
+        public static readonly string ResetLinkPasswordMsgLink1 = "<a href=\"";
+        public static readonly string ResetLinkPasswordMsgLink2 = "\">Link...</a>";
         public static readonly string ResetLinkWrongEmail = "1. Wystąpił błąd podczas resetowania hasła";
         public static readonly string ResetLinkWrongToken = "2. Wystąpił błąd podczas resetowania hasła";
         

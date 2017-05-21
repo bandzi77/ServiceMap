@@ -164,10 +164,10 @@ namespace ServiceMap.Controllers.apiControllers
         {
             var fromEmail = currentUser.GetUser(User).Result.NormalizedEmail;
 
-            emailService.SendEmailAsync("TNT SM", "mariusz-hyla@wp.pl", newUser.Email,
+            emailService.SendEmailAsync("TNT SM", null, newUser.Email,
                 ConstsData.PasswordForNewUserSubject,
                 ConstsData.PasswordForNewUserMsg + $"{newUser.Password}" +
-                ConstsData.PasswordForNewUserQueryLimit + $"{newUser.LimitOfRequestsPerDay}");
+                ConstsData.PasswordForNewUserQueryLimit + $"{newUser.LimitOfRequestsPerDay}", "html");
         }
 
         // PUT api/values/5

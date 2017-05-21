@@ -101,7 +101,7 @@ namespace ServiceMap.Controllers
             {
                 await SendResetLink(email);
             }
-            string message = $"Na wskazany adres email \"{email}\" został wysłany link pozwalający na zresetowanie hasła";
+            string message = "Na wskazany adres email został wysłany link pozwalający na zresetowanie hasła";
             return RedirectToAction("InfoPanel", "Account", new { message });
         }
 
@@ -119,7 +119,7 @@ namespace ServiceMap.Controllers
                 //   $"Please reset your password by clicking here: <a href='{callbackUrl}'>link</a>");
                 //   return View("ForgotPasswordConfirmation"); < a href = '{callbackUrl}' > link </ a >
 
-                emailService.SendEmailAsync("No replay", null, email, ConstsData.ResetLinkPasswordSubject, ConstsData.ResetLinkPasswordMsg + $"{callbackUrl}");
+                emailService.SendEmailAsync("No replay", null, email, ConstsData.ResetLinkPasswordSubject, ConstsData.ResetLinkPasswordMsg + ConstsData.ResetLinkPasswordMsgLink1 +$"{callbackUrl}" +ConstsData.ResetLinkPasswordMsgLink2, "html");
             }
         }
 
@@ -159,8 +159,13 @@ namespace ServiceMap.Controllers
                         return Redirect(returnUrl ?? "/");
                     }
                     else
-                    {// odblokowanie konta
-                        await userManager.SetLockoutEndDateAsync(user, DateTime.Now);
+                    {
+                        if (result.IsLockedOut)
+                        {
+                            return RedirectToAction("InfoPanel", "Account", new { message = "Twoje konto zostało zablokowane." });
+                        }
+                        // odblokowanie konta
+                        //await userManager.SetLockoutEndDateAsync(user, DateTime.Now);
                     }
                 }
                 ModelState.AddModelError(nameof(LoginModel.Email), "Niepoprawny adres email lub hasło");

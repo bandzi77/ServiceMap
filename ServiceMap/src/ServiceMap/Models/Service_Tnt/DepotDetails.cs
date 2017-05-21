@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ServiceMap.Models.ServiceTnt
+namespace ServiceMap.Models.Service_Tnt
 {
     public class DepotDetails
     {
