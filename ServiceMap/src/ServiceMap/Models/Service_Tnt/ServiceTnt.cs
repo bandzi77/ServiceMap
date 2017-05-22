@@ -5,6 +5,13 @@ using System.Threading.Tasks;
 
 namespace ServiceMap.Models.Service_Tnt
 {
+
+    public partial class Blog
+    {
+        public int BlogId { get; set; }
+        public string Url { get; set; }
+
+   }
     public class ServiceTnt
     {
         public string DepotCode { get; set; }
@@ -27,7 +34,19 @@ namespace ServiceMap.Models.Service_Tnt
         public bool? SerwisPodmiejski { get; set; }
         public Single? PickUpDomesticCzas { get; set; }
         public Single? PickUpEksportSmCzas { get; set; }
+        public long RowNumber { get; set; }
+        public int TotalCount { get; set; }
+    }
 
-    }   
+
+    public class Test
+    {
+        public string DepotCode { get; set; }
+        public string Town { get; set; }
+        public string FromPostcode { get; set; }
+        public string ToPostcode { get; set; }
+      
+
+    }
 }
 

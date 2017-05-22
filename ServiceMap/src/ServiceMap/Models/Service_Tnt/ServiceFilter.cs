@@ -10,5 +10,6 @@ namespace ServiceMap.Models.Service_Tnt
         public string PostCode { get; set; }
         public string CityName { get; set; }
         public Int16? CurrentPage { get; set; }
+        public Int16? PageSize { get; set; }
     }
 }

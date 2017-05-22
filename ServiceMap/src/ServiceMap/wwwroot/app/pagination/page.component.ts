@@ -24,7 +24,6 @@ export class PageComponent implements OnInit {
         this.pager = this._pageservice.getPager(this.totalCount, 1, this.pageSize );
     };
 
-
     onSetPage(page: number) {
         if (page < 1 || page > this.pager.totalPages) {
             return;

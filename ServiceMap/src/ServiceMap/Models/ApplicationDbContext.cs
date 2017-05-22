@@ -10,8 +10,17 @@ namespace ServiceMap.Models
     public class ApplicationDbContext : DbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-        :base(options){ }        
+        :base(options){ }
 
-        public DbSet<ServiceTnt> ServicesTnt { get; }
+        public virtual DbSet<ServiceTnt> ServiceTnt { get; set; }
+        public virtual DbSet<Blog> Blog { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+
+            modelBuilder.Entity<ServiceTnt>().
+                HasKey(k => new { k.Town, k.FromPostcode, k.ToPostcode });
+        }
+
     }
 }

@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace ServiceMap.Models.Service_Tnt
 {
-    public class ServiceTntRepository: IServiceTntRepository
+    public class ServiceTntRepository : IServiceTntRepository
     {
         private ApplicationDbContext context;
 
@@ -14,6 +15,20 @@ namespace ServiceMap.Models.Service_Tnt
             context = ctx;
         }
 
-        public IEnumerable<ServiceTnt> ServicesTnt => context.ServicesTnt;
+        public IQueryable<ServiceTnt> ServicesTnt
+        {
+            get
+            {
+                return context.ServiceTnt;
+            }
+        }
+
+        public IQueryable<Blog> blog
+        {
+            get
+            {
+                return context.Blog;
+            }
+        }
     }
 }

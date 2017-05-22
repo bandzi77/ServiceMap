@@ -61,10 +61,10 @@
                             <th style="min-width:200px; white-space:pre">Samochod z winda<br>dostepny w standardzie</th>
 
                             <th class="sm-break-th">Diplomat next<br>day</th>
+                            <th class="sm-last-th-with">Serwis miejski</th>
                             <th class="sm-break-th">Serwis<br>podmiejski</th>
                             <th style="white-space:pre">Pick up domestic<br>czas</th>
                             <th style="white-space:pre">Pick up eksport<br>sm czas</th>
-                            <th class="sm-last-th-with">Serwis miejski</th>
                         </tr>
                     </thead>
                     <!--*ngIf="servicesTnt && servicesTnt.length"-->
@@ -117,22 +117,23 @@
                             </td>
 
                             <td class="sm-break-td">{{serviceTnt.diplomatNextDay}}</td>
+                            <td>
+                                <span *ngIf="serviceTnt.serwisMiejski"><i class="fa fa-check-square-o fa-1x" aria-hidden="true"></i></span>
+                                <span *ngIf="!serviceTnt.serwisMiejski"><i class="fa fa-square-o fa-1x" aria-hidden="true"></i></span>
+                            </td>
                             <td class="sm-break-td">
                                 <span *ngIf="serviceTnt.serwisPodmiejski"><i class="fa fa-check-square-o fa-1x" aria-hidden="true"></i></span>
                                 <span *ngIf="!serviceTnt.serwisPodmiejski"><i class="fa fa-square-o fa-1x" aria-hidden="true"></i></span>
                             </td>
                             <td>{{serviceTnt.pickUpDomesticCzas}}</td>
                             <td>{{serviceTnt.pickUpEksportSmCzas}}</td>
-                            <td>
-                                <span *ngIf="serviceTnt.serwisMiejski"><i class="fa fa-check-square-o fa-1x" aria-hidden="true"></i></span>
-                                <span *ngIf="!serviceTnt.serwisMiejski"><i class="fa fa-square-o fa-1x" aria-hidden="true"></i></span>
-                            </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
-        <page-app *ngIf='servicesTnt && servicesTnt.length && paging.pageSize>1'
+<!--&& paging.pageSize>1-->
+        <page-app *ngIf='servicesTnt && servicesTnt.length' 
                   [totalCount]='paging.totalCount'
                   [pageSize]='paging.pageSize'
                   (pageClicked)='onPageClicked($event)'>

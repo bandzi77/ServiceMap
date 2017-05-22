@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using ServiceMap.Models.apiModels;
 using ServiceMap.Models.Service_Tnt;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
+using System.Data.SqlClient;
+using System.Data;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -23,15 +26,15 @@ namespace ServiceMap.Controllers.apiControllers
         //}
 
         // GET api/values/5
-        private IServiceTntRepository servicesTnt;
+        private IServiceTntRepository appContext;
 
-        public ServicesTntController(IServiceTntRepository servTnt)
-        { servicesTnt = servTnt; }
+        public ServicesTntController(IServiceTntRepository ctx)
+        { appContext = ctx; }
 
         [HttpGet("GetServices")]
         public IActionResult GetServices([FromQuery] ServiceFilter sfilter)
         {
-            var paging = new { totalCount = 3, pageSize = 3 };
+
             ////x => x.productId >= (currentPage ?? 1)
 
             //var serviceTnt = getMockData().ToList();
@@ -39,11 +42,25 @@ namespace ServiceMap.Controllers.apiControllers
             //for (int i = 0; i < 3; i++)
             //{
             //    serviceTnt.AddRange(serviceTnt);
-            //}
-            var res = servicesTnt.ServicesTnt.ToList();
-          //  serviceTnt = serviceTnt.Where(x => x.Town.StartsWith(sfilter?.CityName ?? "", StringComparison.OrdinalIgnoreCase)).Select(x => x).ToList();
 
+          
+            SqlParameter postCode = new SqlParameter("postCode", DBNull.Value); 
+            if (!String.IsNullOrWhiteSpace(sfilter.PostCode))
+            {
+                int number;
+                Int32.TryParse(sfilter.PostCode?.Replace("-", ""), out number);
+                postCode = new SqlParameter("postCode", number == 0 ? DBNull.Value : (object)number);
+            }
+            var townName = new SqlParameter("townName", (object)sfilter.CityName ?? DBNull.Value);
+            var order_by=new SqlParameter("order_by", DBNull.Value);
+            var start = new SqlParameter("start",(object)(((sfilter.CurrentPage??1)-1)*(sfilter.PageSize??25))?? DBNull.Value);
+            var limit = new SqlParameter("limit", (object)sfilter.PageSize?? 25);
+
+            var res = appContext.ServicesTnt.FromSql("[dbo].[SearchServiceTnt] @postCode, @townName, @order_by, @start, @limit", postCode, townName, order_by, start, limit).ToList();
+
+            var paging = new { totalCount = res.Select(x=>x.TotalCount).FirstOrDefault(), pageSize = 25 };
             var result = new { serviceTnt = res, paging = paging };
+
             return Ok(result);
 
         }
