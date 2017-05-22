@@ -9,6 +9,5 @@ namespace ServiceMap.Models.Service_Tnt
     public interface IServiceTntRepository
     {
         IQueryable<ServiceTnt> ServicesTnt { get; }
-        IQueryable<Blog> blog { get; }
     }
 }

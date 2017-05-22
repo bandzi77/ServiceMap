@@ -1,7 +1,7 @@
-USE [FARMAX_SQLSRV]
+USE [ServiceMap]
 GO
 
-/****** Object:  Table [dbo].[Location]    Script Date: 13.05.2017 13:58:22 ******/
+/****** Object:  Table [dbo].[Location]    Script Date: 23.05.2017 00:18:36 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -10,14 +10,14 @@ GO
 
 CREATE TABLE [dbo].[Location](
 	[DepotCode] [nvarchar](10) NOT NULL,
-	[Addresses_Town] [nvarchar](max) NULL,
-	[Addresses_Postcode] [nvarchar](6) NULL,
-	[Addresses_Street] [nvarchar](max) NULL,
-	[InternationalPackageHours_Info] [nvarchar](max) NULL,
-	[DomesticPackageHours_Info] [nvarchar](max) NULL,
-	[SaturdayPackageHours_Info] [nvarchar](max) NULL,
-	[PassportPickupHours_Info] [nvarchar](max) NULL,
-	[WeekPackageHours_Info] [nvarchar](max) NULL,
+	[AddressesTown] [nvarchar](max) NULL,
+	[AddressesPostcode] [nvarchar](6) NULL,
+	[AddressesStreet] [nvarchar](max) NULL,
+	[InternationalPackageHoursInfo] [nvarchar](max) NULL,
+	[DomesticPackageHoursInfo] [nvarchar](max) NULL,
+	[SaturdayPackageHoursInfo] [nvarchar](max) NULL,
+	[PassportPickupHoursInfo] [nvarchar](max) NULL,
+	[WeekPackageHoursInfo] [nvarchar](max) NULL,
 	[InsertDate] [date] NOT NULL,
 	[InsertTime] [time](0) NOT NULL
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]

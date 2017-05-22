@@ -23,19 +23,19 @@ namespace ServiceMap.Controllers.apiControllers
         private SignInManager<AppUser> signInManager;
         private UserManager<AppUser> userManager;
         private RoleManager<IdentityRole> roleManager;
-        private IConfiguration _configuration;
+        private IConfiguration configuration;
         private string roleSuperUser;
         private string roleUser;
         private IEmailService emailService;
         private IUserService currentUser;
 
         public UsersController(SignInManager<AppUser> signinMgr, UserManager<AppUser> userMgr,
-            RoleManager<IdentityRole> roleMgr, IConfiguration configuration, IEmailService emailService, IUserService userService)
+            RoleManager<IdentityRole> roleMgr, IConfiguration config, IEmailService emailService, IUserService userService)
         {
             signInManager = signinMgr;
             userManager = userMgr;
             roleManager = roleMgr;
-            _configuration = configuration;
+            configuration = config;
             this.emailService = emailService;
             this.currentUser = userService;
             roleSuperUser = configuration["Data:Roles:Superuser"];
@@ -83,7 +83,6 @@ namespace ServiceMap.Controllers.apiControllers
         public async Task<IActionResult> Post([FromBody] User user)
         {
             IdentityResult resultIdent = null;
-
             var result = new { success = false, message = ConstsData.UserModelInvalid };
 
             if (ModelState.IsValid && user._id == "0")
@@ -170,50 +169,53 @@ namespace ServiceMap.Controllers.apiControllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(string id, [FromBody] User user)
         {
-            IdentityResult resultIdent = null;
             var result = new { success = false, message = ConstsData.UpdateUserError };
 
-            ModelState.Remove("Password");
-            if (ModelState.IsValid && user._id != "0")
+            if (user.Email.ToUpper() != configuration["Data:FirstUser:Email"].ToUpper())
             {
-                var userToUpdate = await userManager.FindByIdAsync(id);
-                if (userToUpdate != null)
+                IdentityResult resultIdent = null;
+                ModelState.Remove("Password");
+                if (ModelState.IsValid && user._id != "0")
                 {
-                    userToUpdate.LimitOfRequestsPerDay = user.LimitOfRequestsPerDay;
-                    userToUpdate.LockoutEnd = user.IsLocked ? DateTimeOffset.MaxValue : (DateTimeOffset?)null;
-                    resultIdent = await userManager.UpdateAsync(userToUpdate);
-                    if (resultIdent.Succeeded)
+                    var userToUpdate = await userManager.FindByIdAsync(id);
+                    if (userToUpdate != null)
                     {
-                        if (!user.IsLocked)
-                        {
-                            resultIdent = await userManager.ResetAccessFailedCountAsync(userToUpdate);
-                        }
-
+                        userToUpdate.LimitOfRequestsPerDay = user.LimitOfRequestsPerDay;
+                        userToUpdate.LockoutEnd = user.IsLocked ? DateTimeOffset.MaxValue : (DateTimeOffset?)null;
+                        resultIdent = await userManager.UpdateAsync(userToUpdate);
                         if (resultIdent.Succeeded)
                         {
-                            if (await userManager.IsInRoleAsync(userToUpdate, roleSuperUser) && user.IsSuperUser)
+                            if (!user.IsLocked)
                             {
-                                result = new { success = true, message = ConstsData.UpdateUserSuccess };
+                                resultIdent = await userManager.ResetAccessFailedCountAsync(userToUpdate);
+                            }
+
+                            if (resultIdent.Succeeded)
+                            {
+                                if (await userManager.IsInRoleAsync(userToUpdate, roleSuperUser) && user.IsSuperUser)
+                                {
+                                    result = new { success = true, message = ConstsData.UpdateUserSuccess };
+                                }
+                                else
+                                {
+                                    dynamic res = await UserUpdateRole(userToUpdate, user);
+                                    result = new { success = (bool)res.success, message = (string)res.message };
+                                }
                             }
                             else
                             {
-                                dynamic res = await UserUpdateRole(userToUpdate, user);
-                                result = new { success = (bool)res.success, message = (string)res.message };
+                                result = new { success = false, message = ConstsData.UpdateUserResetAccessFailed };
                             }
                         }
                         else
                         {
-                            result = new { success = false, message = ConstsData.UpdateUserResetAccessFailed };
+                            result = new { success = false, message = ConstsData.UpdateUserIdentity };
                         }
                     }
                     else
                     {
-                        result = new { success = false, message = ConstsData.UpdateUserIdentity };
+                        result = new { success = false, message = ConstsData.UpdateUserNotExists };
                     }
-                }
-                else
-                {
-                    result = new { success = false, message = ConstsData.UpdateUserNotExists };
                 }
             }
 
@@ -259,12 +261,15 @@ namespace ServiceMap.Controllers.apiControllers
             if (id != "0")
             {
                 var user = await userManager.FindByIdAsync(id);
-                if (user != null)
+                if (user.Email.ToUpper() != configuration["Data:FirstUser:Email"].ToUpper())
                 {
-                    resultIdent = await userManager.DeleteAsync(user);
-                    if (resultIdent.Succeeded)
+                    if (user != null)
                     {
-                        result = new { success = true, message = ConstsData.DeleteUserSuccess };
+                        resultIdent = await userManager.DeleteAsync(user);
+                        if (resultIdent.Succeeded)
+                        {
+                            result = new { success = true, message = ConstsData.DeleteUserSuccess };
+                        }
                     }
                 }
             }

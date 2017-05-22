@@ -124,6 +124,7 @@ namespace ServiceMap
             services.AddTransient<IUserService, UserService>();
             services.AddSingleton<IEmailService, EmailService>();
             services.AddTransient<IServiceTntRepository, ServiceTntRepository>();
+            services.AddTransient<IDepotRepository, DepotRepository>();
             //   services.AddTransient<IServiceProvider, ServiceCollection>();
             //services.AddTransient<IConfiguration, ConfigureServices>();
             services.AddMvc();

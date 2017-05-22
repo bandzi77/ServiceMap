@@ -13,13 +13,16 @@ namespace ServiceMap.Models
         :base(options){ }
 
         public virtual DbSet<ServiceTnt> ServiceTnt { get; set; }
-        public virtual DbSet<Blog> Blog { get; set; }
+        public virtual DbSet<DepotDetails> Location { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
             modelBuilder.Entity<ServiceTnt>().
                 HasKey(k => new { k.Town, k.FromPostcode, k.ToPostcode });
+
+            modelBuilder.Entity<DepotDetails>().
+               HasKey(k => new { k.DepotCode, k.AddressesTown, k.AddressesStreet, k.AddressesPostcode });
         }
 
     }

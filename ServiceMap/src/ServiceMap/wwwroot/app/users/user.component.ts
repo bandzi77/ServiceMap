@@ -15,7 +15,6 @@ import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
 import { Location } from '@angular/common';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
-//import { GenericValidator } from '../shared/generic-validator';
 import { IResult } from '../shared/common';
 
 @Component({
@@ -203,7 +202,7 @@ export class UserComponent implements OnInit, OnDestroy {
             if (confirm(`Czy chcesz usunąć użytkownika: ${this.user.email}?`)) {
                 this.userService.deleteUser(this.user._id)
                     .subscribe(result => {
-                        this.onSaveComplete(result, this.user);
+                        this.onDeleteComplete(result, this.user);
                     },
                     (error: any) => this.errorMessage = <any>error
                     );
@@ -224,7 +223,6 @@ export class UserComponent implements OnInit, OnDestroy {
                 );
         } else if (!this.userForm.dirty) {
             // nic nie rób
-            // this.onSaveComplete();
         }
 
 
@@ -233,19 +231,28 @@ export class UserComponent implements OnInit, OnDestroy {
     }
 
 
-    private onSaveComplete(res: IResult, user: IUser): void {
+    private onDeleteComplete(res: IResult, user: IUser): void {
+        if (res.success) {
+            this.onBack();
+        } else {
+            this.toastr.error(res.message, 'Błąd!');
+        }
         // Reset the form to clear the flags
         // this.userForm.reset();
         // TODO
         //this.router.navigate(['/userlist']);
         //this.onBack()
-        if (res.success) {
-            this.resetForm();
+    }
+
+    private onSaveComplete(res: IResult, user: IUser): void {
+        if (res.success)
+        {
+            this.toastr.success(res.message, 'Success!');
             if (user._id === "0") {
-                this.toastr.success(res.message, 'Success!');
+                this.resetForm();
             }
             else {
-                this.onBack();
+                this.userForm.markAsPristine();
             }
         } else {
             this.toastr.error(res.message, 'Błąd!');

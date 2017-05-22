@@ -43,35 +43,34 @@
                 <table class="table table-hover table-striped table-condensed sm-max-height">
                     <thead>
                         <tr>
-                            <th>Depot code 1a</th>
-                            <th style="min-width:350px;">Town</th>
-                            <th>From Postcode</th>
-                            <th>To Postcode</th>
-                            <th>Sobota</th>
+                            <th class="sm-small-break-th">Kod<br>Depotu</th>
+                            <th style="min-width:350px;">Miasto</th>
+                            <th>Kod pocztowy od</th>
+                            <th>Kod pocztowy do</th>
+                            <th class="sm-break-th">Doręczenie<br>sobotnie</th>
 
-                            <th>EX9</th>
-                            <th>EX10</th>
-                            <th>EX12</th>
-                            <th>Priority</th>
+                            <th class="sm-small-break-th">ID09 00<br>Express</th>
+                            <th class="sm-small-break-th">ID10 00<br>Express</th>
+                            <th class="sm-small-break-th">ID12 00<br>Express</th>
+                            <th class="sm-break-th">Przesyłka<br>priorytetowa</th>
                             <th class="sm-break-th">Wieczorne<br>dostarczenie</th>
-                            <th class="sm-break-th">Standard<br>Delivery OD</th>
-                            <th class="sm-break-th">Standard<br>Delivery DO</th>
-                            <th class="sm-break-th">Pick up<br>domestic zgl</th>
-                            <th style="min-width:200px; white-space:pre">DateTimePick up<br>eksport sm zgl</th>
-                            <th style="min-width:200px; white-space:pre">Samochod z winda<br>dostepny w standardzie</th>
+                            <!--<th class="sm-break-th">Doręcznia<br>od</th>
+                            <th class="sm-break-th">Doręcznia<br>do</th>-->
+                            <th class="sm-large-with">Zamówienia kuriera<br>krajowego do</th>
+                            <th class="sm-large-with" style="white-space:pre">Zamówienie kuriera<br>międzynarodowego do</th>
+                            <!--<th style="min-width:200px; white-space:pre">Samochod z winda<br>dostepny w standardzie</th>-->
 
-                            <th class="sm-break-th">Diplomat next<br>day</th>
-                            <th class="sm-last-th-with">Serwis miejski</th>
+                            <th class="sm-large-with">Najwcześniejsza dostawa<br>przesyłki pozasystemowej</th>
                             <th class="sm-break-th">Serwis<br>podmiejski</th>
-                            <th style="white-space:pre">Pick up domestic<br>czas</th>
-                            <th style="white-space:pre">Pick up eksport<br>sm czas</th>
+                            <th class="sm-break-th">Serwis<br>miejski</th>
+                            <th class="sm-large-with">Minimalny czas na odbiór<br>przesyłki drogowej</th>
+                            <th style="white-space:pre;" class="sm-last-th-with">Minimalny czas na odbiór<br>przesyłki lotniczej</th>
                         </tr>
                     </thead>
                     <!--*ngIf="servicesTnt && servicesTnt.length"-->
                     <tbody  class="sm-max-height">
                         <tr *ngFor="let serviceTnt of servicesTnt | productFilter : listFilter">
-                            <td>
-
+                            <td class="sm-small-break-td">
                                 <a (click)="onClick(serviceTnt.depotCode, lgModal)">
                                     {{serviceTnt.depotCode}}
                                 </a>
@@ -83,50 +82,53 @@
                             <td>{{serviceTnt.fromPostcode | lowercase}}</td>
                             <td>{{serviceTnt.toPostcode}}</td>
 
-                            <td>
+                            <td class="sm-break-td">
                                 <span *ngIf="serviceTnt.sobota"><i class="fa fa-check-square-o fa-1x" aria-hidden="true"></i></span>
                                 <span *ngIf="!serviceTnt.sobota"><i class="fa fa-square-o fa-1x" aria-hidden="true"></i></span>
                             </td>
 
-                            <td>
+                            <td class="sm-small-break-td">
                                 <span *ngIf="serviceTnt.ex9"><i class="fa fa-check-square-o fa-1x" aria-hidden="true"></i></span>
                                 <span *ngIf="!serviceTnt.ex9"><i class="fa fa-square-o fa-1x" aria-hidden="true"></i></span>
                             </td>
-                            <td>
+                            <td class="sm-small-break-td">
                                 <span *ngIf="serviceTnt.ex10"><i class="fa fa-check-square-o fa-1x" aria-hidden="true"></i></span>
                                 <span *ngIf="!serviceTnt.ex10"><i class="fa fa-square-o fa-1x" aria-hidden="true"></i></span>
                             </td>
-                            <td>
+                            <td class="sm-small-break-td">
                                 <span *ngIf="serviceTnt.ex12"><i class="fa fa-check-square-o fa-1x" aria-hidden="true"></i></span>
                                 <span *ngIf="!serviceTnt.ex12"><i class="fa fa-square-o fa-1x" aria-hidden="true"></i></span>
                             </td>
 
-                            <td>{{serviceTnt.priority}}</td>
+                            <td class="sm-break-td">{{serviceTnt.priority}}</td>
                             <td class="sm-break-td">
                                 <span *ngIf="serviceTnt.wieczorneDostarczenie"><i class="fa fa-check-square-o fa-1x" aria-hidden="true"></i></span>
                                 <span *ngIf="!serviceTnt.wieczorneDostarczenie"><i class="fa fa-square-o fa-1x" aria-hidden="true"></i></span>
                             </td>
 
-                            <td class="sm-break-td">{{serviceTnt.standardDeliveryOd}}</td>
+                            <!-- Na polecenie RW
+                                <td class="sm-break-td">{{serviceTnt.standardDeliveryOd}}</td>
                             <td class="sm-break-td">{{serviceTnt.standardDeliveryDo}}</td>
-                            <td class="sm-break-td">{{serviceTnt.pickUpDomesticZgl}}</td>
-                            <td style="min-width:200px;">{{serviceTnt.dateTimePickUpEksportSmZgl}}</td>
-                            <td style="min-width:200px;">
+                                -->
+                            <td class="sm-large-with">{{serviceTnt.pickUpDomesticZgl}}</td>
+                            <td class="sm-large-with">{{serviceTnt.dateTimePickUpEksportSmZgl}}</td>
+                            <!-- Na polecenie RW
+                                <td class="sm-large-with">
                                 <span *ngIf="serviceTnt.samochodZwindaDostepnyWstandardzie"><i class="fa fa-check-square-o fa-1x" aria-hidden="true"></i></span>
                                 <span *ngIf="!serviceTnt.samochodZwindaDostepnyWstandardzie"><i class="fa fa-square-o fa-1x" aria-hidden="true"></i></span>
-                            </td>
+                            </td>-->
 
-                            <td class="sm-break-td">{{serviceTnt.diplomatNextDay}}</td>
-                            <td>
-                                <span *ngIf="serviceTnt.serwisMiejski"><i class="fa fa-check-square-o fa-1x" aria-hidden="true"></i></span>
-                                <span *ngIf="!serviceTnt.serwisMiejski"><i class="fa fa-square-o fa-1x" aria-hidden="true"></i></span>
-                            </td>
+                            <td class="sm-large-with">{{serviceTnt.diplomatNextDay}}</td>
                             <td class="sm-break-td">
                                 <span *ngIf="serviceTnt.serwisPodmiejski"><i class="fa fa-check-square-o fa-1x" aria-hidden="true"></i></span>
                                 <span *ngIf="!serviceTnt.serwisPodmiejski"><i class="fa fa-square-o fa-1x" aria-hidden="true"></i></span>
                             </td>
-                            <td>{{serviceTnt.pickUpDomesticCzas}}</td>
-                            <td>{{serviceTnt.pickUpEksportSmCzas}}</td>
+                            <td class="sm-break-td">
+                                <span *ngIf="serviceTnt.serwisMiejski"><i class="fa fa-check-square-o fa-1x" aria-hidden="true"></i></span>
+                                <span *ngIf="!serviceTnt.serwisMiejski"><i class="fa fa-square-o fa-1x" aria-hidden="true"></i></span>
+                            </td>
+                            <td class="sm-large-with">{{serviceTnt.pickUpDomesticCzas}}</td>
+                            <td class="sm-large-with">{{serviceTnt.pickUpEksportSmCzas}}</td>
                         </tr>
                     </tbody>
                 </table>

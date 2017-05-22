@@ -12,12 +12,23 @@
 
 
 th, td {
-    min-width: 130px;
-    width: 130px;
+    min-width: 110px;
+    width: 110px;
+}
+
+.sm-small-break-th{
+     width: 80px; min-width: 80px; white-space:pre;
+}
+.sm-small-break-td{
+     width: 80px; min-width: 80px;
+}
+
+.sm-large-with {
+     min-width: 190px;
 }
 
 .sm-last-th-with {
-    width:150px;
+    min-width:208px; 
 }
 .sm-break-th {
     min-width:120px; width:120px; white-space:pre;

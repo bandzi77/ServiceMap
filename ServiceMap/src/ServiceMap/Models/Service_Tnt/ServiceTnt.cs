@@ -5,13 +5,6 @@ using System.Threading.Tasks;
 
 namespace ServiceMap.Models.Service_Tnt
 {
-
-    public partial class Blog
-    {
-        public int BlogId { get; set; }
-        public string Url { get; set; }
-
-   }
     public class ServiceTnt
     {
         public string DepotCode { get; set; }

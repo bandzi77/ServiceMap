@@ -1,11 +1,11 @@
 USE [msdb]
 GO
 
-/****** Object:  Job [ServiceMap Import Data]    Script Date: 18.05.2017 22:29:01 ******/
+/****** Object:  Job [ServiceMap Import Data]    Script Date: 23.05.2017 00:16:46 ******/
 BEGIN TRANSACTION
 DECLARE @ReturnCode INT
 SELECT @ReturnCode = 0
-/****** Object:  JobCategory [[Uncategorized (Local)]]    Script Date: 18.05.2017 22:29:01 ******/
+/****** Object:  JobCategory [[Uncategorized (Local)]]    Script Date: 23.05.2017 00:16:47 ******/
 IF NOT EXISTS (SELECT name FROM msdb.dbo.syscategories WHERE name=N'[Uncategorized (Local)]' AND category_class=1)
 BEGIN
 EXEC @ReturnCode = msdb.dbo.sp_add_category @class=N'JOB', @type=N'LOCAL', @name=N'[Uncategorized (Local)]'
@@ -25,7 +25,7 @@ EXEC @ReturnCode =  msdb.dbo.sp_add_job @job_name=N'ServiceMap Import Data',
 		@category_name=N'[Uncategorized (Local)]', 
 		@owner_login_name=N'DESKTOP-KR3KFBT\mh_user', @job_id = @jobId OUTPUT
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
-/****** Object:  Step [Download files from ftp]    Script Date: 18.05.2017 22:29:01 ******/
+/****** Object:  Step [Download files from ftp]    Script Date: 23.05.2017 00:16:47 ******/
 EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'Download files from ftp', 
 		@step_id=1, 
 		@cmdexec_success_code=0, 
@@ -39,7 +39,7 @@ EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'Download
 		@command=N'D:\import\mrowa.cmd', 
 		@flags=0
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
-/****** Object:  Step [ImportServicesTnt]    Script Date: 18.05.2017 22:29:01 ******/
+/****** Object:  Step [ImportServicesTnt]    Script Date: 23.05.2017 00:16:47 ******/
 EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'ImportServicesTnt', 
 		@step_id=2, 
 		@cmdexec_success_code=0, 
@@ -50,7 +50,9 @@ EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'ImportSe
 		@retry_attempts=0, 
 		@retry_interval=0, 
 		@os_run_priority=0, @subsystem=N'TSQL', 
-		@command=N'-- Tworzy tymaczasow¹ tabelê
+		@command=N'SET QUOTED_IDENTIFIER ON
+
+-- Tworzy tymaczasow¹ tabelê
 
 DROP TABLE IF exists #importServicesTNT
 	CREATE TABLE #importServicesTNT (
@@ -174,7 +176,7 @@ END;',
 		@database_name=N'ServiceMap', 
 		@flags=0
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
-/****** Object:  Step [ImportLocation]    Script Date: 18.05.2017 22:29:01 ******/
+/****** Object:  Step [ImportLocation]    Script Date: 23.05.2017 00:16:47 ******/
 EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'ImportLocation', 
 		@step_id=3, 
 		@cmdexec_success_code=0, 
@@ -226,14 +228,14 @@ BEGIN
 			DELETE FROM [dbo].[Location];
 			INSERT INTO [dbo].[Location]
 				 ( [DepotCode]
-				  ,[Addresses_Town]
-				  ,[Addresses_Postcode]
-				  ,[Addresses_Street]
-				  ,[InternationalPackageHours_Info]
-				  ,[DomesticPackageHours_Info]
-				  ,[SaturdayPackageHours_Info]
-				  ,[PassportPickupHours_Info]
-				  ,[WeekPackageHours_Info]
+				  ,[AddressesTown]
+				  ,[AddressesPostcode]
+				  ,[AddressesStreet]
+				  ,[InternationalPackageHoursInfo]
+				  ,[DomesticPackageHoursInfo]
+				  ,[SaturdayPackageHoursInfo]
+				  ,[PassportPickupHoursInfo]
+				  ,[WeekPackageHoursInfo]
 				 )
 			SELECT [DepotCode]
 				  ,[Addresses_Town]

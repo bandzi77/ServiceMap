@@ -23,12 +23,5 @@ namespace ServiceMap.Models.Service_Tnt
             }
         }
 
-        public IQueryable<Blog> blog
-        {
-            get
-            {
-                return context.Blog;
-            }
-        }
     }
 }

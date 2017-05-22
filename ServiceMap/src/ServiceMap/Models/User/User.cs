@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ServiceMap.Common;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace ServiceMap.Models.User
         public string _id { get; set; }
         [Required]
         public string Email { get; set; }
-        [RegularExpression("(?=.*\\d)(?=.*[a-zA-Z])(?=.+[_\\!\\@\\#\\$\\%\\^\\&\\*\\(\\)\\+\\-\\=])(?!.*\\s).{8,12}")]
+        [RegularExpression(ConstsData.PasswordRegExp)]
         [Required]
         public string Password { get; set; }
         [Required]
