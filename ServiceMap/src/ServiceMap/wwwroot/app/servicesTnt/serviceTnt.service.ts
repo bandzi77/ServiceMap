@@ -8,6 +8,7 @@ import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 
+
 @Injectable()
 export class ServicesTntService {
     private _productUrl = 'api/servicesTnt/servicesTnt.json';
@@ -46,6 +47,8 @@ export class ServicesTntService {
     //    console.error(error);
     //    return Observable.throw(error.json().error || 'Server error');
     //}
+
+
 
 
     private extractData(response: Response) {

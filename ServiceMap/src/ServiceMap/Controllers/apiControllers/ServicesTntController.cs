@@ -9,6 +9,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using System.Data.SqlClient;
 using System.Data;
+using ServiceMap.Sql;
+using ServiceMap.Common;
+using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Identity;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -27,43 +31,55 @@ namespace ServiceMap.Controllers.apiControllers
 
         // GET api/values/5
         private IServiceTntRepository appContext;
+        private IConfiguration configuration;
+        private IUserService userService;
+        private UserManager<AppUser> userManager;
 
-        public ServicesTntController(IServiceTntRepository ctx)
-        { appContext = ctx; }
-
-        [HttpGet("GetServices")]
-        public IActionResult GetServices([FromQuery] ServiceFilter sfilter)
+        public ServicesTntController(UserManager<AppUser> usrMgr, IServiceTntRepository ctx, IConfiguration config, IUserService usrService)
         {
-
-            ////x => x.productId >= (currentPage ?? 1)
-
-            //var serviceTnt = getMockData().ToList();
-
-            //for (int i = 0; i < 3; i++)
-            //{
-            //    serviceTnt.AddRange(serviceTnt);
-
-          
-            SqlParameter postCode = new SqlParameter("postCode", DBNull.Value); 
-            if (!String.IsNullOrWhiteSpace(sfilter.PostCode))
-            {
-                int number;
-                Int32.TryParse(sfilter.PostCode?.Replace("-", ""), out number);
-                postCode = new SqlParameter("postCode", number == 0 ? DBNull.Value : (object)number);
-            }
-            var townName = new SqlParameter("townName", (object)sfilter.CityName ?? DBNull.Value);
-            var order_by=new SqlParameter("order_by", DBNull.Value);
-            var start = new SqlParameter("start",(object)(((sfilter.CurrentPage??1)-1)*(sfilter.PageSize??25))?? DBNull.Value);
-            var limit = new SqlParameter("limit", (object)sfilter.PageSize?? 25);
-
-            var res = appContext.ServicesTnt.FromSql("[dbo].[SearchServiceTnt] @postCode, @townName, @order_by, @start, @limit", postCode, townName, order_by, start, limit).ToList();
-
-            var paging = new { totalCount = res.Select(x=>x.TotalCount).FirstOrDefault(), pageSize = 25 };
-            var result = new { serviceTnt = res, paging = paging };
-
-            return Ok(result);
+            appContext = ctx;
+            configuration = config;
+            userService = usrService;
+            userManager = usrMgr;
 
         }
+
+        [HttpGet("GetServices")]
+        public async Task<IActionResult> GetServices([FromQuery] ServiceFilter filter)
+        {
+            List<ServiceTnt> res = new List<ServiceTnt>();
+            var currentUser = await userService.GetUser(User);
+            if (!User.IsInRole(configuration["Data:Roles:Superuser"]))
+            {
+                if ((currentUser.NumberOfRequestsPerDay??0) >= currentUser.LimitOfRequestsPerDay)
+                {
+                    return Ok(new
+                    {
+                        serviceTnt = res,
+                        paging = new { totalCount = 0, pageSize = 25 },
+                        result = new { success = false, message = ConstsData.ExceededNumberOfRequestsPerDay }
+                    });
+                }
+
+                res = appContext.ServicesTnt.FromSql(SqlQuery.sGetServicesTnt, SqlBuilder.GetServicesTnt(filter)).ToList();
+                currentUser.NumberOfRequestsPerDay = currentUser.NumberOfRequestsPerDay == null ? 1 : currentUser.NumberOfRequestsPerDay + 1;
+                await userManager.UpdateAsync(currentUser);
+            }
+            else
+            {
+                res = appContext.ServicesTnt.FromSql(SqlQuery.sGetServicesTnt, SqlBuilder.GetServicesTnt(filter)).ToList();
+            }
+
+            var result = new
+            {
+                serviceTnt = res,
+                paging = new { totalCount = res.Select(x => x.TotalCount).FirstOrDefault(), pageSize = 25 },
+                result = new { success = true, message = "" }
+            };
+
+            return Ok(result);
+        }
+
 
         [HttpGet("GetDepotDetails")]
         public IActionResult GetDepotDetails(string depotCode)

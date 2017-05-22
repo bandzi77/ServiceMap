@@ -16,12 +16,12 @@ namespace ServiceMap.Controllers.apiControllers
     [Authorize]
     public class AppController : Controller
     {
-        IConfiguration _configuration;
+        IConfiguration configuration;
         private SignInManager<AppUser> signInManager;       
 
-        public AppController(IConfiguration configuration, SignInManager<AppUser> signinMgr)
+        public AppController(IConfiguration config, SignInManager<AppUser> signinMgr)
         {
-            _configuration = configuration;
+            configuration = config;
             signInManager = signinMgr;
         }
 
@@ -31,7 +31,7 @@ namespace ServiceMap.Controllers.apiControllers
         {
             bool issuperuser = false;
 
-            if (User.IsInRole(_configuration["Data:Roles:Superuser"]))
+            if (User.IsInRole(configuration["Data:Roles:Superuser"]))
             {
                 issuperuser = true;
             }

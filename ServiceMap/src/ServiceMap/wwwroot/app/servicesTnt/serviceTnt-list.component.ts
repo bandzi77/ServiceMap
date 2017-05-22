@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, ViewChild } from '@angular/core';
+﻿import { Component, OnInit, ViewChild, ViewContainerRef  } from '@angular/core';
 import { IServiceTnt, IServiceFilter } from './serviceTnt';
 import { IDepotDetails, IDepotDetailsFilter } from './depotDetails';
 import { IPage } from '../pagination/page';
@@ -6,6 +6,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ServicesTntService } from './serviceTnt.service';
 import { Subscription } from 'rxjs';
 import { LgModalComponent } from '../shared/lgModal.component';
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { IResult } from '../shared/common';
+
 
 @Component({
     templateUrl: 'app/servicesTnt/serviceTnt-list.component.html?v=${new Date().getTime()',
@@ -13,6 +16,7 @@ import { LgModalComponent } from '../shared/lgModal.component';
 })
 
 export class ServiceTntListComponent implements OnInit {
+   
     busyIndicator: Subscription;
     pageTitle: string = "Mapa Serwisowa";
     imageWidth: number = 50;
@@ -27,7 +31,12 @@ export class ServiceTntListComponent implements OnInit {
     private serviceFilter: IServiceFilter;
     @ViewChild('lgModal') lgModalRef: LgModalComponent;
 
-    constructor(private _serviceTntService: ServicesTntService, private _route: ActivatedRoute) {
+    constructor(private _serviceTntService: ServicesTntService,
+                private _route: ActivatedRoute,
+                private toastr: ToastsManager,
+                vcr: ViewContainerRef)
+    {
+        this.toastr.setRootViewContainerRef(vcr);
     }
 
     ngOnInit(): void {
@@ -41,6 +50,7 @@ export class ServiceTntListComponent implements OnInit {
             .subscribe(result => {
                 this.servicesTnt = result.serviceTnt;
                 this.paging = result.paging;
+                this.onGetComplete(result.result);
             },
             error => this.errorMessage = <any>error);
     }
@@ -81,5 +91,11 @@ export class ServiceTntListComponent implements OnInit {
             this.lgModalRef.show();
         },
             error => this.errorMessage = <any>error);
+    }
+
+    private onGetComplete(res: IResult): void {
+        if (!res.success) {
+            this.toastr.error(res.message, 'Błąd!');
+        }
     }
 }

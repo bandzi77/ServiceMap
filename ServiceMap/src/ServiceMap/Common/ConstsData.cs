@@ -44,5 +44,9 @@ namespace ServiceMap.Common
         public static readonly string UpdateUserIdentity = "13. Błąd podczas aktualizacji danych, spróbj ponownie";
         public static readonly string UpdateUserResetAccessFailed = "14. Błąd podczas aktualizacji danych, spróbj ponownie";
         public static readonly string UpdateUserRoleIdentity = "15. Błąd podczas aktualizacji danych, spróbj ponownie";
+
+        //Wyszukwianie usług
+        public static readonly string ExceededNumberOfRequestsPerDay = "16. Przekroczony limit zapytań w ciągu dnia";
+
     }
 }

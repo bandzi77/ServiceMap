@@ -132,8 +132,8 @@
                 </table>
             </div>
         </div>
-<!--&& paging.pageSize>1-->
-        <page-app *ngIf='servicesTnt && servicesTnt.length' 
+
+        <page-app *ngIf='servicesTnt && servicesTnt.length && paging.pageSize>1'
                   [totalCount]='paging.totalCount'
                   [pageSize]='paging.pageSize'
                   (pageClicked)='onPageClicked($event)'>

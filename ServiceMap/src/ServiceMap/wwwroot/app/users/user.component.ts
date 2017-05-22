@@ -232,13 +232,6 @@ export class UserComponent implements OnInit, OnDestroy {
         console.log('Saved: ' + JSON.stringify(this.userForm.value));
     }
 
-    private showSuccess() {
-        this.toastr.success('You are awesome!', 'Success!');
-    }
-
-    //onSaveUser(res:IResult): void {
-    //    if 
-    //}
 
     private onSaveComplete(res: IResult, user: IUser): void {
         // Reset the form to clear the flags
@@ -257,8 +250,6 @@ export class UserComponent implements OnInit, OnDestroy {
         } else {
             this.toastr.error(res.message, 'Błąd!');
         }
-
-        //this.showSuccess();
     }
 
     private resetForm(): void {

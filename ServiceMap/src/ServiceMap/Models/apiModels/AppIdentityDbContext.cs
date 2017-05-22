@@ -34,33 +34,29 @@ namespace ServiceMap.Models.apiModels
             if (await userManager.FindByEmailAsync(email) == null)
             {
                 if (await roleManager.FindByNameAsync(roleSuperUser) == null)
-                {   
+                {
                     await roleManager.CreateAsync(new IdentityRole(roleSuperUser));
-
                 }
 
                 if (await roleManager.FindByNameAsync(roleUser) == null)
                 {
                     await roleManager.CreateAsync(new IdentityRole(roleUser));
-
                 }
 
                 AppUser user = new AppUser
                 {
                     UserName = email,
                     Email = email,
-                    AccessFailedCount = 10
+                    AccessFailedCount = 100
                 };
 
                 IdentityResult result = await userManager.CreateAsync(user, password);
-
-
 
                 if (result.Succeeded)
                 {
                     await userManager.AddToRoleAsync(user, roleSuperUser);
                 }
-              
+
             }
         }
     }

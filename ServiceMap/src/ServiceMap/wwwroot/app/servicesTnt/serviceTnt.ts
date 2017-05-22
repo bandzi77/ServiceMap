@@ -1,4 +1,5 @@
 ﻿import { IPage } from '../pagination/page';
+import { IResult } from '../shared/common';
 
 export interface IServiceTnt {
     depotCode: string;
@@ -31,4 +32,5 @@ export interface IServiceFilter {
 export interface IServiceTntResult {
     serviceTnt: IServiceTnt[];
     paging: IPage[];
+    result: IResult;
 }

@@ -60,7 +60,7 @@ namespace ServiceMap.Controllers.apiControllers
                 _users = userManager.Users;
             }
 
-            var _result = _users
+            var result_ = _users
                 .Select(x => new User()
                 {
                     _id = x.Id,
@@ -69,17 +69,13 @@ namespace ServiceMap.Controllers.apiControllers
                     NumberOfRequestsPerDay = x.NumberOfRequestsPerDay,
                     IsSuperUser = x.Roles.Any(y => y.RoleId == userRole.Id),
                     IsLocked = x.LockoutEnd > DateTime.Now && x.LockoutEnabled
-                }).AsQueryable();
+                }).OrderBy(s=>s.Email).AsQueryable();
 
             if (showLockedOnly)
             {
-                _result = _result.Where(x => x.IsLocked == showLockedOnly);
+                result_ = result_.Where(x => x.IsLocked == showLockedOnly);
             }
-            var t = _result.OrderBy(x => x.Email).ToList();
-            t.AddRange(t);
-            t.AddRange(t);
-            t.AddRange(t);
-            var result = new { users = t, paging = "" };
+           var result = new { users = result_, paging = "" };
             return Ok(result);
         }
 
@@ -106,7 +102,7 @@ namespace ServiceMap.Controllers.apiControllers
                 }
 
                 if (await roleManager.FindByNameAsync(roleUser) == null)
-                {
+                { 
                     resultIdent = await roleManager.CreateAsync(new IdentityRole(roleUser));
                 }
 
