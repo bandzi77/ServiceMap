@@ -18,6 +18,7 @@ namespace ServiceMap.Common
         }
         public async void SendEmailAsync(string fromName, string CcEmail, string toEmail, string subject, string message, string emailFormat)
         {
+#if !DEBUG
             var host = configuration["Data:SMTP:host"];
             int port;
             int.TryParse(configuration["Data:SMTP:port"], out port);
@@ -35,6 +36,7 @@ namespace ServiceMap.Common
             emailMessage.Subject = subject;
             emailMessage.Body = String.IsNullOrWhiteSpace(emailFormat)?new TextPart("plain") { Text = message } : new TextPart(emailFormat) { Text = message };
 
+       
             using (var client = new SmtpClient())
             {
                 //client.LocalDomain = "tnt.com";
@@ -44,6 +46,7 @@ namespace ServiceMap.Common
                 await client.SendAsync(emailMessage).ConfigureAwait(false);
                 await client.DisconnectAsync(true).ConfigureAwait(false);
             }
+#endif
         }
     }
 }
