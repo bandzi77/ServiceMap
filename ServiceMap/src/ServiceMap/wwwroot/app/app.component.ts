@@ -12,7 +12,7 @@ import 'rxjs/add/observable/throw';
 @Component({
     selector: 'sm-app',
     templateUrl: 'app/app.component.html',
-    styleUrls: ['/app.component.css']
+    styleUrls: ['/app.component.css','../common/CommonStyle.css']
 })
 export class AppComponent implements OnInit {
     public isSuperUser: boolean;

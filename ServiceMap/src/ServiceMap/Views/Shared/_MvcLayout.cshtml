@@ -9,41 +9,16 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
     <link rel="stylesheet" asp-href-include="lib/font-awesome/css/font-awesome.css" />
-
-
+    <link asp-href-include="common/CommonStyle.css" rel="stylesheet" />
+    <link href="~/common/MvcLayout.css" rel="stylesheet" />
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
     <!--Potrzebne dla popovera-->
     <script src="~/lib/sm-common/sm-common.js"></script>
-    <style>
-        /*wymgane przez navbar-fixed-bottom*/
-        body {
-            padding-bottom: 70px;
-        }
-
-        .naglowek {
-            font-size: large;
-        }
-    </style>
-</head>
+ </head>
 <body>
-    @*<div class="panel panel" style="background-color:white; border-bottom-color:darkorange;">
-            <div class="panel-heading" style="margin-left:15px; vertical-align:middle;">
-                <div class="row">
-                    <h3 style="color:slategrey">
-                        <a href="http://www.tnt.com/express/pl_pl/site/home.html">
-                            <img src="~/app/assets/images/logo.svg" alt="TNT" style="width: 98px; height: 35px;" />
-                        </a>  Mapa Serwisowa
-                        <a class="btn btn-lg">Zaloguj</a>
-                    </h3>
-
-
-                </div>
-            </div>
-        </div>
-        <div>*@
     <div>
-        <nav class="navbar navbar-default" style="background-color:white; border-bottom-color:darkorange;">
+        <nav class="navbar navbar-default" >
             <div class="container-fluid">
                 <!--  <div class="navbar-collapse collapse">-->
                 <div class="navbar-header" style="padding:10px;">
@@ -52,7 +27,7 @@
                     </a>
                 </div>
                 <ul class="nav navbar-nav">
-                    <li style="color:slategrey; white-space:nowrap" class="navbar-text naglowek">
+                    <li style="white-space:nowrap" class="navbar-text naglowek ">
                         Mapa Serwisowa
                     </li>
                 </ul>
@@ -73,7 +48,7 @@
     </environment>
     <footer class="navbar navbar-default navbar-fixed-bottom text-center">
         <div class="container-fluid">
-            <p class="text-muted">TNT Express Worldwide (Poland) sp. z o.o. &copy; 2017 - Mapa Serwisowa 1.0.0 </p>
+            <p class="sm-text-dark-grey">TNT Express Worldwide (Poland) sp. z o.o. &copy; 2017 - Mapa Serwisowa 1.0.0 </p>
         </div>
     </footer>
 </body>

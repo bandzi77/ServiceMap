@@ -60,7 +60,7 @@ AppComponent = __decorate([
     core_1.Component({
         selector: 'sm-app',
         templateUrl: 'app/app.component.html',
-        styleUrls: ['/app.component.css']
+        styleUrls: ['/app.component.css', '../common/CommonStyle.css']
     }),
     __metadata("design:paramtypes", [http_1.Http,
         common_1.Location])

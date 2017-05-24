@@ -39,7 +39,7 @@
                                   (mouseup)="onEyeEvent($event)"
                                   (mouseleave)="onEyeEvent($event)"
                                   class="input-group-addon btn"
-                                  [ngClass]="{'disabled': userForm.get('_id').value!='0'}"><i class="fa fa-eye fa-1x"></i></span>
+                                  [ngClass]="{'disabled': userForm.get('_id').value!=0}"><i class="fa fa-eye fa-1x"></i></span>
                             <input class="form-control"
                                    autocomplete="off"
                                    id="passwordId"
@@ -97,7 +97,7 @@
 
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-3">
-                        <label class="btn btn-primary smap-check-btn">
+                        <label class="btn btn-primary  smap-check-btn">
                             <input id="isSuperUserId"
                                    type="checkbox"
                                    formControlName="isSuperUser" />
