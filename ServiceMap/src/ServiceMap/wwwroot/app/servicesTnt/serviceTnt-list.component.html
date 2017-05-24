@@ -38,15 +38,14 @@
                 {{listFilter}}
             </div>
         </div>-->
-        <div class="tablecontainer">
-            <div class="table-responsive sm-max-height">
-                <table class="table table-hover table-striped table-condensed sm-max-height">
+            <div class="table-responsive">
+                <table class="table table-hover table-striped table-condensed ">
                     <thead>
                         <tr>
                             <th class="sm-small-break-th">Kod<br>Depotu</th>
                             <th style="min-width:350px;">Miasto</th>
-                            <th>Kod pocztowy od</th>
-                            <th>Kod pocztowy do</th>
+                            <th class="sm-break-th">Kod<br>pocztowy od</th>
+                            <th class="sm-break-th">Kod<br>pocztowy do</th>
                             <th class="sm-break-th">Doręczenie<br>sobotnie</th>
 
                             <th class="sm-small-break-th">ID09 00<br>Express</th>
@@ -68,7 +67,7 @@
                         </tr>
                     </thead>
                     <!--*ngIf="servicesTnt && servicesTnt.length"-->
-                    <tbody  class="sm-max-height">
+                    <tbody>
                         <tr *ngFor="let serviceTnt of servicesTnt | productFilter : listFilter">
                             <td class="sm-small-break-td">
                                 <a (click)="onClick(serviceTnt.depotCode, lgModal)">
@@ -79,8 +78,8 @@
                                 </a>-->
                             </td>
                             <td style="min-width:350px;max-width:350px;">{{serviceTnt.town}}</td>
-                            <td>{{serviceTnt.fromPostcode | lowercase}}</td>
-                            <td>{{serviceTnt.toPostcode}}</td>
+                            <td class="sm-break-td">{{serviceTnt.fromPostcode | lowercase}}</td>
+                            <td class="sm-break-td">{{serviceTnt.toPostcode}}</td>
 
                             <td class="sm-break-td">
                                 <span *ngIf="serviceTnt.sobota"><i class="fa fa-check-square-o fa-1x" aria-hidden="true"></i></span>
@@ -133,8 +132,6 @@
                     </tbody>
                 </table>
             </div>
-        </div>
-
         <page-app *ngIf='servicesTnt && servicesTnt.length && paging.pageSize>1'
                   [totalCount]='paging.totalCount'
                   [pageSize]='paging.pageSize'

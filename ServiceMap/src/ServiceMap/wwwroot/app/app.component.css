@@ -10,10 +10,15 @@ html, body {
     height: 100%;
 }
 
+.table-responsive {
+    border-radius: 5px 5px 0 0;
+    border: 1px solid slategrey;
+}
+
 table {
     border-collapse: collapse; /* IE7 and lower */
     border-spacing: 0;
-    margin-bottom: 5px !important; /*nadpisuje bootstrapowy styl 20px*/
+    margin-bottom: 0px !important; /*nadpisuje bootstrapowy styl 20px*/
 }
 
 th {
@@ -33,7 +38,7 @@ th {
 
 tbody {
     display: block;
-    overflow-y: auto;
+
     overflow-x: hidden;
 }
 
@@ -53,9 +58,6 @@ td:last-child {
     border-right: 1px solid #ccc;
 }
 
-.sm-max-height {
-    height: 100%;
-}
 .smap-check-btn2 {
     min-width: 200px;
     text-align: left;

@@ -1,15 +1,10 @@
 ﻿
-.tablecontainer {
-    width: 100%;
-    overflow: hidden;
-    height:83%;
-}
 
-.table-responsive {
-    border-radius: 5px 5px 0 0;
-    border: 1px solid slategrey;
-}
 
+tbody {
+    height:450px;
+    overflow-y: scroll;
+}
 
 th, td {
     min-width: 110px;
@@ -24,11 +19,11 @@ th, td {
 }
 
 .sm-large-with {
-     min-width: 190px;
+     min-width: 200px;
 }
 
 .sm-last-th-with {
-    min-width:208px; 
+    min-width:218px; 
 }
 .sm-break-th {
     min-width:120px; width:120px; white-space:pre;
