@@ -1,7 +1,4 @@
-﻿
-
-
-tbody {
+﻿tbody {
     height:450px;
     overflow-y: scroll;
 }
@@ -31,6 +28,11 @@ th, td {
 .sm-break-td {
     min-width:120px; width:120px;
 }
+
+.panel-primary > .panel-heading {
+    border-color: white;
+}
+
 
 /*@font-face {
   font-family: 'FontAwesome';

@@ -5,13 +5,10 @@ body {
 
 .naglowek {
     font-size: large;
+    font-weight: bold;
 }
 
-.navbar-fixed-bottom {
-    border-top-color:#ff6600;
-    padding-top :10px;
-    color:#333;
-}
+
 
 /* niebieski
      .panel-primary > .panel-heading {
@@ -23,20 +20,10 @@ body {
 
 /* Panel podstawowy*/
 .panel-primary > .panel-heading {
-    color: black;
-    background-color: white;
-    border-color: #f06000;
+    color: #f06000;
     font-size:medium;
+    font-weight:bold;
 }
-
-.panel-primary {
-    border-color: #f06000;
-}
-
-    .panel-primary > .panel-heading {
-        background-image: none;
-    }
-
 
 /* Button podstawowy*/
 
@@ -57,8 +44,6 @@ body {
     background-color: #f06000 !important;
     border-color: #f87018 !important;
 }
-
-
 
 
 /* Linki */

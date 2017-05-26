@@ -38,5 +38,7 @@ tbody {
     width:100%;
 }
 
-
+.panel-primary > .panel-heading {
+    border-color: white;
+}
 
