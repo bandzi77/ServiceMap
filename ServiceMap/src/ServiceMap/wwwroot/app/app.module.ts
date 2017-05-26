@@ -5,16 +5,15 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
-import { SharedModule } from './shared/shared.module';
+import { SmSharedModule } from './shared/shared.module';
 import { WelcomeComponent } from './home/welcome.component';
 import { ServiceTntModule } from './servicesTnt/serviceTnt.module';
 import { UserService } from './users/user.service';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { UserComponent } from './users/user.component';
 import { ServiceTntListComponent } from './servicesTnt/serviceTnt-list.component';
 import { ProductModule } from './users/user-module';
 import { UserListComponent } from './users/user-list.component';
-
 
 @NgModule({
     imports: [
@@ -31,7 +30,7 @@ import { UserListComponent } from './users/user-list.component';
 
             { path: '', redirectTo: 'serviceTnt', pathMatch: 'full' },
             { path: '**', redirectTo: 'serviceTnt', pathMatch: 'full' },      ]),
-        SharedModule,
+        SmSharedModule,
         ProductModule
     ],
     declarations: [

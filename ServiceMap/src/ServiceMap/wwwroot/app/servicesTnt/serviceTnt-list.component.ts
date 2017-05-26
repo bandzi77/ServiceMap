@@ -8,6 +8,7 @@ import { Subscription } from 'rxjs';
 import { LgModalComponent } from '../shared/lgModal.component';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { IResult } from '../shared/common';
+import { LazyLoadEvent, SelectItem } from 'primeng/primeng'
 
 
 @Component({
@@ -26,9 +27,12 @@ export class ServiceTntListComponent implements OnInit {
     cityName: string = '';
     servicesTnt: IServiceTnt[];
     depotTnt: IDepotDetails[];
-    paging: IPage[];
+    paging: IPage;
     errorMessage: string;
     private serviceFilter: IServiceFilter;
+    columnOptions: SelectItem[];
+    cols: any;
+    iscreated: boolean = false;
     @ViewChild('lgModal') lgModalRef: LgModalComponent;
 
     constructor(private _serviceTntService: ServicesTntService,
@@ -41,6 +45,33 @@ export class ServiceTntListComponent implements OnInit {
 
     ngOnInit(): void {
         let id = +this._route.snapshot.params['currentPage'];
+        this.paging = this.getPage();
+
+
+
+        this.cols = [
+            { field: 'depotCode', header: 'Kod Depotu' },
+            { field: 'town', header: 'Miasto', style:"{'width':'250px'}"},
+            { field: 'fromPostcode', header: 'Kod pocztowy od' },
+            { field: 'toPostcode', header: 'Kod pocztowy do' }
+        ];
+
+
+        this.columnOptions = [];
+        for (let i = 0; i < this.cols.length; i++) {
+            this.columnOptions.push({ label: this.cols[i].header, value: this.cols[i] });
+        }
+    }
+
+
+
+
+    private getPage():IPage
+    {
+        return {
+            totalCount: 0,
+            pageSize: 25
+        };
     }
 
     private _getData(filtr: IServiceFilter) {
@@ -92,6 +123,35 @@ export class ServiceTntListComponent implements OnInit {
         },
             error => this.errorMessage = <any>error);
     }
+
+
+    loadPageLazy(event: LazyLoadEvent) {
+        //in a real application, make a remote request to load data using state metadata from event
+        //event.first = First row offset
+        //event.rows = Number of rows per page
+        //event.sortField = Field name to sort with
+        //event.sortOrder = Sort order as number, 1 for asc and -1 for dec
+        //filters: FilterMetadata object having field as key and filter value, filter matchMode as value
+
+        //imitate db connection over a network
+        //setTimeout(() => {
+        //    if (this.datasource) {
+        //        this.cars = this.datasource.slice(event.first, (event.first + event.rows));
+        //    }
+        //}, 250);
+
+
+            //let filtr = this._createServiceFilter();
+
+            //this._getData(filtr);
+        if (this.iscreated) {
+            this.onPageClicked((event.first / event.rows) + 1);
+        }
+        else {
+            this.iscreated = true;
+        }
+    }
+
 
     private onGetComplete(res: IResult): void {
         if (!res.success) {

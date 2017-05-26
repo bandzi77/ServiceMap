@@ -7,6 +7,8 @@ import { PageModule } from '../pagination/page.module';
 import { LgModalComponent } from './lgModal.component';
 import { ToastModule, ToastOptions } from 'ng2-toastr/ng2-toastr';
 import { CustomOption } from './toastr-custom-option';
+import { DataTableModule, SharedModule, MultiSelectModule, ToggleButtonModule } from 'primeng/primeng';
+
 
 
 @NgModule({
@@ -21,7 +23,11 @@ import { CustomOption } from './toastr-custom-option';
         ModalModule,
         PageModule,
         PopoverModule,
-        ToastModule
+        ToastModule,
+        DataTableModule,
+        SharedModule,
+        MultiSelectModule,
+        ToggleButtonModule 
     ],
     imports: [
         CommonModule,
@@ -44,5 +50,5 @@ import { CustomOption } from './toastr-custom-option';
 
 })
 
-export class SharedModule {
+export class SmSharedModule {
 }

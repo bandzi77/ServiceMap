@@ -31,6 +31,6 @@ export interface IServiceFilter {
 
 export interface IServiceTntResult {
     serviceTnt: IServiceTnt[];
-    paging: IPage[];
+    paging: IPage;
     result: IResult;
 }

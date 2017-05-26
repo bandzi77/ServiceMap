@@ -4,14 +4,14 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { UserDetailGuard, UserEditGuard } from './user-guard.service';
 import { UserComponent } from './user.component';
 import { UserService } from './user.service';
-import { SharedModule } from '../shared/shared.module';
+import { SmSharedModule } from '../shared/shared.module';
 import { UserListComponent } from './user-list.component';
 
 
 @NgModule({
     imports: [
         ReactiveFormsModule,
-        SharedModule,
+        SmSharedModule,
         RouterModule.forChild([
             {
                 path: 'adduser',

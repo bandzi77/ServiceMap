@@ -2,9 +2,9 @@ html, body {
     height: 100%;
 }
 
-li {
+/*li {
     font-size: large;
-}
+}*/
 
 div.panel-heading {
     font-size: x-large;
@@ -22,8 +22,8 @@ table {
 }
 
 th {
-    color: white;
-    background-color: slategrey;
+    color: white !important; /* nadpisanie primeng*/
+    background-color: slategrey !important; /* nadpisanie primeng*/
     vertical-align: text-top !important;
 }
 
@@ -55,7 +55,7 @@ tr:last-child {
 }
 
 td:last-child {
-    border-right: 1px solid #ccc;
+    border-right: 1px solid #ccc !important;
 }
 
 .smap-check-btn2 {
@@ -166,4 +166,21 @@ color: #777 !important;
     tbody {
         height: 300px;
     }
+}*/
+/* Nadpisuje style primeng*/
+.ui-datatable .ui-datatable-thead>tr>th, .ui-datatable .ui-datatable-tfoot>tr>td, .ui-datatable .ui-datatable-data>tr>td {
+   /*border-style: 0px 0 !important;*/
+    border-style: none !important;
+    border-left: 1px solid #ccc !important;
+}
+.ui-multiselect .ui-multiselect-label {
+    font-size:smaller;
+}
+th {
+     white-space: nowrap;  
+     height:30px;
+}
+
+/*.ui-datatable thead th, .ui-datatable tfoot td {
+    text-align:left !important;
 }*/

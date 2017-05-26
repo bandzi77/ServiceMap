@@ -31,7 +31,7 @@ AppModule = __decorate([
         imports: [
             platform_browser_1.BrowserModule,
             http_1.HttpModule,
-            // TODO - Do usuni�cia
+            // TODO - Do usunięcia
             serviceTnt_module_1.ServiceTntModule,
             forms_1.ReactiveFormsModule,
             router_1.RouterModule.forRoot([
@@ -42,7 +42,7 @@ AppModule = __decorate([
                 { path: '', redirectTo: 'serviceTnt', pathMatch: 'full' },
                 { path: '**', redirectTo: 'serviceTnt', pathMatch: 'full' },
             ]),
-            shared_module_1.SharedModule,
+            shared_module_1.SmSharedModule,
             user_module_1.ProductModule
         ],
         declarations: [

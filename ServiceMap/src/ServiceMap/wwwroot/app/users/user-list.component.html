@@ -34,6 +34,24 @@
         </div>
     </div>
 </div>
+
+<p-dataTable [value]="users">
+    <p-column>
+
+
+        <template let-car="rowData" pTemplate="body">
+            <button class="btn btn-primary btn-xs"
+                    (click)="selectCar(car)">
+                Edytuj
+            </button>
+
+        </template>
+    </p-column>
+    <p-column field="email" header="Vin"></p-column>
+
+</p-dataTable>
+
+
 <div class="table-responsive">
     <table class="table table-hover table-striped table-condensed">
         <thead>

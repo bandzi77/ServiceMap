@@ -45,6 +45,9 @@ export class UserListComponent implements OnInit, OnDestroy {
         this._getData(filtr);
     }
 
+    selectCar(user: IUser) {
+        this.router.navigate(['/adduser'], { queryParams: { _id: user._id, email: user.email, limitOfRequestsPerDay: user.limitOfRequestsPerDay, isSuperUser: user.isSuperUser, isLocked: user.isLocked} });
+         }
 
     private _getData(filtr: IUserFilter) {
         this.busyIndicator = this._userService.getUsers(filtr)

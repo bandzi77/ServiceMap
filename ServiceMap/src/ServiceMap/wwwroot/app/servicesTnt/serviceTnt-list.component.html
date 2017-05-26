@@ -38,6 +38,52 @@
                 {{listFilter}}
             </div>
         </div>-->
+
+<p-dataTable [value]="servicesTnt"
+             scrollable="true" scrollHeight="450px"
+             [lazy]="true" [rows]="25" [paginator]="true" [pageLinks]="8" [rowsPerPageOptions]="[25,50]"
+             [totalRecords]="paging.totalCount" (onLazyLoad)="loadPageLazy($event)">
+    <p-header>
+        <div style="text-align:left">
+            <p-multiSelect [options]="columnOptions" [(ngModel)]="cols"></p-multiSelect>
+        </div>
+    </p-header>
+    <p-column *ngFor="let col of cols" [field]="col.field" [header]="col.header" [sortable]="true">
+        <span *ngIf="col.field=='depotCode'">
+            <template pTemplate="header">
+               <!--<span style="height:50px;" class="sm-small-break-th">Kod<br>Depotu</span>-->
+                <span style="height:30px; vertical-align:central" >Kod Depotu</span>
+            </template>
+            <template let-col let-car="rowData" pTemplate="body" >
+                <span>
+                    <button class="btn btn-primary btn-xs" style="width:50px;     font-size: small; padding:0;" (click)="onClick(car[col.field], lgModal)">
+                        {{car[col.field]}}
+                    </button>
+                </span>
+            </template>
+            </span>
+</p-column>
+</p-dataTable>
+
+<!--<p-dataTable [value]="servicesTnt" 
+             scrollable="true"  scrollHeight="490px"
+             [lazy]="true" [rows]="25" [paginator]="true" [pageLinks]="8" [rowsPerPageOptions]="[25,50]"
+             [totalRecords]="paging.totalCount" (onLazyLoad)="loadPageLazy($event)">
+    <p-column field="depotCode" header="Color" [sortable]="true">
+        <template let-col let-car="rowData" pTemplate="body">
+            <span>
+                <button class="btn btn-primary btn-xs"  style="width:50px;     font-size: small; padding:0;" (click)="onClick(car[col.field], lgModal)">
+                    {{car[col.field]}}
+                </button>
+            </span>
+        </template>
+    </p-column>
+    <p-column field="fromPostcode" header="Vin"></p-column>
+    <p-column field="toPostcode" header="Year"></p-column>
+
+</p-dataTable>-->
+
+
             <div class="table-responsive">
                 <table class="table table-hover table-striped table-condensed ">
                     <thead>

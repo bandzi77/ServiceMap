@@ -8,7 +8,7 @@ import { ServiceTntDetailComponent } from './depot-detail.component';
 import { ServicesTntFilterPipe } from './serviceTnt-filter.pipe';
 
 import { ServicesTntService } from './serviceTnt.service';
-import { SharedModule } from '../shared/shared.module';
+import { SmSharedModule } from '../shared/shared.module';
 
 
 
@@ -21,7 +21,7 @@ import { SharedModule } from '../shared/shared.module';
         ServicesTntFilterPipe
     ],
     imports: [
-        SharedModule,
+        SmSharedModule,
         RouterModule.forChild([
             { path: 'serviceTnt', component: ServiceTntListComponent },
             {
