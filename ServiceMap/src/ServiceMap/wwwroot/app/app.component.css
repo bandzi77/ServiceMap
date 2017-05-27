@@ -36,16 +36,19 @@ th {
         border-radius: 0 5px 0 0;
     }
 
-tbody {
+.dupa {
+    width:250px;
+}
+/*tbody {
     display: block;
     overflow-x: hidden;
     background-color: white;
-}
+}*/
 
-tr {
+/*tr {
     display: block;
 }
-
+*/
 td, th {
     border-left: 1px solid #ccc;
 }

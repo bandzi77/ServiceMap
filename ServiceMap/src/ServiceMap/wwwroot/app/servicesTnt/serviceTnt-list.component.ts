@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs';
 import { LgModalComponent } from '../shared/lgModal.component';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { IResult } from '../shared/common';
-import { LazyLoadEvent, SelectItem } from 'primeng/primeng'
+import { LazyLoadEvent, SelectItem, MultiSelect } from 'primeng/primeng'
 
 
 @Component({
@@ -32,9 +32,10 @@ export class ServiceTntListComponent implements OnInit {
     private serviceFilter: IServiceFilter;
     columnOptions: SelectItem[];
     cols: any;
+    cols1: any;
     iscreated: boolean = false;
     @ViewChild('lgModal') lgModalRef: LgModalComponent;
-
+    @ViewChild('multiselect') multi: MultiSelect;
     constructor(private _serviceTntService: ServicesTntService,
                 private _route: ActivatedRoute,
                 private toastr: ToastsManager,
@@ -44,6 +45,7 @@ export class ServiceTntListComponent implements OnInit {
     }
 
     ngOnInit(): void {
+   
         let id = +this._route.snapshot.params['currentPage'];
         this.paging = this.getPage();
 
@@ -51,16 +53,38 @@ export class ServiceTntListComponent implements OnInit {
 
         this.cols = [
             { field: 'depotCode', header: 'Kod Depotu' },
-            { field: 'town', header: 'Miasto', style:"{'width':'250px'}"},
+            { field: 'town', header: 'Miasto'},
             { field: 'fromPostcode', header: 'Kod pocztowy od' },
-            { field: 'toPostcode', header: 'Kod pocztowy do' }
-        ];
+            { field: 'toPostcode', header: 'Kod pocztowy do' },
 
+            { field: 'sobota', header: 'Doręczenie sobotnie'  },
+            { field: 'ex9', header: 'ID09 00 Express' },
+            { field: 'ex10', header: 'ID10 00 Express' },
+            { field: 'ex12', header: 'ID12 00 Express' },
+
+
+             { field: 'priority', header: 'Przesyłka priorytetowa' },
+             { field: 'wieczorneDostarczenie', header: 'Wieczorne dostarczenie' },
+             //{ field: 'standardDeliveryOd', header: 'Doręcznia < br > od' },
+             //{ field: 'standardDeliveryDo', header: 'Doręcznia < br >do' }
+
+             { field: 'pickUpDomesticZgl', header: 'Zamówienia kuriera krajowego do<' },
+             { field: 'dateTimePickUpEksportSmZgl', header: 'Zamówienie kuriera międzynarodowego do' },
+             //{ field: 'samochodZwindaDostepnyWstandardzie', header: 'ISamochod z winda< br > dostepny w standardzie' },
+             { field: 'diplomatNextDay', header: 'Najwcześniejsza dostawa przesyłki pozasystemowej' },
+
+             { field: 'serwisMiejski', header: 'Serwis podmiejski '},
+             { field: 'serwisPodmiejski', header: 'Serwis miejski' },
+             { field: 'pickUpDomesticCzas', header: 'Minimalny czas na odbiór przesyłki drogowej' },
+             { field: 'pickUpEksportSmCzas', header: 'Minimalny czas na odbiór przesyłki lotniczej' }
+        ];
 
         this.columnOptions = [];
         for (let i = 0; i < this.cols.length; i++) {
             this.columnOptions.push({ label: this.cols[i].header, value: this.cols[i] });
         }
+
+   
     }
 
 

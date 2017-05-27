@@ -31,7 +31,7 @@ AppModule = __decorate([
         imports: [
             platform_browser_1.BrowserModule,
             http_1.HttpModule,
-            // TODO - Do usunięcia
+            // TODO - Do usuni�cia
             serviceTnt_module_1.ServiceTntModule,
             forms_1.ReactiveFormsModule,
             router_1.RouterModule.forRoot([
