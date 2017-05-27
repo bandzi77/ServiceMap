@@ -46,10 +46,12 @@ namespace ServiceMap.Controllers.apiControllers
         }
 
         [HttpGet("GetServices")]
-        public async Task<IActionResult> GetServices([FromQuery] ServiceFilter filter)
+        public async Task<IActionResult> GetServices([FromQuery] ServiceFilter filter, PageInfo page)
         {
             List<ServiceTnt> res = new List<ServiceTnt>();
             var currentUser = await userService.GetUser(User);
+
+            // Jeśli nie jest administratorem to zwieksza ilość zapytań w ciągu dnia o jeden
             if (!User.IsInRole(configuration["Data:Roles:Superuser"]))
             {
                 if ((currentUser.NumberOfRequestsPerDay??0) >= currentUser.LimitOfRequestsPerDay)
@@ -61,20 +63,16 @@ namespace ServiceMap.Controllers.apiControllers
                         result = new { success = false, message = ConstsData.ExceededNumberOfRequestsPerDay }
                     });
                 }
-
-                res = serviceTnContext.ServicesTnt.FromSql(SqlQuery.sGetServicesTnt, SqlBuilder.GetServicesTnt(filter)).ToList();
                 currentUser.NumberOfRequestsPerDay = currentUser.NumberOfRequestsPerDay == null ? 1 : currentUser.NumberOfRequestsPerDay + 1;
                 await userManager.UpdateAsync(currentUser);
             }
-            else
-            {
-                res = serviceTnContext.ServicesTnt.FromSql(SqlQuery.sGetServicesTnt, SqlBuilder.GetServicesTnt(filter)).ToList();
-            }
+
+            res = serviceTnContext.ServicesTnt.FromSql(SqlQuery.sGetServicesTnt, SqlBuilder.GetServicesTnt(filter, page)).ToList();
 
             var result = new
             {
                 serviceTnt = res,
-                paging = new { totalCount = res.Select(x => x.TotalCount).FirstOrDefault(), pageSize = 25 },
+                paging = new { totalCount = res.Select(x => x.TotalCount).FirstOrDefault(), pageSize = page.PageSize },
                 result = new { success = true, message = "" }
             };
 

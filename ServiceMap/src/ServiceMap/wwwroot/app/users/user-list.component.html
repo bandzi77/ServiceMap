@@ -4,13 +4,14 @@
         <div class="panel-heading">
             <div class="form-group">
                 <div>
-                    <label for="pesel" style="font-size:medium;">Podaj </label>
+                    <label for="pesel" style="font-size:small;">Podaj </label>
                     <input class="form-control"
                            type="text"
                            autocomplete="off"
                            focus="true"
                            placeholder="Email"
-                           [(ngModel)]="email" />
+                           [(ngModel)]="email" 
+                           (keyup.enter)="onSearchUsers()"/>
                 </div>
             </div>
             <div class="form-group">
@@ -35,69 +36,64 @@
     </div>
 </div>
 
-<p-dataTable [value]="users">
-    <p-column>
+<p-dataTable [value]="users"
+             scrollable="true" scrollHeight="450px" scrollWidth="100%;"
+             [rows]="25" [paginator]="true" [pageLinks]="8" [rowsPerPageOptions]="[10,25,50]"           
+             [globalFilter]="gb" #dt>
+    <p-column field="email" 
+              header="Email"
+               [filter]="true" 
+               [style]="{'width':'270px'}" 
+               [sortable]="true"
+              filterPlaceholder="Szukaj"></p-column>
 
 
-        <template let-car="rowData" pTemplate="body">
+    <p-column *ngFor="let col of cols"
+              [field]="col.field"
+              [header]="col.header"
+              [sortable]="true"
+              [style]="col.field=='email'?{'width':'270px'}:
+              col.field=='isSuperUser'?{'width':'180px'}:
+              col.field=='isLocked'?{'width':'180px'}:{'width':'150px'}">
+    
+        <!--<span *ngIf="col.field=='isLocked'">
+
+            <template let-col let-user="rowData" pTemplate="body">
+                <span *ngIf="user[col.field]"><i class="fa fa-check-square-o fa-1x" aria-hidden="true"></i></span>
+                <span *ngIf="!user[col.field]"><i class="fa fa-square-o fa-1x" aria-hidden="true"></i></span>
+            </template>
+        </span>-->
+
+    </p-column>
+    <p-column field="isSuperUser" header="Konto użytkownika TNT" [filter]="true" [style]="{'overflow':'visible','width':'180px'}" filterMatchMode="equals"  [sortable]="true">
+        <template pTemplate="filter" let-col>
+            <p-dropdown [options]="checkSelector" appendTo="body" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
+        </template>
+        <template let-col let-user="rowData" pTemplate="body">
+            <span *ngIf="user[col.field]"><i class="fa fa-check-square-o fa-1x" aria-hidden="true"></i></span>
+            <span *ngIf="!user[col.field]"><i class="fa fa-square-o fa-1x" aria-hidden="true"></i></span>
+        </template>
+    </p-column>
+
+    <p-column field="isLocked" header="Konto zablokowane" [filter]="true" [style]="{'overflow':'visible','width':'180px'}"  filterMatchMode="equals"  [sortable]="true">
+        <template pTemplate="filter" let-col>
+            <p-dropdown [options]="checkSelector" appendTo="body" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
+        </template>
+        <template let-col let-user="rowData" pTemplate="body">
+            <span *ngIf="user[col.field]"><i class="fa fa-check-square-o fa-1x" aria-hidden="true"></i></span>
+            <span *ngIf="!user[col.field]"><i class="fa fa-square-o fa-1x" aria-hidden="true"></i></span>
+        </template>
+    </p-column>
+
+    <p-column header="Edycja" [style]="{'width':'150px'}">
+        
+            <template let-user="rowData" pTemplate="body">
             <button class="btn btn-primary btn-xs"
-                    (click)="selectCar(car)">
+                    (click)="onSelectUser(user)">
                 Edytuj
             </button>
 
         </template>
-    </p-column>
-    <p-column field="email" header="Vin"></p-column>
+        </p-column>
 
 </p-dataTable>
-
-
-<div class="table-responsive">
-    <table class="table table-hover table-striped table-condensed">
-        <thead>
-            <tr>
-                <th><div class="sm-email-col-width-th">Email</div></th>
-                <th><div class="sm-common-width">Limit zapytań</div></th>
-                <th><div class="sm-common-width">Liczba zapytań</div></th>
-                <th><div class="sm-IsSuperUser-col-width">Konto użytkownika TNT</div></th>
-                <th><div class="sm-common-width">Konto zablokowane</div></th>
-                <!--<th class="hidden">Id</th>-->
-                <th class="sm-last-coll-with"><div>Edycja</div></th>
-            </tr>
-        </thead>
-        <!--*ngIf="users && users.length"-->
-        <tbody>
-            <tr *ngFor="let user of users">
-                <td><div class="sm-wrap-tekst sm-email-col-width-td">{{user.email | lowercase}}</div></td>
-                <td><div class="sm-wrap-tekst sm-common-width">{{user.limitOfRequestsPerDay}}</div></td>
-                <td><div class="sm-wrap-tekst sm-common-width">{{user.numberOfRequestsPerDay}}</div></td>
-                <td>
-                    <div class="sm-wrap-tekst; sm-IsSuperUser-col-width">
-                        <span *ngIf="user.isSuperUser"><i class="fa fa-check-square-o fa-1x" aria-hidden="true"></i></span>
-                        <span *ngIf="!user.isSuperUser"><i class="fa fa-square-o fa-1x" aria-hidden="true"></i></span>
-                    </div>
-                </td>
-
-                <td>
-                    <div class="sm-wrap-tekst sm-common-width">
-                        <span *ngIf="user.isLocked"><i class="fa fa-check-square-o fa-1x" aria-hidden="true"></i></span>
-                        <span *ngIf="!user.isLocked"><i class="fa fa-square-o fa-1x" aria-hidden="true"></i></span>
-                    </div>
-                </td>
-                <!--<td class="hidden">{{user._id}}</td>-->
-                <td class="sm-last-coll-with">
-                    <a class="btn-sm btn-primary "
-                       [routerLink]="['/adduser']"
-                       [queryParams]="{_id:user._id, email:user.email, limitOfRequestsPerDay:user.limitOfRequestsPerDay, isSuperUser:user.isSuperUser, isLocked:user.isLocked }">
-                        Edytuj
-                    </a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-<!--<page-app *ngIf='servicesTnt && servicesTnt.length && paging.pageSize>1'
-          [totalCount]='paging.totalCount'
-          [pageSize]='paging.pageSize'
-          (pageClicked)='onPageClicked($event)'>
-</page-app>-->

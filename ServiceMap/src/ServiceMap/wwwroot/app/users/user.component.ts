@@ -88,7 +88,7 @@ export class UserComponent implements OnInit, OnDestroy {
             Validators.minLength(8),
             Validators.maxLength(12),
             Validators.pattern(this.passwordRegEx)]],
-            limitOfRequestsPerDay: ['', checkRange(1, 1000)],
+            limitOfRequestsPerDay: ['', checkRange(1, 500)],
             isSuperUser: false,
             isLocked: false
         });
@@ -170,7 +170,7 @@ export class UserComponent implements OnInit, OnDestroy {
         else {
             this.emailValidationMessages.pattern = this.patternEmail;
             emailControl.setValidators([Validators.required, Validators.pattern((this.emailRegEx))]);
-            limitOfRequestsPerDayControl.setValidators([Validators.required, checkRange(1, 1000)]);
+            limitOfRequestsPerDayControl.setValidators([Validators.required, checkRange(1, 500)]);
         }
 
         emailControl.updateValueAndValidity();
@@ -247,12 +247,14 @@ export class UserComponent implements OnInit, OnDestroy {
     private onSaveComplete(res: IResult, user: IUser): void {
         if (res.success)
         {
-            this.toastr.success(res.message, 'Success!');
+               this.resetForm();
             if (user._id === "0") {
-                this.resetForm();
+                this.toastr.success(res.message, 'Success!');
+             
             }
             else {
-                this.userForm.markAsPristine();
+                this.onBack();
+             // this.userForm.markAsPristine();
             }
         } else {
             this.toastr.error(res.message, 'Błąd!');

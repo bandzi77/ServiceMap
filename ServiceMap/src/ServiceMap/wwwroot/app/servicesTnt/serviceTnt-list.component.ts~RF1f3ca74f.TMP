@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs';
 import { LgModalComponent } from '../shared/lgModal.component';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { IResult } from '../shared/common';
-import { LazyLoadEvent, SelectItem, MultiSelect, DataTable } from 'primeng/primeng'
+import { LazyLoadEvent, SelectItem, MultiSelect } from 'primeng/primeng'
 
 
 @Component({
@@ -33,9 +33,10 @@ export class ServiceTntListComponent implements OnInit {
     private serviceFilter: IServiceFilter;
     columnOptions: SelectItem[];
     cols: any;
+    cols1: any;
     iscreated: boolean = false;
     @ViewChild('lgModal') lgModalRef: LgModalComponent;
-    @ViewChild('dataTable') public dataTable: DataTable;
+
     //TODO -usunąć
     @ViewChild('multiselect') multi: MultiSelect;
     constructor(private _serviceTntService: ServicesTntService,
@@ -85,7 +86,10 @@ export class ServiceTntListComponent implements OnInit {
         for (let i = 0; i < this.cols.length; i++) {
             this.columnOptions.push({ label: this.cols[i].header, value: this.cols[i] });
         }
+
+   
     }
+
 
     //TODO - usunąć
     private _getPage(): IPage {
@@ -95,16 +99,18 @@ export class ServiceTntListComponent implements OnInit {
         };
     }
 
+
     private _getPageInfo(): IPageInfo {
         return {
             order_by: null,
-            current_page: 3,
+            current_page: 0,
             page_size: 25
         };
     }
 
     private _getData(filtr: IServiceFilter) {
 
+     //   this._setPage(filtr);
         this.busyIndicator = this._serviceTntService.searchServicesTnt(filtr,this.pageInfo)
             .subscribe(result => {
                 this.servicesTnt = result.serviceTnt;
@@ -114,30 +120,30 @@ export class ServiceTntListComponent implements OnInit {
             error => this.errorMessage = <any>error);
     }
 
+    //_setPage(serviceFilter: IServiceFilter): void {
+    //    if (serviceFilter.currentPage === undefined) {
+    //        serviceFilter.currentPage = null;
+    //    };
+    //}
+
     onSearchService() {
         console.log('testowanie init');
-        this.dataTable.rows;
         let filtr = this._createServiceFilter();
-        this.pageInfo.current_page = 0;
+
         this._getData(filtr);
-        this.dataTable.first=0;
     }
 
     onPageClicked(page: number) {
-        let filtr = this._createServiceFilter();
+        let filtr = this._createServiceFilter(page);
         this._getData(filtr);
     }
 
-    onLazyLoading() {
-        let filtr = this._createServiceFilter();
-        this._getData(filtr);
-    }
-
-    _createServiceFilter(): IServiceFilter {
+    _createServiceFilter(page?: number): IServiceFilter {
         let _serviceFilter: IServiceFilter =
             {
                 postCode: this.postCode,
                 cityName: this.cityName,
+              //  currentPage: page
             };
 
         return _serviceFilter;
@@ -151,6 +157,7 @@ export class ServiceTntListComponent implements OnInit {
         },
             error => this.errorMessage = <any>error);
     }
+
 
     loadPageLazy(event: LazyLoadEvent) {
         //in a real application, make a remote request to load data using state metadata from event
@@ -167,11 +174,18 @@ export class ServiceTntListComponent implements OnInit {
         //    }
         //}, 250);
 
+
+            //let filtr = this._createServiceFilter();
+
+            //this._getData(filtr);
+//
+
         if (this.iscreated) {
-            this.pageInfo.order_by = this._setOrderBy(event.sortField, event.sortOrder);
-            this.pageInfo.current_page = (event.first / event.rows);
-            this.pageInfo.page_size = event.rows;
-            this.onLazyLoading();
+            this.pageInfo.order_by = 
+            this.pageInfo.current_page = (event.first / event.rows) + 1;
+            
+
+            this.onPageClicked((event.first / event.rows) + 1);
         }
         else {
             this.iscreated = true;
@@ -193,7 +207,7 @@ export class ServiceTntListComponent implements OnInit {
             return result;
         }
 
-        return result = result +" "+ ((sortOrder === -1) ? 'desc' : 'asc');
+        return result = result + (sortOrder === -1) ? 'desc' : 'asc';
     }
 
     private onGetComplete(res: IResult): void {

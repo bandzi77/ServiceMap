@@ -10,15 +10,15 @@ namespace ServiceMap.Sql
 {
     public static class SqlBuilder
     {
-        public static SqlParameter[] GetServicesTnt(ServiceFilter filter)
+        public static SqlParameter[] GetServicesTnt(ServiceFilter filter, PageInfo page)
         {
             var result = new List<SqlParameter>();
 
             result.Add(GetSqlParameter(filter.PostCode?.Trim(), "postCode", SqlDbType.NVarChar,6));
             result.Add(GetSqlParameter(filter.CityName?.Trim(), "town", SqlDbType.NVarChar, 50));
-            result.Add(GetSqlParameter((string) null, "order_by", SqlDbType.NVarChar, 128));
-            result.Add(GetSqlParameter((((filter.CurrentPage ?? 1) - 1) * (filter.PageSize ?? 25)), "start", SqlDbType.Int));
-            result.Add(GetSqlParameter(filter.PageSize ?? 25, "limit", SqlDbType.Int));
+            result.Add(GetSqlParameter(page.OrderBy?.Trim(), "order_by", SqlDbType.NVarChar, 128));
+            result.Add(GetSqlParameter((page.CurrentPage * page.PageSize ), "start", SqlDbType.Int));
+            result.Add(GetSqlParameter(page.PageSize, "limit", SqlDbType.Int));
 
             return result.ToArray();
         }

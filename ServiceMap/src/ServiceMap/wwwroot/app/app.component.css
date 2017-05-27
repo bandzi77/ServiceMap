@@ -28,17 +28,13 @@ th {
 }
 
     th:first-child {
-        border-radius: 5px 0 0 0;
+        border-radius: 8px 0 0 0;
         border-left: 0px;
     }
 
     th:last-child {
-        border-radius: 0 5px 0 0;
+        border-radius: 0 8px 0 0;
     }
-
-.dupa {
-    width:250px;
-}
 /*tbody {
     display: block;
     overflow-x: hidden;
@@ -181,7 +177,7 @@ color: #777 !important;
 }
 th {
      white-space: nowrap;  
-     height:30px;
+     height:50px;
 }
 
 /*.ui-datatable thead th, .ui-datatable tfoot td {

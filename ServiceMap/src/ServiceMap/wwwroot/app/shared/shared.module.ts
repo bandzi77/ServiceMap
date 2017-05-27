@@ -7,7 +7,7 @@ import { PageModule } from '../pagination/page.module';
 import { LgModalComponent } from './lgModal.component';
 import { ToastModule, ToastOptions } from 'ng2-toastr/ng2-toastr';
 import { CustomOption } from './toastr-custom-option';
-import { DataTableModule, SharedModule, MultiSelectModule, ToggleButtonModule } from 'primeng/primeng';
+import { DataTableModule, SharedModule, MultiSelectModule, ToggleButtonModule, DropdownModule } from 'primeng/primeng';
 
 
 
@@ -27,7 +27,8 @@ import { DataTableModule, SharedModule, MultiSelectModule, ToggleButtonModule } 
         DataTableModule,
         SharedModule,
         MultiSelectModule,
-        ToggleButtonModule 
+        ToggleButtonModule,
+        DropdownModule
     ],
     imports: [
         CommonModule,
@@ -40,7 +41,8 @@ import { DataTableModule, SharedModule, MultiSelectModule, ToggleButtonModule } 
         ),
         ModalModule.forRoot(),
         PopoverModule.forRoot(),
-        ToastModule.forRoot()
+        ToastModule.forRoot(),
+        DropdownModule
     ],
     providers: [
         {

@@ -1,34 +1,4 @@
-﻿tbody {
-    height:450px;
-    overflow-y: scroll;
-}
-
-
-th, td {
-    min-width: 110px;
-    width: 110px;
-}
-
-.sm-small-break-th{
-     width: 80px; min-width: 80px; white-space:pre;
-}
-.sm-small-break-td{
-     width: 80px; min-width: 80px;
-}
-
-.sm-large-with {
-     min-width: 200px;
-}
-
-.sm-last-th-with {
-    min-width:218px; 
-}
-.sm-break-th {
-    min-width:120px; width:120px; white-space:pre;
-}
-.sm-break-td {
-    min-width:120px; width:120px;
-}
+﻿
 
 .panel-primary > .panel-heading {
     border-color: white;

@@ -1,86 +1,87 @@
 ﻿<div [ngBusy]="{busy: busyIndicator}"></div>
-        <div class="form-inline">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <div class="form-group">
-                        <div>
-                            <label for="pesel" style="font-size:medium">Podaj </label>
-                            <input class="form-control"
-                                   type="text"
-                                   autocomplete="off"
-                                   focus="true"
-                                   placeholder="Kod pocztowy"
-                                   [(ngModel)]="postCode" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div>
-                            <label for="cardNumber" style="font-size:medium">lub</label>
-                            <input class="form-control"
-                                   type="text"
-                                   autocomplete="off"
-                                   placeholder="Nazwa miasta"
-                                   [(ngModel)]="cityName" />
-                        </div>
-                    </div>
-                    <button name="searchBtn"
-                            class="btn btn-sm-orange"
-                            (click)='onSearchService()'
-                            autofocus>
-                        <i class="fa fa-search fa-1x"></i> &nbsp;&nbsp;Szukaj
-                    </button>
+<div class="form-inline">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <div class="form-group">
+                <div>
+                    <label for="postCode" style="font-size:small">Podaj </label>
+                    <input class="form-control"
+                           type="text"
+                           autocomplete="off"
+                           focus="true"
+                           placeholder="Kod pocztowy"
+                           [(ngModel)]="postCode"
+                           (keyup.enter)="onSearchService()" />
                 </div>
             </div>
-        </div>
-
-        <!--<div class="row">
-            <div class="col-md-6">
-                {{listFilter}}
+            <div class="form-group">
+                <div>
+                    <label for="cityName" style="font-size:small">lub</label>
+                    <input class="form-control"
+                           type="text"
+                           autocomplete="off"
+                           placeholder="Nazwa miasta"
+                           [(ngModel)]="cityName" 
+                           (keyup.enter)="onSearchService()"/>
+                </div>
             </div>
-        </div>-->
+            <button name="searchBtn"
+                    class="btn btn-sm-orange"
+                    (click)='onSearchService()'
+                    autofocus>
+                <i class="fa fa-search fa-1x"></i> &nbsp;&nbsp;Szukaj
+            </button>
+        </div>
+    </div>
+</div>
 
-<p-dataTable [value]="servicesTnt" resizableColumns="true"
+<!--<div class="row">
+    <div class="col-md-6">
+        {{listFilter}}
+    </div>
+</div>-->
+<!--[first]="pageInfo.current_page"-->
+
+
+<p-dataTable #dataTable [value]="servicesTnt" 
              scrollable="true" scrollHeight="450px" scrollWidth="100%;"
-             [lazy]="true" [rows]="25" [paginator]="true" [pageLinks]="8" [rowsPerPageOptions]="[25,50]"
-             [totalRecords]="paging.totalCount" (onLazyLoad)="loadPageLazy($event)">
+             [lazy]="true" [rows]="25" 
+             [paginator]="true" [pageLinks]="8" 
+             [rowsPerPageOptions]="[10,25,50]"
+             [totalRecords]="paging.totalCount" (onLazyLoad)="loadPageLazy($event)"
+             [sortFile]="town">
     <p-header>
         <div style="text-align:left">
-            <p-multiSelect #multiselect [options]="columnOptions" [(ngModel)]="cols" ></p-multiSelect>
+            <p-multiSelect #multiselect  [options]="columnOptions" [(ngModel)]="cols"></p-multiSelect>
         </div>
     </p-header>
-    <p-column *ngFor="let col of cols" [field]="col.field" [header]="col.header"
-               [style]="col.field=='depotCode'?{'width':'70px'}:
+    <p-column *ngFor="let col of cols"
+              [field]="col.field"
+              [header]="col.header"
+              [style]="col.field=='depotCode'?{'width':'70px'}:
                 col.field=='town'?{'width':'350px'}:
                 (col.field=='fromPostcode'||col.field=='toPostcode')?{'width':'120px'}:
-                 (col.field=='pickUpDomesticZgl'||col.field=='dateTimePickUpEksportSmZgl' ||
-               col.field=='diplomatNextDay' || col.field=='pickUpDomesticCzas' || col.field=='pickUpEksportSmCzas'
-              
-              )?{'width':'180px'}:{'width':'120px'}
-
-
-              "
-               [sortable]="col.field=='town'||col.field=='fromPostcode'||col.field=='toPostcode'">
-
-
-
+                (col.field=='pickUpDomesticZgl'||col.field=='dateTimePickUpEksportSmZgl' ||
+                col.field=='diplomatNextDay' || col.field=='pickUpDomesticCzas' || 
+                col.field=='pickUpEksportSmCzas')?{'width':'180px'}:{'width':'120px'}"
+              [sortable]="col.field=='town'||col.field=='fromPostcode'||col.field=='toPostcode'">
         <span *ngIf="col.field=='depotCode'">
             <template pTemplate="header">
-               <span>Kod<br>Depotu</span>
+                <span >Kod<br>Depotu</span>
                 <!--<span class="sm-small-break-th">Kod Depotu</span>-->
             </template>
-            <template let-col let-car="rowData" pTemplate="body" >
-                <span >
-                    <button class="btn btn-primary btn-xs"  style="width:50px; font-size:small" (click)="onClick(car[col.field], lgModal)">
-                       {{car[col.field]}}
+            <template let-col let-car="rowData" pTemplate="body">
+                <span>
+                    <button class="btn btn-primary btn-xs" style="width:50px; font-size:small" (click)="onClick(car[col.field], lgModal)">
+                        {{car[col.field]}}
                     </button>
                 </span>
             </template>
-            </span>
-
+        </span>
 
         <span *ngIf="col.field=='fromPostcode'">
             <template pTemplate="header">
-                <span >Kod<br>pocztowy od</span>
+                <span>Kod<br>pocztowy od</span>
             </template>
         </span>
         <span *ngIf="col.field=='toPostcode'">
@@ -177,7 +178,6 @@
             </template>
         </span>
 
-
         <span *ngIf="col.field=='serwisPodmiejski'">
             <template pTemplate="header">
                 <span>Serwis<br>podmiejski</span>
@@ -208,138 +208,8 @@
             </template>
         </span>
 
-        <!--<span *ngIf="col.field=='town'">
-        <template pTemplate="header">
-            <span style="width:250px !important;">Miasto</span>
-        </template>
-        <template let-col let-car="rowData" pTemplate="body">
-            <span style="width:250px !important;">{{car[col.field]}}</span>
-
-        </template>
-    </span>-->
-
-
-</p-column>
-</p-dataTable>
-
-<!--<p-dataTable [value]="servicesTnt" 
-             scrollable="true"  scrollHeight="490px"
-             [lazy]="true" [rows]="25" [paginator]="true" [pageLinks]="8" [rowsPerPageOptions]="[25,50]"
-             [totalRecords]="paging.totalCount" (onLazyLoad)="loadPageLazy($event)">
-    <p-column field="depotCode" header="Color" [sortable]="true">
-        <template let-col let-car="rowData" pTemplate="body">
-            <span>
-                <button class="btn btn-primary btn-xs"  style="width:50px;     font-size: small; padding:0;" (click)="onClick(car[col.field], lgModal)">
-                    {{car[col.field]}}
-                </button>
-            </span>
-        </template>
     </p-column>
-    <p-column field="fromPostcode" header="Vin"></p-column>
-    <p-column field="toPostcode" header="Year"></p-column>
-
-</p-dataTable>-->
-
-
-            <div class="table-responsive">
-                <table class="table table-hover table-striped table-condensed ">
-                    <thead>
-                        <tr>
-                            <th class="sm-small-break-th">Kod<br>Depotu</th>
-                            <th style="min-width:350px;">Miasto</th>
-                            <th class="sm-break-th">Kod<br>pocztowy od</th>
-                            <th class="sm-break-th">Kod<br>pocztowy do</th>
-                            <th class="sm-break-th">Doręczenie<br>sobotnie</th>
-
-                            <th class="sm-small-break-th">ID09 00<br>Express</th>
-                            <th class="sm-small-break-th">ID10 00<br>Express</th>
-                            <th class="sm-small-break-th">ID12 00<br>Express</th>
-                            <th class="sm-break-th">Przesyłka<br>priorytetowa</th>
-                            <th class="sm-break-th">Wieczorne<br>dostarczenie</th>
-                            <!--<th class="sm-break-th">Doręcznia<br>od</th>
-                            <th class="sm-break-th">Doręcznia<br>do</th>-->
-                            <th class="sm-large-with">Zamówienia kuriera<br>krajowego do</th>
-                            <th class="sm-large-with" style="white-space:pre">Zamówienie kuriera<br>międzynarodowego do</th>
-                            <!--<th style="min-width:200px; white-space:pre">Samochod z winda<br>dostepny w standardzie</th>-->
-
-                            <th class="sm-large-with">Najwcześniejsza dostawa<br>przesyłki pozasystemowej</th>
-                            <th class="sm-break-th">Serwis<br>podmiejski</th>
-                            <th class="sm-break-th">Serwis<br>miejski</th>
-                            <th class="sm-large-with">Minimalny czas na odbiór<br>przesyłki drogowej</th>
-                            <th style="white-space:pre;" class="sm-last-th-with">Minimalny czas na odbiór<br>przesyłki lotniczej</th>
-                        </tr>
-                    </thead>
-                    <!--*ngIf="servicesTnt && servicesTnt.length"-->
-                    <tbody>
-                        <tr *ngFor="let serviceTnt of servicesTnt | productFilter : listFilter">
-                            <td class="sm-small-break-td">
-                                <a (click)="onClick(serviceTnt.depotCode, lgModal)">
-                                    {{serviceTnt.depotCode}}
-                                </a>
-                                <!--<a [routerLink]="['/serviceTnt',serviceTnt.productId]">
-                                    {{serviceTnt.depotCode}}
-                                </a>-->
-                            </td>
-                            <td style="min-width:350px;max-width:350px;">{{serviceTnt.town}}</td>
-                            <td class="sm-break-td">{{serviceTnt.fromPostcode | lowercase}}</td>
-                            <td class="sm-break-td">{{serviceTnt.toPostcode}}</td>
-
-                            <td class="sm-break-td">
-                                <span *ngIf="serviceTnt.sobota"><i class="fa fa-check-square-o fa-1x" aria-hidden="true"></i></span>
-                                <span *ngIf="!serviceTnt.sobota"><i class="fa fa-square-o fa-1x" aria-hidden="true"></i></span>
-                            </td>
-
-                            <td class="sm-small-break-td">
-                                <span *ngIf="serviceTnt.ex9"><i class="fa fa-check-square-o fa-1x" aria-hidden="true"></i></span>
-                                <span *ngIf="!serviceTnt.ex9"><i class="fa fa-square-o fa-1x" aria-hidden="true"></i></span>
-                            </td>
-                            <td class="sm-small-break-td">
-                                <span *ngIf="serviceTnt.ex10"><i class="fa fa-check-square-o fa-1x" aria-hidden="true"></i></span>
-                                <span *ngIf="!serviceTnt.ex10"><i class="fa fa-square-o fa-1x" aria-hidden="true"></i></span>
-                            </td>
-                            <td class="sm-small-break-td">
-                                <span *ngIf="serviceTnt.ex12"><i class="fa fa-check-square-o fa-1x" aria-hidden="true"></i></span>
-                                <span *ngIf="!serviceTnt.ex12"><i class="fa fa-square-o fa-1x" aria-hidden="true"></i></span>
-                            </td>
-
-                            <td class="sm-break-td">{{serviceTnt.priority}}</td>
-                            <td class="sm-break-td">
-                                <span *ngIf="serviceTnt.wieczorneDostarczenie"><i class="fa fa-check-square-o fa-1x" aria-hidden="true"></i></span>
-                                <span *ngIf="!serviceTnt.wieczorneDostarczenie"><i class="fa fa-square-o fa-1x" aria-hidden="true"></i></span>
-                            </td>
-
-                            <!-- Na polecenie RW
-                                <td class="sm-break-td">{{serviceTnt.standardDeliveryOd}}</td>
-                            <td class="sm-break-td">{{serviceTnt.standardDeliveryDo}}</td>
-                                -->
-                            <td class="sm-large-with">{{serviceTnt.pickUpDomesticZgl}}</td>
-                            <td class="sm-large-with">{{serviceTnt.dateTimePickUpEksportSmZgl}}</td>
-                            <!-- Na polecenie RW
-                                <td class="sm-large-with">
-                                <span *ngIf="serviceTnt.samochodZwindaDostepnyWstandardzie"><i class="fa fa-check-square-o fa-1x" aria-hidden="true"></i></span>
-                                <span *ngIf="!serviceTnt.samochodZwindaDostepnyWstandardzie"><i class="fa fa-square-o fa-1x" aria-hidden="true"></i></span>
-                            </td>-->
-
-                            <td class="sm-large-with">{{serviceTnt.diplomatNextDay}}</td>
-                            <td class="sm-break-td">
-                                <span *ngIf="serviceTnt.serwisPodmiejski"><i class="fa fa-check-square-o fa-1x" aria-hidden="true"></i></span>
-                                <span *ngIf="!serviceTnt.serwisPodmiejski"><i class="fa fa-square-o fa-1x" aria-hidden="true"></i></span>
-                            </td>
-                            <td class="sm-break-td">
-                                <span *ngIf="serviceTnt.serwisMiejski"><i class="fa fa-check-square-o fa-1x" aria-hidden="true"></i></span>
-                                <span *ngIf="!serviceTnt.serwisMiejski"><i class="fa fa-square-o fa-1x" aria-hidden="true"></i></span>
-                            </td>
-                            <td class="sm-large-with">{{serviceTnt.pickUpDomesticCzas}}</td>
-                            <td class="sm-large-with">{{serviceTnt.pickUpEksportSmCzas}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        <page-app *ngIf='servicesTnt && servicesTnt.length && paging.pageSize>1'
-                  [totalCount]='paging.totalCount'
-                  [pageSize]='paging.pageSize'
-                  (pageClicked)='onPageClicked($event)'>
-        </page-app>
+</p-dataTable>
 
 <lg-modal #lgModal [myheader]="' '">
     <depot-details [depotsTnt]='depotTnt'></depot-details>

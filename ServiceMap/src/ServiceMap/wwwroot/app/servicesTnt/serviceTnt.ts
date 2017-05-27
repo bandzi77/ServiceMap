@@ -26,7 +26,6 @@ export interface IServiceTnt {
 export interface IServiceFilter {
     postCode: string;
     cityName: string;
-    currentPage?: number;
 }
 
 export interface IServiceTntResult {

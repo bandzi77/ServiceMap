@@ -20,7 +20,7 @@ body {
 
 /* Panel podstawowy*/
 .panel-primary > .panel-heading {
-    color: #f06000;
+    color: #777;
     font-size:medium;
     font-weight:bold;
 }

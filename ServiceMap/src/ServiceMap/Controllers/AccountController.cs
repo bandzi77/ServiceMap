@@ -101,7 +101,7 @@ namespace ServiceMap.Controllers
             {
                 await SendResetLink(email);
             }
-            string message = "Na wskazany adres email został wysłany link pozwalający na zresetowanie hasła";
+            string message = "Na podany adres email został wysłany link pozwalający na zresetowanie hasła.";
             return RedirectToAction("InfoPanel", "Account", new { message });
         }
 

@@ -3,6 +3,7 @@ import { IUser, IUserFilter } from './user';
 import { UserService } from './user.service';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
+import { SelectItem } from 'primeng/primeng'
 
 @Component({
     templateUrl: 'app/users/user-list.component.html',
@@ -16,6 +17,9 @@ export class UserListComponent implements OnInit, OnDestroy {
     private email: string = '';
     private showLockedOnly: boolean = false;
     errorMessage: string;
+    columnOptions: SelectItem[];
+    checkSelector: SelectItem[];
+    cols: any;
 
     public pageTitle: string = 'Lista Użytkowników';
 
@@ -31,6 +35,17 @@ export class UserListComponent implements OnInit, OnDestroy {
                     this.onSearchUsers();
                 }
             });
+
+        this._SetColums();
+        this.columnOptions = [];
+        for (let i = 0; i < this.cols.length; i++) {
+            this.columnOptions.push({ label: this.cols[i].header, value: this.cols[i] });
+        }
+
+        this.checkSelector = [];
+        this.checkSelector.push({ label: 'Wszystkie', value: null });
+        this.checkSelector.push({ label: 'Tak', value: 'true' });
+        this.checkSelector.push({ label: 'Nie', value: 'false' });
     }
 
     ngOnDestroy(): void {
@@ -45,9 +60,9 @@ export class UserListComponent implements OnInit, OnDestroy {
         this._getData(filtr);
     }
 
-    selectCar(user: IUser) {
-        this.router.navigate(['/adduser'], { queryParams: { _id: user._id, email: user.email, limitOfRequestsPerDay: user.limitOfRequestsPerDay, isSuperUser: user.isSuperUser, isLocked: user.isLocked} });
-         }
+    onSelectUser(user: IUser) {
+        this.router.navigate(['/adduser'], { queryParams: { _id: user._id, email: user.email, limitOfRequestsPerDay: user.limitOfRequestsPerDay, isSuperUser: user.isSuperUser, isLocked: user.isLocked } });
+    }
 
     private _getData(filtr: IUserFilter) {
         this.busyIndicator = this._userService.getUsers(filtr)
@@ -66,4 +81,13 @@ export class UserListComponent implements OnInit, OnDestroy {
         return _userFilter;
     }
 
+    _SetColums() {
+        this.cols = [
+            //{ field: 'email', header: 'Email' },
+            { field: 'limitOfRequestsPerDay', header: 'Limit zapytań' },
+            { field: 'numberOfRequestsPerDay', header: 'Liczba zapytań' },
+        ]
+    }
 }
+
+

@@ -1,5 +1,6 @@
 ﻿import { Injectable } from '@angular/core';
 import { IServiceTnt, IServiceFilter, IServiceTntResult } from './serviceTnt';
+import { IPageInfo } from '../pagination/page';
 import { IDepotDetails, IDepotDetailsFilter, IDepotDetailsResult } from './depotDetails';
 import { Http, Response, RequestOptions, URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
@@ -28,13 +29,15 @@ export class ServicesTntService {
             .catch(this.handleError);
     }
 
-    searchServicesTnt(serviceFilter: IServiceFilter): Observable<IServiceTntResult> {
+    searchServicesTnt(serviceFilter: IServiceFilter,pageInfo:IPageInfo ): Observable<IServiceTntResult> {
         let searchParams = new URLSearchParams();
         let currentPage;
 
         searchParams.set('postCode', serviceFilter.postCode);
         searchParams.set('cityName', serviceFilter.cityName);
-        searchParams.set('currentPage', "" + serviceFilter.currentPage);
+        searchParams.set('orderBy', pageInfo.order_by);
+        searchParams.set('currentPage', "" + pageInfo.current_page);
+        searchParams.set('pageSize', "" + pageInfo.page_size);
 
         return this._http.get(this._serchServicesUrl, { search: searchParams })
             .map(this.extractData)
