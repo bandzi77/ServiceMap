@@ -146,6 +146,7 @@ namespace ServiceMap.Controllers
             if (ModelState.IsValid)
             {
                 AppUser user = await userManager.FindByEmailAsync(details.Email);
+                var accessFailedCount = user.AccessFailedCount;
                 var list = userManager.Users.ToAsyncEnumerable();
 
                 if (user != null)
@@ -158,14 +159,18 @@ namespace ServiceMap.Controllers
                     {
                         return Redirect(returnUrl ?? "/");
                     }
-                    else
+                    else 
                     {
                         if (result.IsLockedOut)
                         {
+                            // Sprawdzenie, czy przed chwilą zostało zablokowane konto, jeśli tak wysyła maila na adres firmowy.
+                            if (accessFailedCount > 0)
+                            {
+                                emailService.SendEmailAsync("No replay", null, "pl.web.sm@tnt.com", 
+                                    ConstsData.AccountIsLockedSubject, String.Format(ConstsData.AccountIsLockedMessage, user.Email),"plain");
+                            }
                             return RedirectToAction("InfoPanel", "Account", new { message = "Twoje konto zostało zablokowane." });
                         }
-                        // odblokowanie konta
-                        //await userManager.SetLockoutEndDateAsync(user, DateTime.Now);
                     }
                 }
                 ModelState.AddModelError(nameof(LoginModel.Email), "Niepoprawny adres email lub hasło");

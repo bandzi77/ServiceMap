@@ -33,7 +33,7 @@ export class ServiceTntListComponent implements OnInit {
     private serviceFilter: IServiceFilter;
     columnOptions: SelectItem[];
     cols: any;
-    iscreated: boolean = false;
+    isInitWindow: boolean = false;
     @ViewChild('lgModal') lgModalRef: LgModalComponent;
     @ViewChild('dataTable') public dataTable: DataTable;
     //TODO -usunąć
@@ -120,12 +120,8 @@ export class ServiceTntListComponent implements OnInit {
         let filtr = this._createServiceFilter();
         this.pageInfo.current_page = 0;
         this._getData(filtr);
-        this.dataTable.first=0;
-    }
-
-    onPageClicked(page: number) {
-        let filtr = this._createServiceFilter();
-        this._getData(filtr);
+        this.dataTable.first = 0;
+        this.isInitWindow = true;
     }
 
     onLazyLoading() {
@@ -167,14 +163,11 @@ export class ServiceTntListComponent implements OnInit {
         //    }
         //}, 250);
 
-        if (this.iscreated) {
+        if (this.isInitWindow) {
             this.pageInfo.order_by = this._setOrderBy(event.sortField, event.sortOrder);
             this.pageInfo.current_page = (event.first / event.rows);
             this.pageInfo.page_size = event.rows;
             this.onLazyLoading();
-        }
-        else {
-            this.iscreated = true;
         }
     }
 

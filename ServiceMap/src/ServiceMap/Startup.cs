@@ -100,18 +100,6 @@ namespace ServiceMap
                     //}
                 };
 
-                //opts.Cookies.ApplicationCookie.Events = new CookieAuthenticationEvents
-                //{
-                //    OnRedirectToLogin = ctx =>
-                //    {
-                //        ctx.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
-                //        return Task.FromResult<object>(null);
-                //    }
-                //};
-                //opts.Cookies.ApplicationCookie.AutomaticAuthenticate = true;
-                //opts.Cookies.ApplicationCookie.AuthenticationScheme = Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationDefaults.AuthenticationScheme;
-                //opts.Cookies.ApplicationCookie.ReturnUrlParameter = Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationDefaults.ReturnUrlParameter;
-
             })
                 // W przypadku innej ścieżki niż domyślna
                 //(opt=>opt.Cookies.ApplicationCookie.LoginPath="/")
@@ -125,8 +113,6 @@ namespace ServiceMap
             services.AddSingleton<IEmailService, EmailService>();
             services.AddTransient<IServiceTntRepository, ServiceTntRepository>();
             services.AddTransient<IDepotRepository, DepotRepository>();
-            //   services.AddTransient<IServiceProvider, ServiceCollection>();
-            //services.AddTransient<IConfiguration, ConfigureServices>();
             services.AddMvc();
         }
 
@@ -174,18 +160,6 @@ namespace ServiceMap
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}");
-
-                //routes.MapRoute(
-                // name: "login",
-                // template: "{controller=Account}/{action=Login}/{returnUrl}");
-
-                //routes.MapRoute(
-                //name: "logout",
-                //template: "{controller=Account}/{action=Logout}");
-
-                //routes.MapRoute(
-                //name: "forgotPassword",
-                //template: "{controller=Account}/{action=ForgotPassword}");
 
                 routes.MapSpaFallbackRoute(
                         name: "spa-fallback",

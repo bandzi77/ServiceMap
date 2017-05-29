@@ -2,10 +2,6 @@ html, body {
     height: 100%;
 }
 
-/*li {
-    font-size: large;
-}*/
-
 div.panel-heading {
     font-size: x-large;
 }
@@ -23,7 +19,7 @@ table {
 
 th {
     color: white !important; /* nadpisanie primeng*/
-    background-color: slategrey !important; /* nadpisanie primeng*/
+    background-color: #0b77a7 !important; /* #333f48 slategrey nadpisanie primeng*/
     vertical-align: text-top !important;
 }
 
@@ -35,16 +31,12 @@ th {
     th:last-child {
         border-radius: 0 8px 0 0;
     }
-/*tbody {
-    display: block;
-    overflow-x: hidden;
-    background-color: white;
-}*/
 
-/*tr {
-    display: block;
+    th {
+     white-space: nowrap;  
+     height:50px;
 }
-*/
+
 td, th {
     border-left: 1px solid #ccc;
 }
@@ -60,33 +52,6 @@ td:last-child {
 .smap-check-btn2 {
     min-width: 200px;
     text-align: left;
-}
-
-/*.control-label{
-color: #777 !important;
-}*/
-
-/*.btn-primary {
-    color: #fff;
-    background-color: #f06000;
-    border-color: #f06000;
-}
-
-    .btn-primary:hover {
-        color: #fff;
-        background-color: #f87018;
-        border-color: #f87018;
-    }
-
-    .btn-primary:active {
-        color: #fff;
-        background-color: #f06000 !important;
-        border-color: #f87018 !important;
-    }*/
-
-
-.table-responsive {
-    overflow-y: hidden !important;
 }
 
 /*
@@ -128,17 +93,6 @@ color: #777 !important;
     color: #fff;
 }
 
-/*.btn-psz-blue-locked:hover,
-    .btn-psz-blue-locked:focus
-   
- {
-        background-color: #0ba8eb;
-        border-color: #0ba8eb;
-        color: #fff;
-    }*/
-
-
-
 .btn-psz-green {
     background-color: #189A46;
     border-color: #189A46;
@@ -175,11 +129,4 @@ color: #777 !important;
 .ui-multiselect .ui-multiselect-label {
     font-size:smaller;
 }
-th {
-     white-space: nowrap;  
-     height:50px;
-}
 
-/*.ui-datatable thead th, .ui-datatable tfoot td {
-    text-align:left !important;
-}*/

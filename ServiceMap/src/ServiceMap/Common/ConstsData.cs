@@ -48,5 +48,9 @@ namespace ServiceMap.Common
         //Wyszukwianie usług
         public static readonly string ExceededNumberOfRequestsPerDay = "16. Przekroczony limit zapytań w ciągu dnia";
 
+        // Zablokowanie konta
+        public static readonly string AccountIsLockedSubject = "Blokada konta użytkownika";
+        public static readonly string AccountIsLockedMessage = "Informacja,\n\n    Konto użytkownika {0} zostało zablokowane z powodu przekroczenia dozwolnej liczby błędnie wprowadzanego hasła.";
+
     }
 }
