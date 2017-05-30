@@ -21,14 +21,13 @@
                            type="text"
                            autocomplete="off"
                            placeholder="Nazwa miasta"
-                           [(ngModel)]="cityName" 
-                           (keyup.enter)="onSearchService()"/>
+                           [(ngModel)]="cityName"
+                           (keyup.enter)="onSearchService()" />
                 </div>
             </div>
             <button name="searchBtn"
                     class="btn btn-sm-orange"
-                    (click)='onSearchService()'
-                    autofocus>
+                    (click)='onSearchService()'>
                 <i class="fa fa-search fa-1x"></i> &nbsp;&nbsp;Szukaj
             </button>
         </div>
@@ -43,16 +42,16 @@
 <!--[first]="pageInfo.current_page"-->
 
 
-<p-dataTable #dataTable [value]="servicesTnt" 
-             scrollable="true" scrollHeight="450px" scrollWidth="100%;"
-             [lazy]="true" [rows]="25" 
-             [paginator]="true" [pageLinks]="8" 
+<p-dataTable #dataTable [value]="servicesTnt"
+             scrollable="true" scrollHeight="420px" scrollWidth="100%;"
+             [lazy]="true" [rows]="25"
+             [paginator]="true" [pageLinks]="8"
              [rowsPerPageOptions]="[10,25,50]"
              [totalRecords]="paging.totalCount" (onLazyLoad)="loadPageLazy($event)"
              [sortFile]="town">
     <p-header>
         <div style="text-align:left">
-            <p-multiSelect #multiselect  [options]="columnOptions" [(ngModel)]="cols"></p-multiSelect>
+            <p-multiSelect #multiselect [options]="columnOptions" [(ngModel)]="cols"></p-multiSelect>
         </div>
     </p-header>
     <p-column *ngFor="let col of cols"
@@ -62,17 +61,17 @@
                 col.field=='town'?{'width':'350px'}:
                 (col.field=='fromPostcode'||col.field=='toPostcode')?{'width':'120px'}:
                 (col.field=='pickUpDomesticZgl'||col.field=='dateTimePickUpEksportSmZgl' ||
-                col.field=='diplomatNextDay' || col.field=='pickUpDomesticCzas' || 
+                col.field=='diplomatNextDay' || col.field=='pickUpDomesticCzas' ||
                 col.field=='pickUpEksportSmCzas')?{'width':'180px'}:{'width':'120px'}"
               [sortable]="col.field=='town'||col.field=='fromPostcode'||col.field=='depotCode'">
         <span *ngIf="col.field=='depotCode'">
             <template pTemplate="header">
-                <span >Kod<br>Depotu</span>
+                <span>Kod<br>Depotu</span>
                 <!--<span class="sm-small-break-th">Kod Depotu</span>-->
             </template>
             <template let-col let-car="rowData" pTemplate="body">
                 <span>
-                    <button class="btn btn-primary btn-xs" style="width:50px; font-size:small" (click)="onClick(car[col.field], lgModal)">
+                    <button class="btn btn-psz-blue btn-xs" style="width:50px; font-size:small" (click)="onClick(car[col.field], lgModal)">
                         {{car[col.field]}}
                     </button>
                 </span>

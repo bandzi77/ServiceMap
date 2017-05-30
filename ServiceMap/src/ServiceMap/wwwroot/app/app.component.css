@@ -6,17 +6,6 @@ div.panel-heading {
     font-size: x-large;
 }
 
-.table-responsive {
-    border-radius: 5px 5px 0 0;
-    border: 1px solid slategrey;
-}
-
-table {
-    border-collapse: collapse; /* IE7 and lower */
-    border-spacing: 0;
-    margin-bottom: 0px !important; /*nadpisuje bootstrapowy styl 20px*/
-}
-
 th {
     color: white !important; /* nadpisanie primeng*/
     background-color: #0b77a7 !important; /* #333f48 slategrey nadpisanie primeng*/
@@ -70,10 +59,8 @@ td:last-child {
     background-image: none;
 }
 
-/*Na razie nie potrzebne jest*/
-
 .btn-psz-blue {
-    background-color: #1cb3f4;
+    background-color: #1cb3f4; 
     border-color: #1cb3f4;
     color: #fff;
 }
