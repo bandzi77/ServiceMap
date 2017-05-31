@@ -13,6 +13,7 @@ import { UserListComponent } from './user-list.component';
         ReactiveFormsModule,
         SmSharedModule,
         RouterModule.forChild([
+            { path: 'userlist', component: UserListComponent },
             {
                 path: 'adduser',
                 canDeactivate: [UserEditGuard],

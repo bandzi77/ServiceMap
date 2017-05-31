@@ -20,18 +20,15 @@ import { UserListComponent } from './users/user-list.component';
         BrowserModule,
         HttpModule,
         // TODO - Do usuniêcia
-        ServiceTntModule,
+
         ReactiveFormsModule,
         RouterModule.forRoot([
-            { path: 'adduser', component: UserComponent },
             { path: 'serviceTnt', component: ServiceTntListComponent },
-            { path: 'userlist', component: UserListComponent },
-            //{ path: 'welcome', component: WelcomeComponent },
-
             { path: '', redirectTo: 'serviceTnt', pathMatch: 'full' },
             { path: '**', redirectTo: 'serviceTnt', pathMatch: 'full' },      ]),
         SmSharedModule,
-        ProductModule
+        ProductModule,
+        ServiceTntModule
     ],
     declarations: [
         AppComponent,
