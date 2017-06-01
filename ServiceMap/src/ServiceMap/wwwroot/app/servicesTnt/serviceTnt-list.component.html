@@ -48,7 +48,9 @@
              [paginator]="true" [pageLinks]="8"
              [rowsPerPageOptions]="[10,25,50]"
              [totalRecords]="paging.totalCount" (onLazyLoad)="loadPageLazy($event)"
-             [sortFile]="town">
+             [sortFile]="town"
+             [rowHover]="true"
+             >
     <p-header>
         <div style="text-align:left">
             <p-multiSelect #multiselect [options]="columnOptions" [(ngModel)]="cols"></p-multiSelect>

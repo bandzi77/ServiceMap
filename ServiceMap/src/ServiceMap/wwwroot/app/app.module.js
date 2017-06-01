@@ -17,10 +17,8 @@ var welcome_component_1 = require("./home/welcome.component");
 var serviceTnt_module_1 = require("./servicesTnt/serviceTnt.module");
 var user_service_1 = require("./users/user.service");
 var forms_1 = require("@angular/forms");
-var user_component_1 = require("./users/user.component");
 var serviceTnt_list_component_1 = require("./servicesTnt/serviceTnt-list.component");
 var user_module_1 = require("./users/user-module");
-var user_list_component_1 = require("./users/user-list.component");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -31,19 +29,19 @@ AppModule = __decorate([
         imports: [
             platform_browser_1.BrowserModule,
             http_1.HttpModule,
-            // TODO - Do usunięcia
-            serviceTnt_module_1.ServiceTntModule,
+            // TODO - Do usuni�cia
             forms_1.ReactiveFormsModule,
             router_1.RouterModule.forRoot([
-                { path: 'adduser', component: user_component_1.UserComponent },
-                { path: 'serviceTnt', component: serviceTnt_list_component_1.ServiceTntListComponent },
-                { path: 'userlist', component: user_list_component_1.UserListComponent },
                 //{ path: 'welcome', component: WelcomeComponent },
+                //{ path: '', redirectTo: 'welcome', pathMatch: 'full' },
+                //{ path: '**', redirectTo: 'welcome', pathMatch: 'full' }
+                { path: 'serviceTnt', component: serviceTnt_list_component_1.ServiceTntListComponent },
                 { path: '', redirectTo: 'serviceTnt', pathMatch: 'full' },
                 { path: '**', redirectTo: 'serviceTnt', pathMatch: 'full' },
             ]),
             shared_module_1.SmSharedModule,
-            user_module_1.ProductModule
+            user_module_1.ProductModule,
+            serviceTnt_module_1.ServiceTntModule
         ],
         declarations: [
             app_component_1.AppComponent,

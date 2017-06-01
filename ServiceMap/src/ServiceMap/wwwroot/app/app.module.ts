@@ -23,9 +23,13 @@ import { UserListComponent } from './users/user-list.component';
 
         ReactiveFormsModule,
         RouterModule.forRoot([
+            //{ path: 'welcome', component: WelcomeComponent },
+            //{ path: '', redirectTo: 'welcome', pathMatch: 'full' },
+            //{ path: '**', redirectTo: 'welcome', pathMatch: 'full' }
             { path: 'serviceTnt', component: ServiceTntListComponent },
             { path: '', redirectTo: 'serviceTnt', pathMatch: 'full' },
-            { path: '**', redirectTo: 'serviceTnt', pathMatch: 'full' },      ]),
+            { path: '**', redirectTo: 'serviceTnt', pathMatch: 'full' },      
+        ]),
         SmSharedModule,
         ProductModule,
         ServiceTntModule

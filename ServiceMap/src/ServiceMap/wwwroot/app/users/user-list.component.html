@@ -39,7 +39,9 @@
 <p-dataTable [value]="users"
              scrollable="true" scrollHeight="450px" scrollWidth="100%;"
              [rows]="25" [paginator]="true" [pageLinks]="8" [rowsPerPageOptions]="[10,25,50]"           
-             [globalFilter]="gb" #dt>
+             [globalFilter]="gb" 
+             [rowHover]="true"
+             #dt>
     <p-column field="email" 
               header="Email"
                [filter]="true" 

@@ -157,7 +157,7 @@ namespace ServiceMap.Controllers
 
                     if (result.Succeeded)
                     {
-                        return Redirect(returnUrl ?? "/");
+                        return Redirect(returnUrl ?? "~/");
                     }
                     else 
                     {

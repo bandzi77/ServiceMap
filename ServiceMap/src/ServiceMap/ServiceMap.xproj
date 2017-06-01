@@ -20,5 +20,8 @@
     <DnxInvisibleContent Include=".bowerrc" />
     <DnxInvisibleContent Include="wwwroot\app\assets\.gitkeep" />
   </ItemGroup>
+  <ItemGroup>
+    <DnxInvisibleFolder Include="wwwroot\mychangesMH\" />
+  </ItemGroup>
   <Import Project="$(VSToolsPath)\DotNet.Web\Microsoft.DotNet.Web.targets" Condition="'$(VSToolsPath)' != ''" />
 </Project>
