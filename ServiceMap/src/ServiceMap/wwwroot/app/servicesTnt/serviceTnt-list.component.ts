@@ -12,7 +12,7 @@ import { LazyLoadEvent, SelectItem, MultiSelect, DataTable } from 'primeng/prime
 
 
 @Component({
-    templateUrl: 'app/servicesTnt/serviceTnt-list.component.html?v=${new Date().getTime()',
+    templateUrl: 'app/servicesTnt/serviceTnt-list.component.html',
     styleUrls: ['app/servicesTnt/serviceTnt-list.component.css']
 })
 

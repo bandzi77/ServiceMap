@@ -1,5 +1,3 @@
-/// <reference path="users/user.component.ts" />
-/// <reference path="users/user.component.ts" />
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';

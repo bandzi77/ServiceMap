@@ -61,3 +61,13 @@
         border-color: #f87018;
         color: white;
     }
+
+ /*Nadpisanie stylów bootsrapowowych*/
+ .tooltip-inner {
+  background-color: #337ab7;
+  color: white;
+  font-size: small;
+}
+.tooltip .tooltip-arrow {
+  border-bottom-color: white;
+}

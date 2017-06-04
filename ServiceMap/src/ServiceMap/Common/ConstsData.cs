@@ -34,7 +34,8 @@ namespace ServiceMap.Common
         public static readonly string UserModelInvalid = "3. Wystąpił błąd podczas dodawania nowego użytkownika";
         public static readonly string UserCreateIdentityError = "4. Wystąpił błąd podczas dodawania nowego użytkownika";
         public static readonly string UserCreateAnotherError = "5. Wystąpił błąd podczas dodawania nowego użytkownika";
-        public static readonly string UserCreateSuccess = "6. Użytkownik został zapisany";
+        public static readonly string UserCreateSuccess = "6. Użytkownik został dodany";
+        public static readonly string UserCreateEmailError = "6.1. Konto zostało utworzone. Wystąpił błąd podczas wysłania emaila do użytkownika z danymi konta.";
         public static readonly string UserAlreadyExists = "7. Podany adres email istnieje już w systemie";
         public static readonly string DeleteUserSuccess = "8. Użytkownik został usunięty z systemu";
         public static readonly string DeleteUserError = "9. Błąd podczas usuwania użytkownika z systemu";

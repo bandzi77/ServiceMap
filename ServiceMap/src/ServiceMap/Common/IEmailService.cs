@@ -7,6 +7,7 @@ namespace ServiceMap.Common
 {
    public interface IEmailService
     {
-        void SendEmailAsync(string fromName, string CcEmail, string toEmail, string subject, string message, string emailFormat);
+        Task<bool> SendEmailAsync(string fromName, string CcEmail, string toEmail, string subject, string message, string emailFormat);
+        bool SendEmail(string fromName, string CcEmail, string toEmail, string subject, string message, string emailFormat);
     }
 }

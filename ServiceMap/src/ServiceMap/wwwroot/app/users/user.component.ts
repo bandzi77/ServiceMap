@@ -43,7 +43,7 @@ export class UserComponent implements OnInit, OnDestroy {
     userForm: FormGroup;
     emailMessage: string = '';
     passwordMessage: string = '';
-    limitOfRequestsPerDay: string = '';
+    limitPerDayMessage: string = '';
     private sub: Subscription;
     private emailTntRegEx: string = '[a-zA-Z0-9._%+-]+@(TNT.COM|tnt.com)';
     private regExpEmail = new RegExp(this.emailTntRegEx);
@@ -52,6 +52,7 @@ export class UserComponent implements OnInit, OnDestroy {
     patternEmailTnt: string = 'Niepoprawny adres email z domeny tnt.com.';
     patternEmail: string = 'Niepoprawny adres email.';
     result: IResult;
+    isDisabledCheckBoxTntAccount: boolean=false;
 
     private emailValidationMessages = {
         required: 'Email jest wymagany.',
@@ -66,6 +67,12 @@ export class UserComponent implements OnInit, OnDestroy {
         maxlength: 'Hasło jest za długie.'
     };
 
+    private limitOfRequestsPerDayMessage = {
+        required: "Limit zapytań jest wymagany.",
+        range: "Wprowadź wartość z przedziału od 1 do 1000"
+    };
+
+
     constructor(
         public toastr: ToastsManager,
         vcr: ViewContainerRef,
@@ -78,33 +85,20 @@ export class UserComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
+
         this.userForm = this.fb.group({
             _id: "0",
-            email: [{ value: '', disabled: true }, [
-                Validators.required,
-                Validators.maxLength(250),
-                Validators.pattern(this.emailRegEx)]],
-            password: ['', [Validators.required,
-            Validators.minLength(8),
-            Validators.maxLength(12),
-            Validators.pattern(this.passwordRegEx)]],
-            limitOfRequestsPerDay: ['', checkRange(1, 500)],
+            email: [{ value: '', disabled: true }, this._getEmailValidators()],
+            password: ['', this._getPassswordValidators()],
+            limitOfRequestsPerDay: ['', this._getLimitPerDayValidators()],
             isSuperUser: false,
             isLocked: false
         });
 
-        const emailControl = this.userForm.get('email');
-        emailControl.valueChanges.debounceTime(0).subscribe(value =>
-            this.setMessage(emailControl, this.emailValidationMessages, 'emailMessage'));
+        // Ustawia komunikaty dla walidatorów
+        this._setMessageForValidators();
 
-
-        const passwordControl = this.userForm.get('password');
-        passwordControl.valueChanges.debounceTime(0).subscribe(value =>
-            this.setMessage(passwordControl, this.passValidationMessages, 'passwordMessage'));
-
-        this.userForm.get('isSuperUser').valueChanges
-            .subscribe(value => this.setNotification(value));
-
+        // Tworzy obiekt z danymi użytkownika do edycji
         this.sub = this.route.queryParams.subscribe(
             params => {
                 let user = <IUser>{
@@ -128,6 +122,7 @@ export class UserComponent implements OnInit, OnDestroy {
         this.sub.unsubscribe();
     }
 
+    // Metoda wypełniająca danymi formularz jeśli jest w trybie edycji użytkownika, jeśli nie wyświetla pusty
     onUserRetrieved(user: IUser): void {
         this.user = user;
 
@@ -140,12 +135,18 @@ export class UserComponent implements OnInit, OnDestroy {
             this.pageTitle = 'Dodaj nowego użytkownika';
         } else {
             this.pageTitle = `Edytuj użytkownika: ${this.user.email}`;
+
+            // Blokuje pola kluczowe do edycii
             this.userForm.get('email').disable();
             this.userForm.get('password').disable();
+
+            // Nie pozwala na zmianę typu konta jeśli email nie był z domeny TNT
             if (!this.regExpEmail.test(this.user.email)) {
                 this.userForm.get('isSuperUser').disable();
+                this.isDisabledCheckBoxTntAccount = true;
             }
 
+            // Wypełnia formularz do edycji danymi z query params
             this.userForm.patchValue({
                 _id: this.user._id === "undefined" ? '' : this.user._id,
                 email: this.user.email === "undefined" ? '' : this.user.email,
@@ -161,16 +162,17 @@ export class UserComponent implements OnInit, OnDestroy {
         const emailControl = this.userForm.get('email');
         const limitOfRequestsPerDayControl = this.userForm.get('limitOfRequestsPerDay');
 
+        // zmiania reguły walidatora w zależnośći od tego czy jest to konto z domeny TNT
         if (ischecked) {
             this.emailValidationMessages.pattern = this.patternEmailTnt;
-            emailControl.setValidators([Validators.required, Validators.pattern(this.emailTntRegEx)]);
+            emailControl.setValidators(this._getTntEmailValidators());
             limitOfRequestsPerDayControl.reset();
             limitOfRequestsPerDayControl.clearValidators();
         }
         else {
             this.emailValidationMessages.pattern = this.patternEmail;
-            emailControl.setValidators([Validators.required, Validators.pattern((this.emailRegEx))]);
-            limitOfRequestsPerDayControl.setValidators([Validators.required, checkRange(1, 500)]);
+            emailControl.setValidators(this._getEmailValidators());
+            limitOfRequestsPerDayControl.setValidators(this._getLimitPerDayValidators());
         }
 
         emailControl.updateValueAndValidity();
@@ -196,7 +198,7 @@ export class UserComponent implements OnInit, OnDestroy {
 
     deleteUser(): void {
         if (this.user._id === "0") {
-            // Don't delete, it was never saved.
+            // Dla nowego użytkownika, tylko czyści formularz
             this.userForm.reset();
         } else {
             if (confirm(`Czy chcesz usunąć użytkownika: ${this.user.email}?`)) {
@@ -204,7 +206,8 @@ export class UserComponent implements OnInit, OnDestroy {
                     .subscribe(result => {
                         this.onDeleteComplete(result, this.user);
                     },
-                    (error: any) => this.errorMessage = <any>error
+                    (error: any) =>
+                        this.errorMessage = <any>error
                     );
             }
         }
@@ -225,7 +228,6 @@ export class UserComponent implements OnInit, OnDestroy {
             // nic nie rób
         }
 
-
         console.log(this.userForm);
         console.log('Saved: ' + JSON.stringify(this.userForm.value));
     }
@@ -245,19 +247,18 @@ export class UserComponent implements OnInit, OnDestroy {
     }
 
     private onSaveComplete(res: IResult, user: IUser): void {
-        if (res.success)
-        {
-               this.resetForm();
+        if (res.success) {
+            this.resetForm();
             if (user._id === "0") {
                 this.toastr.success(res.message, 'Success!');
-             
+
             }
             else {
                 this.onBack();
-             // this.userForm.markAsPristine();
+                // this.userForm.markAsPristine();
             }
         } else {
-            this.toastr.error(res.message, 'Błąd!');
+            this.toastr.error(res.message, 'Błąd!', { dismiss: 'click'});
         }
     }
 
@@ -270,15 +271,86 @@ export class UserComponent implements OnInit, OnDestroy {
         });
     }
 
+    private _setMessageForValidators() {
+        const emailControl = this.userForm.get('email');
+        emailControl.valueChanges.debounceTime(0).subscribe(value =>
+            this.setMessage(emailControl, this.emailValidationMessages, 'emailMessage'));
+
+        const passwordControl = this.userForm.get('password');
+        passwordControl.valueChanges.debounceTime(0).subscribe(value =>
+            this.setMessage(passwordControl, this.passValidationMessages, 'passwordMessage'));
+
+        const limitOfRPerDayControl = this.userForm.get('limitOfRequestsPerDay');
+        limitOfRPerDayControl.valueChanges.debounceTime(0).subscribe(value =>
+            this.setMessage(limitOfRPerDayControl, this.limitOfRequestsPerDayMessage, 'limitPerDayMessage'));
+
+        this.userForm.get('isSuperUser').valueChanges
+            .subscribe(value => this.setNotification(value));
+    }
+
+    private _getEmailValidators(): ValidatorFn {
+        return Validators.compose([
+            Validators.required,
+            Validators.maxLength(250),
+            Validators.pattern(this.emailRegEx)]
+        );
+    }
+
+
+    private _getTntEmailValidators(): ValidatorFn {
+        return Validators.compose([
+            Validators.required,
+            Validators.maxLength(250),
+            Validators.pattern(this.emailTntRegEx)]
+        );
+    }
+
+    private _getPassswordValidators(): ValidatorFn {
+        return Validators.compose([
+            Validators.required,
+            Validators.maxLength(12),
+            Validators.pattern(this.passwordRegEx)]
+        );
+    }
+
+    private _getLimitPerDayValidators(): ValidatorFn {
+        return Validators.compose([
+            Validators.required,
+            checkRange(1, 1000)]
+        );
+    }
 }
 
 
 
 function checkRange(min: number, max: number): ValidatorFn {
     return (c: AbstractControl): { [key: string]: boolean } | null => {
+        // Requred będzie odpowiada za brak danych
+        if ((c.value || "").length == 0)
+        { return null; }
+
         if (c.value !== undefined && (isNaN(c.value) || c.value < min || c.value > max)) {
             return { 'range': true };
         };
         return null;
     };
 }
+
+    //function ExRequired(c: FormControl) {
+    //    debugger;
+    //    if ((c.value || "").length == 0) {
+    //        return { 'required': true };
+    //    }
+
+    //    // jest ok gdy zwraca null
+    //    return null;
+    //}
+
+
+    //function checkRange(c: FormControl) {
+
+    //    if (c.value && c.value.length == 0) {
+    //        return null;
+    //    }
+    //    let result = (parseInt(c.value) > 0 && parseInt(c.value) <= 500 && !isNaN(c.value));
+    //    return result ? null : { 'range': true }

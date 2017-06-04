@@ -28,6 +28,7 @@ namespace ServiceMap.Controllers.apiControllers
         private string roleUser;
         private IEmailService emailService;
         private IUserService currentUser;
+        private readonly string superUser;
 
         public UsersController(SignInManager<AppUser> signinMgr, UserManager<AppUser> userMgr,
             RoleManager<IdentityRole> roleMgr, IConfiguration config, IEmailService emailService, IUserService userService)
@@ -40,6 +41,7 @@ namespace ServiceMap.Controllers.apiControllers
             this.currentUser = userService;
             roleSuperUser = configuration["Data:Roles:Superuser"];
             roleUser = configuration["Data:Roles:User"];
+            superUser = configuration["Data:FirstUser:Email"];
         }
 
 
@@ -69,13 +71,14 @@ namespace ServiceMap.Controllers.apiControllers
                     NumberOfRequestsPerDay = x.NumberOfRequestsPerDay,
                     IsSuperUser = x.Roles.Any(y => y.RoleId == userRole.Id),
                     IsLocked = x.LockoutEnd > DateTime.Now && x.LockoutEnabled
-                }).OrderBy(s=>s.Email).AsQueryable();
+                }).OrderBy(s => s.Email).AsQueryable();
 
             if (showLockedOnly)
             {
                 result_ = result_.Where(x => x.IsLocked == showLockedOnly);
             }
-           var result = new { users = result_, paging = "" };
+            result_ = result_.Where(x=>x.Email.ToUpper() != superUser.ToUpper() || superUser.ToUpper()==null);
+            var result = new { users = result_, paging = "" };
             return Ok(result);
         }
 
@@ -85,7 +88,7 @@ namespace ServiceMap.Controllers.apiControllers
             IdentityResult resultIdent = null;
             var result = new { success = false, message = ConstsData.UserModelInvalid };
 
-            if (ModelState.IsValid && user._id == "0")
+            if (ModelState.IsValid && user._id == "0" && user.Email.ToUpper() != superUser.ToUpper())
             {
                 // Sprawdza czy taki użytkownik już istnieje
                 if (await userManager.FindByEmailAsync(user.Email.ToUpper()) != null)
@@ -101,7 +104,7 @@ namespace ServiceMap.Controllers.apiControllers
                 }
 
                 if (await roleManager.FindByNameAsync(roleUser) == null)
-                { 
+                {
                     resultIdent = await roleManager.CreateAsync(new IdentityRole(roleUser));
                 }
 
@@ -143,8 +146,14 @@ namespace ServiceMap.Controllers.apiControllers
                 // Zwraca wynik końcowy operacji
                 if (resultIdent.Succeeded)
                 {
-                    SendPasswordToUser(user);
-                    result = new { success = true, message = ConstsData.UserCreateSuccess };
+                    if (SendPasswordToUser(user))
+                    {
+                        result = new { success = true, message = ConstsData.UserCreateSuccess };
+                    }
+                    else
+                    {
+                        result = new { success = false, message = ConstsData.UserCreateEmailError };
+                    }
                 }
                 else
                 {
@@ -155,11 +164,13 @@ namespace ServiceMap.Controllers.apiControllers
             return Ok(result);
         }
 
-        private void SendPasswordToUser(User newUser)
+
+
+        private bool SendPasswordToUser(User newUser)
         {
             var fromEmail = currentUser.GetUser(User).Result.NormalizedEmail;
 
-            emailService.SendEmailAsync("TNT SM", null, newUser.Email,
+            return emailService.SendEmail("TNT SM", null, newUser.Email,
                 ConstsData.PasswordForNewUserSubject,
                 ConstsData.PasswordForNewUserMsg + $"{newUser.Password}" +
                 ConstsData.PasswordForNewUserQueryLimit + $"{newUser.LimitOfRequestsPerDay}", "html");
@@ -171,7 +182,7 @@ namespace ServiceMap.Controllers.apiControllers
         {
             var result = new { success = false, message = ConstsData.UpdateUserError };
 
-            if (user.Email.ToUpper() != configuration["Data:FirstUser:Email"].ToUpper())
+            if (user.Email.ToUpper() != superUser.ToUpper())
             {
                 IdentityResult resultIdent = null;
                 ModelState.Remove("Password");

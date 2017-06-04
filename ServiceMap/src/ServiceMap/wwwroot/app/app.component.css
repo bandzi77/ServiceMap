@@ -8,7 +8,7 @@ div.panel-heading {
 
 th {
     color: white !important; /* nadpisanie primeng*/
-    background-color: #0b77a7 !important; /* #333f48 slategrey nadpisanie primeng*/
+    background-color: slategrey !important; /* #333f48 #0b77a7  nadpisanie primeng*/
     vertical-align: text-top !important;
 }
 

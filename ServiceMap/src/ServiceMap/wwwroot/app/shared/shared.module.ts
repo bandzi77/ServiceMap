@@ -2,14 +2,12 @@
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { BusyModule, BusyConfig } from 'angular2-busy';
-import { ModalModule, PopoverModule } from 'ng2-bootstrap';
+import { ModalModule, PopoverModule, TooltipModule } from 'ng2-bootstrap';
 import { PageModule } from '../pagination/page.module';
 import { LgModalComponent } from './lgModal.component';
 import { ToastModule, ToastOptions } from 'ng2-toastr/ng2-toastr';
 import { CustomOption } from './toastr-custom-option';
 import { DataTableModule, SharedModule, MultiSelectModule, ToggleButtonModule, DropdownModule } from 'primeng/primeng';
-
-
 
 @NgModule({
     declarations: [
@@ -23,12 +21,13 @@ import { DataTableModule, SharedModule, MultiSelectModule, ToggleButtonModule, D
         ModalModule,
         PageModule,
         PopoverModule,
+        TooltipModule,
         ToastModule,
         DataTableModule,
         SharedModule,
         MultiSelectModule,
         ToggleButtonModule,
-        DropdownModule
+        DropdownModule,
     ],
     imports: [
         CommonModule,
@@ -41,6 +40,7 @@ import { DataTableModule, SharedModule, MultiSelectModule, ToggleButtonModule, D
         ),
         ModalModule.forRoot(),
         PopoverModule.forRoot(),
+        TooltipModule.forRoot(),
         ToastModule.forRoot(),
         DropdownModule
     ],
