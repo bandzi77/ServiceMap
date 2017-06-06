@@ -37,8 +37,8 @@
 </div>
 
 <p-dataTable [value]="users"
-             scrollable="true" scrollHeight="450px" scrollWidth="100%;"
-             [rows]="25" [paginator]="true" [pageLinks]="8" [rowsPerPageOptions]="[10,25,50]"           
+             scrollable="true" scrollHeight="80%" scrollWidth="100%;"
+             [paginator]="true" [pageLinks]="8" [rows]="15" [rowsPerPageOptions]="[15,25,50]"           
              [globalFilter]="gb" 
              [rowHover]="true"
              #dt>
@@ -90,11 +90,10 @@
     <p-column header="Edycja" [style]="{'width':'150px'}">
         
             <template let-user="rowData" pTemplate="body">
-            <button class="btn btn-psz-blue btn-xs"
+            <button class="btn btn-psz-blue btn-xs btn-sm-font-small"
                     (click)="onSelectUser(user)">
                 Edytuj
             </button>
-
         </template>
         </p-column>
 

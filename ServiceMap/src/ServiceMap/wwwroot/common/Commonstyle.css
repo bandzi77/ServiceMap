@@ -26,7 +26,6 @@
         background-image: none;
     }
 
-
 .sm-text-dark-grey {
     /*color: #333;*/
     font-size:medium;
@@ -70,4 +69,36 @@
 }
 .tooltip .tooltip-arrow {
   border-bottom-color: white;
+}
+
+/* Nadpisuje style primeng*/
+.ui-datatable .ui-datatable-thead>tr>th, .ui-datatable .ui-datatable-tfoot>tr>td, .ui-datatable .ui-datatable-data>tr>td {
+   /*border-style: 0px 0 !important;*/
+    border-style: none !important;
+    border-left: 1px solid #ccc !important;
+}
+.ui-multiselect .ui-multiselect-label {
+    font-size:smaller;
+}
+
+.ui-datatable-scrollable-body {
+      overflow-y: scroll !important;
+}
+
+/*Nadpisuje style wybierania kolumn*/
+/*Tło*/
+.ui-widget-header .ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-state-highlight {
+  background: slategrey !important;
+}
+
+/*Checkobxy*/
+.ui-chkbox-box.ui-state-active, .ui-radiobutton-box.ui-state-active {
+     border:  1px solid slategrey !important;
+     background: white !important;
+     color:#555555 !important;
+}
+
+/*Wielkość czcionek*/
+li > div + label {
+font-weight: normal;
 }

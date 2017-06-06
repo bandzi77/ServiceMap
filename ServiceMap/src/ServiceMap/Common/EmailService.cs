@@ -46,8 +46,9 @@ namespace ServiceMap.Common
 
         public bool SendEmail(string fromName, string CcEmail, string toEmail, string subject, string message, string emailFormat)
         {
-#if !DEBUG
+
             bool result = true;
+#if RELEASE
             try
             {
                 var mimeMsg = CreateEmailMessate(fromName, CcEmail, toEmail, subject, message, emailFormat);
@@ -69,8 +70,8 @@ namespace ServiceMap.Common
             {
                 result = false;
             }
-            return result;
 #endif
+            return result;
         }
 
         private ExtMimeMessage CreateEmailMessate(string fromName, string CcEmail, string toEmail, string subject, string message, string emailFormat)

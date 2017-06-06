@@ -3,11 +3,11 @@
         {{pageTitle}}
     </div>
     <div class="panel-body" *ngIf="userForm">
-        <form class="form-horizontal"
-              novalidate
+        <form autocomplete="off"
+              class="form-horizontal"
               (ngSubmit)="saveUser()"
               [formGroup]="userForm"
-              autocomplete="off">
+              novalidate>
             <fieldset>
                 <div class="form-group" [ngClass]="{'has-error': emailMessage}">
                     <label class="col-md-2 control-label"

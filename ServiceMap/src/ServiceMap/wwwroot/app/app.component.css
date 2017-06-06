@@ -80,6 +80,12 @@ td:last-child {
     color: #fff;
 }
 
+
+.btn-sm-font-small{
+    font-size:small !important;
+}
+
+
 .btn-psz-green {
     background-color: #189A46;
     border-color: #189A46;
@@ -107,13 +113,5 @@ td:last-child {
         height: 300px;
     }
 }*/
-/* Nadpisuje style primeng*/
-.ui-datatable .ui-datatable-thead>tr>th, .ui-datatable .ui-datatable-tfoot>tr>td, .ui-datatable .ui-datatable-data>tr>td {
-   /*border-style: 0px 0 !important;*/
-    border-style: none !important;
-    border-left: 1px solid #ccc !important;
-}
-.ui-multiselect .ui-multiselect-label {
-    font-size:smaller;
-}
+
 
