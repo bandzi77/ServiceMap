@@ -86,7 +86,7 @@ namespace ServiceMap.Controllers
                     return View(model);
                 }
 
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("InfoPanel", "Account", new { message = ConstsData.ResetPasswordSuccess });
             }
 
             return View(model);
@@ -119,7 +119,7 @@ namespace ServiceMap.Controllers
                 //   $"Please reset your password by clicking here: <a href='{callbackUrl}'>link</a>");
                 //   return View("ForgotPasswordConfirmation"); < a href = '{callbackUrl}' > link </ a >
 
-                emailService.SendEmailAsync("No replay", null, email, ConstsData.ResetLinkPasswordSubject, ConstsData.ResetLinkPasswordMsg + ConstsData.ResetLinkPasswordMsgLink1 +$"{callbackUrl}" +ConstsData.ResetLinkPasswordMsgLink2, "html");
+               await emailService.SendEmailAsync("No replay", null, email, ConstsData.ResetLinkPasswordSubject, ConstsData.ResetLinkPasswordMsg + ConstsData.ResetLinkPasswordMsgLink1 +$"{callbackUrl}" +ConstsData.ResetLinkPasswordMsgLink2, "html");
             }
         }
 

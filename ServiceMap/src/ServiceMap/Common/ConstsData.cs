@@ -14,10 +14,11 @@ namespace ServiceMap.Common
         public static readonly string ResetLinkPasswordSubject = "Reset hasła";
         public static readonly string ResetLinkPasswordMsg = "<p>Drogi Użytkowniku!<br>    <p>Poniżej znajdziesz link pozwalający na zresetowanie hasła w aplikacji Mapa Serwisowa:<br>";
         public static readonly string ResetLinkPasswordMsgLink1 = "<a href=\"";
-        public static readonly string ResetLinkPasswordMsgLink2 = "\">Link...</a>";
+        public static readonly string ResetLinkPasswordMsgLink2 = "\">Zresetuj hasło</a><br><br>";
         public static readonly string ResetLinkWrongEmail = "1. Wystąpił błąd podczas resetowania hasła";
         public static readonly string ResetLinkWrongToken = "2. Wystąpił błąd podczas resetowania hasła";
-        
+        public static readonly string ResetPasswordSuccess= "Twoje hasło zostało pomyślnie zresetowane.";
+
         public const string EmailValidationMsg = "Niepoprawny format adresu email";
         public const string EmailRequiredMsg = "Email jest wymagany";
         public const string EmailRegExpMsg = "Dopuszczalne znaki specjalne w email prefix: '.' '_' '%' '+' '-'";

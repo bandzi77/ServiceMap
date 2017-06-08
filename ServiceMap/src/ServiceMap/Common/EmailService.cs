@@ -26,12 +26,15 @@ namespace ServiceMap.Common
                 var mimeMsg = CreateEmailMessate(fromName, CcEmail, toEmail, subject, message, emailFormat);
                 using (var client = new SmtpClient())
                 {
-                    //client.LocalDomain = "tnt.com";
-                client.Connect(mimeMsg.Host, mimeMsg.Port, SecureSocketOptions.None);
-                client.AuthenticationMechanisms.Remove("XOAUTH2");
-                client.Authenticate(mimeMsg.TntEmail, mimeMsg.Password);
-                await client.SendAsync(mimeMsg).ConfigureAwait(false);
-                await client.DisconnectAsync(true).ConfigureAwait(false);
+                    client.Connect(mimeMsg.Host, mimeMsg.Port, SecureSocketOptions.None);
+
+                    if (mimeMsg.IsSmtpRequredAuthentication)
+                    {
+                        client.AuthenticationMechanisms.Remove("XOAUTH2");
+                        client.Authenticate(mimeMsg.TntEmail, mimeMsg.Password);
+                    }
+                    await client.SendAsync(mimeMsg).ConfigureAwait(false);
+                    await client.DisconnectAsync(true).ConfigureAwait(false);
                 }
                 result = true;
             }

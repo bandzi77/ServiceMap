@@ -7,9 +7,9 @@ export interface IServiceTnt {
     fromPostcode: string;
     toPostcode: string;
     sobota: boolean;
-    ex9: boolean;
-    ex10: boolean;
-    ex12: boolean;
+    eX9: boolean;
+    eX10: boolean;
+    eX12: boolean;
     priority: string;
     wieczorneDostarczenie?: boolean;
     standardDeliveryOd: string;

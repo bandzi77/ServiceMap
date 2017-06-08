@@ -83,27 +83,27 @@
 
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-3">
-                        <!-- Huck na to aby przycisk pojawiał się z tooltipem lub nie -->
+                        <!-- Hack na to aby przycisk pojawiał się z tooltipem lub nie -->
                         <span *ngIf="isDisabledCheckBoxTntAccount" tooltip="Brak możliwości zmiany typu konta dla adresów z poza domeny tnt.com"
                               placement="left">
-                            <label class="btn btn-primary  smap-check-btn" [ngClass]="{'disabled': isDisabledCheckBoxTntAccount}">
+                            <label class="btn btn-primary  sm-check-btn" [ngClass]="{'disabled': isDisabledCheckBoxTntAccount}">
                                 <input id="isSuperUserId"
                                        type="checkbox"
                                        formControlName="isSuperUser" />
-                                Konto użytkownika TNT
+                                Uprawnienia administratora
                             </label>
                         </span>
-                        <label *ngIf="!isDisabledCheckBoxTntAccount" class="btn btn-primary  smap-check-btn" [ngClass]="{'disabled': isDisabledCheckBoxTntAccount}">
+                        <label *ngIf="!isDisabledCheckBoxTntAccount" class="btn btn-primary  sm-check-btn" [ngClass]="{'disabled': isDisabledCheckBoxTntAccount}">
                             <input id="isSuperUserId"
                                    type="checkbox"
                                    formControlName="isSuperUser" />
-                            Konto użytkownika TNT
+                            Uprawnienia administratora 
                         </label>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-3">
-                        <label class="btn btn-primary smap-check-btn" [ngClass]="{'btn-danger': userForm.get('isLocked').value}">
+                        <label class="btn btn-primary sm-check-btn" [ngClass]="{'btn-danger': userForm.get('isLocked').value}">
                             <input id="isLockedId"
                                    type="checkbox"
                                    formControlName="isLocked" />

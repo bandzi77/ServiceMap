@@ -60,13 +60,13 @@ export class ServiceTntListComponent implements OnInit {
             { field: 'toPostcode', header: 'Kod pocztowy do' },
 
             { field: 'sobota', header: 'Doręczenie sobotnie'  },
-            { field: 'ex9', header: 'ID09 00 Express' },
-            { field: 'ex10', header: 'ID10 00 Express' },
-            { field: 'ex12', header: 'ID12 00 Express' },
+            { field: 'eX9', header: 'ID09 00 Express' },
+            { field: 'eX10', header: 'ID10 00 Express' },
+            { field: 'eX12', header: 'ID12 00 Express' },
 
 
              { field: 'priority', header: 'Przesyłka priorytetowa' },
-             { field: 'wieczorneDostarczenie', header: 'Wieczorne dostarczenie' },
+             //{ field: 'wieczorneDostarczenie', header: 'Wieczorne dostarczenie' },
              //{ field: 'standardDeliveryOd', header: 'Doręcznia < br > od' },
              //{ field: 'standardDeliveryDo', header: 'Doręcznia < br >do' }
 

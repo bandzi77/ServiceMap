@@ -10,8 +10,8 @@
                            autocomplete="off"
                            focus="true"
                            placeholder="Email"
-                           [(ngModel)]="email" 
-                           (keyup.enter)="onSearchUsers()"/>
+                           [(ngModel)]="email"
+                           (keyup.enter)="onSearchUsers()" />
                 </div>
             </div>
             <div class="form-group">
@@ -37,16 +37,16 @@
 </div>
 
 <p-dataTable [value]="users"
-             scrollable="true" scrollHeight="80%" scrollWidth="100%;"
-             [paginator]="true" [pageLinks]="8" [rows]="15" [rowsPerPageOptions]="[15,25,50]"           
-             [globalFilter]="gb" 
+             scrollable="true" scrollHeight="460px" scrollWidth="100%;"
+             [paginator]="true" [pageLinks]="8" [rows]="15" [rowsPerPageOptions]="[15,25,50]"
+             [globalFilter]="gb"
              [rowHover]="true"
              #dt>
-    <p-column field="email" 
+    <p-column field="email"
               header="Email"
-               [filter]="true" 
-               [style]="{'width':'270px'}" 
-               [sortable]="true"
+              [filter]="true"
+              [style]="{'width':'270px'}"
+              [sortable]="true"
               filterPlaceholder="Szukaj"></p-column>
 
 
@@ -57,7 +57,7 @@
               [style]="col.field=='email'?{'width':'270px'}:
               col.field=='isSuperUser'?{'width':'180px'}:
               col.field=='isLocked'?{'width':'180px'}:{'width':'150px'}">
-    
+
         <!--<span *ngIf="col.field=='isLocked'">
 
             <template let-col let-user="rowData" pTemplate="body">
@@ -67,7 +67,7 @@
         </span>-->
 
     </p-column>
-    <p-column field="isSuperUser" header="Konto użytkownika TNT" [filter]="true" [style]="{'overflow':'visible','width':'180px'}" filterMatchMode="equals"  [sortable]="true">
+    <p-column field="isSuperUser" header="Uprawnienia administratora" [filter]="true" [style]="{'overflow':'visible','width':'210px'}" filterMatchMode="equals" [sortable]="true">
         <template pTemplate="filter" let-col>
             <p-dropdown [options]="checkSelector" appendTo="body" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
         </template>
@@ -77,7 +77,7 @@
         </template>
     </p-column>
 
-    <p-column field="isLocked" header="Konto zablokowane" [filter]="true" [style]="{'overflow':'visible','width':'180px'}"  filterMatchMode="equals"  [sortable]="true">
+    <p-column field="isLocked" header="Konto zablokowane" [filter]="true" [style]="{'overflow':'visible','width':'180px'}" filterMatchMode="equals" [sortable]="true">
         <template pTemplate="filter" let-col>
             <p-dropdown [options]="checkSelector" appendTo="body" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
         </template>
@@ -87,14 +87,14 @@
         </template>
     </p-column>
 
-    <p-column header="Edycja" [style]="{'width':'150px'}">
-        
-            <template let-user="rowData" pTemplate="body">
+    <p-column header="Edycja" [style]="{'width':'110px'}">
+
+        <template let-user="rowData" pTemplate="body">
             <button class="btn btn-psz-blue btn-xs btn-sm-font-small"
                     (click)="onSelectUser(user)">
-                Edytuj
+                <i class="fa fa-pencil" aria-hidden="true"></i>  Edytuj
             </button>
         </template>
-        </p-column>
+    </p-column>
 
 </p-dataTable>

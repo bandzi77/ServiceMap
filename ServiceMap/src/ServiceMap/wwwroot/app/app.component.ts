@@ -25,7 +25,9 @@ export class AppComponent implements OnInit {
     ngOnInit() {
         this.checkPermissions()
             .subscribe(
-            data => this.isSuperUser = data === true,
+            data =>
+                this.isSuperUser =
+                data === true,
             error => console.error(<any>error));
     }
 

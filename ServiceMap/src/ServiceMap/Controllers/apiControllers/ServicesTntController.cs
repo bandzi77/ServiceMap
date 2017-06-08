@@ -59,7 +59,7 @@ namespace ServiceMap.Controllers.apiControllers
                     return Ok(new
                     {
                         serviceTnt = res,
-                        paging = new { totalCount = 0, pageSize = 25 },
+                        paging = new { totalCount = 0, pageSize = page.PageSize },
                         result = new { success = false, message = ConstsData.ExceededNumberOfRequestsPerDay }
                     });
                 }
