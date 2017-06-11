@@ -166,7 +166,7 @@ namespace ServiceMap.Controllers
                             // Sprawdzenie, czy przed chwilą zostało zablokowane konto, jeśli tak wysyła maila na adres firmowy.
                             if (accessFailedCount > 0)
                             {
-                                emailService.SendEmailAsync("No replay", null, "pl.web.sm@tnt.com", 
+                               await emailService.SendEmailAsync("No replay", null, "pl.web.sm@tnt.com", 
                                     ConstsData.AccountIsLockedSubject, String.Format(ConstsData.AccountIsLockedMessage, user.Email),"plain");
                             }
                             return RedirectToAction("InfoPanel", "Account", new { message = "Twoje konto zostało zablokowane." });

@@ -46,8 +46,8 @@ namespace ServiceMap.Controllers.apiControllers
 
 
         // GET: api/values
-        [HttpGet]
-        public async Task<IActionResult> Get(string email, bool showLockedOnly)
+        [HttpGet("GetUsers")]
+        public async Task<IActionResult> GetUsers(string email, bool showLockedOnly)
         {
             IQueryable<AppUser> _users = null;
 
@@ -66,18 +66,19 @@ namespace ServiceMap.Controllers.apiControllers
                 .Select(x => new User()
                 {
                     _id = x.Id,
+                    TntUserName = x.TntUserName,
                     Email = x.Email,
                     LimitOfRequestsPerDay = x.LimitOfRequestsPerDay,
                     NumberOfRequestsPerDay = x.NumberOfRequestsPerDay,
                     IsSuperUser = x.Roles.Any(y => y.RoleId == userRole.Id),
                     IsLocked = x.LockoutEnd > DateTime.Now && x.LockoutEnabled
-                }).OrderBy(s => s.Email).AsQueryable();
+                }).OrderBy(s => s.TntUserName).AsQueryable();
 
             if (showLockedOnly)
             {
                 result_ = result_.Where(x => x.IsLocked == showLockedOnly);
             }
-            result_ = result_.Where(x=>x.Email.ToUpper() != superUser.ToUpper() || superUser.ToUpper()==null);
+            result_ = result_.Where(x => x.Email.ToUpper() != superUser.ToUpper() || superUser.ToUpper() == null);
             var result = new { users = result_, paging = "" };
             return Ok(result);
         }
@@ -117,6 +118,7 @@ namespace ServiceMap.Controllers.apiControllers
                 // Tworzenie użytkownika
                 AppUser newUser = new AppUser
                 {
+                    TntUserName = user.TntUserName.Trim(),
                     UserName = user.Email.ToUpper(),
                     Email = user.Email.ToUpper(),
                     AccessFailedCount = 5,
@@ -191,6 +193,7 @@ namespace ServiceMap.Controllers.apiControllers
                     var userToUpdate = await userManager.FindByIdAsync(id);
                     if (userToUpdate != null)
                     {
+                        userToUpdate.TntUserName = user.TntUserName.Trim();
                         userToUpdate.LimitOfRequestsPerDay = user.LimitOfRequestsPerDay;
                         userToUpdate.LockoutEnd = user.IsLocked ? DateTimeOffset.MaxValue : (DateTimeOffset?)null;
                         resultIdent = await userManager.UpdateAsync(userToUpdate);

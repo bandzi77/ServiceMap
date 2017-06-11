@@ -25,7 +25,7 @@ namespace ServiceMap.Models.apiModels
             RoleManager<IdentityRole> roleManager =
                 serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-            string username = configuration["Data:FirstUser:Name"];
+            string tntUserName = configuration["Data:FirstUser:Name"];
             string email = configuration["Data:FirstUser:Email"];
             string password = configuration["Data:FirstUser:Password"];
             string roleSuperUser = configuration["Data:Roles:Superuser"];
@@ -46,6 +46,7 @@ namespace ServiceMap.Models.apiModels
                 AppUser user = new AppUser
                 {
                     UserName = email,
+                    TntUserName = tntUserName,
                     Email = email,
                     AccessFailedCount = 100
                 };

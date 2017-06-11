@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace ServiceMap.Models.apiModels
 {
-    public class AppUser: IdentityUser
+    public class AppUser : IdentityUser
     {
-      public  int? LimitOfRequestsPerDay { get; set; }
-      public int? NumberOfRequestsPerDay { get; set; }
+        public int? LimitOfRequestsPerDay { get; set; }
+        public int? NumberOfRequestsPerDay { get; set; }
+        public string TntUserName { get; set; }
     }
 }

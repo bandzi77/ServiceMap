@@ -9,6 +9,25 @@
               [formGroup]="userForm"
               novalidate>
             <fieldset>
+
+                <div class="form-group" [ngClass]="{'has-error': userNameMessage}">
+                    <label class="col-md-2 control-label"
+                           for="userNameId">Nazwa użytkownika</label>
+                    <div class="col-md-8">
+                        <input autocomplete="off"
+                               class="form-control"
+                               id="userNameId"
+                               type="text"
+                               placeholder="Nazwa użytkownika (wymagane)"
+                               formControlName="tntUserName"
+                               maxlength="250" />
+
+                        <span class="help-block" *ngIf="userNameMessage">
+                            {{ userNameMessage }}
+                        </span>
+                    </div>
+                </div>
+
                 <div class="form-group" [ngClass]="{'has-error': emailMessage}">
                     <label class="col-md-2 control-label"
                            for="emailId">Email</label>
@@ -31,6 +50,7 @@
                         </span>
                     </div>
                 </div>
+
                 <div class="form-group" [ngClass]="{'has-error': passwordMessage}">
                     <label class="col-md-2 control-label"
                            for="passwordId">Hasło</label>
@@ -59,8 +79,8 @@
                     </div>
                     <div>
                     </div>
-
                 </div>
+
                 <div class="form-group"
                      *ngIf="!userForm.get('isSuperUser').value"
                      [@shrinkOut]="!userForm.get('isSuperUser').value"
@@ -97,7 +117,7 @@
                             <input id="isSuperUserId"
                                    type="checkbox"
                                    formControlName="isSuperUser" />
-                            Uprawnienia administratora 
+                            Uprawnienia administratora
                         </label>
                     </div>
                 </div>

@@ -3,9 +3,7 @@
     state,
     style,
     transition,
-    animate, Component, OnInit, OnDestroy,
-    ViewContainerRef
-} from '@angular/core';
+    animate, Component, OnInit, OnDestroy,  ViewContainerRef} from '@angular/core';
 import { FormControl, FormBuilder, FormGroup, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IUser } from './user';
@@ -41,6 +39,7 @@ export class UserComponent implements OnInit, OnDestroy {
     inputType: string = "password";
     user: IUser = new IUser();
     userForm: FormGroup;
+    userNameMessage: string = '';
     emailMessage: string = '';
     passwordMessage: string = '';
     limitPerDayMessage: string = '';
@@ -53,6 +52,13 @@ export class UserComponent implements OnInit, OnDestroy {
     patternEmail: string = 'Niepoprawny adres email.';
     result: IResult;
     isDisabledCheckBoxTntAccount: boolean=false;
+
+
+    private userNameValidationMessages = {
+        required: 'Nazwa użytkownika jest wymagana.',
+        minlength: 'Nazwa musi składać się z co najmniej 5 znaków.',
+        maxlength: 'Nazwa nie może przekraczać 250 znaków.'
+    };
 
     private emailValidationMessages = {
         required: 'Email jest wymagany.',
@@ -86,23 +92,43 @@ export class UserComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
 
-        this.userForm = this.fb.group({
-            _id: "0",
-            email: [{ value: '', disabled: true }, this._getEmailValidators()],
-            password: ['', this._getPassswordValidators()],
-            limitOfRequestsPerDay: ['', this._getLimitPerDayValidators()],
-            isSuperUser: false,
-            isLocked: false
-        });
+        // Tworzy rective form
+        this._createReactiveUserForm();
 
         // Ustawia komunikaty dla walidatorów
         this._setMessageForValidators();
 
         // Tworzy obiekt z danymi użytkownika do edycji
+        this._userInit();
+    }
+
+    onBack() {
+        this.location.back();
+    }
+
+    ngOnDestroy(): void {
+        this.sub.unsubscribe();
+    }
+
+    private _createReactiveUserForm():void {
+        this.userForm = this.fb.group({
+            _id: "0",
+            tntUserName: [null, this._getUserNameValidators()],
+            email: [{ value: '', disabled: true }, this._getEmailValidators()],
+            password: [null, this._getPassswordValidators()],
+            limitOfRequestsPerDay: [null, this._getLimitPerDayValidators()],
+            isSuperUser: false,
+            isLocked: false
+        });
+    }
+
+    // Tworzy obiekt z danymi użytkownika do edycji
+    private _userInit(): void {
         this.sub = this.route.queryParams.subscribe(
             params => {
                 let user = <IUser>{
                     _id: String(params['_id']),
+                    tntUserName: String(params['tntUserName']),
                     email: String(params['email']),
                     password: '',
                     limitOfRequestsPerDay: Number(params['limitOfRequestsPerDay']),
@@ -112,14 +138,6 @@ export class UserComponent implements OnInit, OnDestroy {
                 this.onUserRetrieved(user);
             }
         );
-    }
-
-    onBack() {
-        this.location.back();
-    }
-
-    ngOnDestroy(): void {
-        this.sub.unsubscribe();
     }
 
     // Metoda wypełniająca danymi formularz jeśli jest w trybie edycji użytkownika, jeśli nie wyświetla pusty
@@ -148,10 +166,11 @@ export class UserComponent implements OnInit, OnDestroy {
 
             // Wypełnia formularz do edycji danymi z query params
             this.userForm.patchValue({
-                _id: this.user._id === "undefined" ? '' : this.user._id,
-                email: this.user.email === "undefined" ? '' : this.user.email,
+                _id: this.user._id === "undefined" ? 0 : this.user._id,
+                tntUserName: this.user.tntUserName === "undefined" ? null : this.user.tntUserName,
+                email: this.user.email === "undefined" ? null : this.user.email,
                 password: '********',
-                limitOfRequestsPerDay: isNaN(this.user.limitOfRequestsPerDay) ? '' : this.user.limitOfRequestsPerDay,
+                limitOfRequestsPerDay: isNaN(this.user.limitOfRequestsPerDay) ? null : this.user.limitOfRequestsPerDay,
                 isSuperUser: this.user.isSuperUser,
                 isLocked: this.user.isLocked
             });
@@ -199,7 +218,7 @@ export class UserComponent implements OnInit, OnDestroy {
     deleteUser(): void {
         if (this.user._id === "0") {
             // Dla nowego użytkownika, tylko czyści formularz
-            this.userForm.reset();
+            this.resetForm()
         } else {
             if (confirm(`Czy chcesz usunąć użytkownika: ${this.user.email}?`)) {
                 this.userService.deleteUser(this.user._id)
@@ -214,6 +233,9 @@ export class UserComponent implements OnInit, OnDestroy {
     }
 
     saveUser() {
+        // Zabezpieczenie przed wpisaniem pustych znaków
+        this.userForm.get('tntUserName').setValue(this.userForm.get('tntUserName').value.trim());
+
         if (this.userForm.dirty && this.userForm.valid) {
             // Copy the form values over the product object values
             let p = Object.assign({}, this.user, this.userForm.value);
@@ -272,6 +294,13 @@ export class UserComponent implements OnInit, OnDestroy {
     }
 
     private _setMessageForValidators() {
+
+        // userNameValidationMessage
+
+        const userNameControl = this.userForm.get('tntUserName');
+        userNameControl.valueChanges.debounceTime(0).subscribe(value =>
+            this.setMessage(userNameControl, this.userNameValidationMessages, 'userNameMessage'));
+
         const emailControl = this.userForm.get('email');
         emailControl.valueChanges.debounceTime(0).subscribe(value =>
             this.setMessage(emailControl, this.emailValidationMessages, 'emailMessage'));
@@ -286,6 +315,16 @@ export class UserComponent implements OnInit, OnDestroy {
 
         this.userForm.get('isSuperUser').valueChanges
             .subscribe(value => this.setNotification(value));
+    }
+
+   
+
+    private _getUserNameValidators(): ValidatorFn {
+        return Validators.compose([
+            Validators.required,
+            Validators.minLength(5),
+            Validators.maxLength(250)]
+        );
     }
 
     private _getEmailValidators(): ValidatorFn {

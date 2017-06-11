@@ -1,7 +1,8 @@
 ﻿export class IUser {
     public _id: string;
-    public email = '';
-    public password = '';
+    public tntUserName: string = '';
+    public email: string = '';
+    public password: string = '';
     public isSuperUser = false;
     public isLocked = false;
     public limitOfRequestsPerDay?: number;
@@ -15,4 +16,4 @@ export interface IUserFilter {
 
 export interface IUserResult {
     users: IUser[];
-}
+};

@@ -12,6 +12,12 @@ namespace ServiceMap.Models.User
         [Required]
         public string _id { get; set; }
         [Required]
+        [MinLength(5)]
+        [MaxLength(250)]
+        public string TntUserName { get; set; }
+
+        [Required]
+        [MaxLength(250)]
         public string Email { get; set; }
         [RegularExpression(ConstsData.PasswordRegExp)]
         [Required]

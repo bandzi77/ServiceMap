@@ -14,6 +14,7 @@ export class UserListComponent implements OnInit, OnDestroy {
     private busyIndicator: Subscription;
     users: IUser[];
     private sub: Subscription;
+    private tntUserName: string = '';
     private email: string = '';
     private showLockedOnly: boolean = false;
     errorMessage: string;
@@ -27,21 +28,7 @@ export class UserListComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.sub = this._route.queryParams.subscribe(
-            params => {
-                this.email = params.hasOwnProperty('email') ? params['email'] : '';
-                this.showLockedOnly = params['showLockedOnly'] === "true";
-                if (params.hasOwnProperty('email')) {
-                    this.onSearchUsers();
-                }
-            });
-
-        this._SetColums();
-        this.columnOptions = [];
-        for (let i = 0; i < this.cols.length; i++) {
-            this.columnOptions.push({ label: this.cols[i].header, value: this.cols[i] });
-        }
-
+        // Do filtrowania kolumny Uprawnienia administratora oraz konto zablokowane
         this.checkSelector = [];
         this.checkSelector.push({ label: 'Wszystkie', value: null });
         this.checkSelector.push({ label: 'Tak', value: 'true' });
@@ -49,19 +36,18 @@ export class UserListComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        this.sub.unsubscribe();
+        //this.sub.unsubscribe();
     }
 
     private onSearchUsers() {
         console.log('Wyszukiwanie użytkowników');
-        // Powoduje, że po powrocie odświeża listę
-        this.router.navigate(['/userlist'], { queryParams: { email: this.email, showLockedOnly: this.showLockedOnly } });
         let filtr = this._createUserFilter();
         this._getData(filtr);
     }
 
+
     onSelectUser(user: IUser) {
-        this.router.navigate(['/adduser'], { queryParams: { _id: user._id, email: user.email, limitOfRequestsPerDay: user.limitOfRequestsPerDay, isSuperUser: user.isSuperUser, isLocked: user.isLocked } });
+        this.router.navigate(['/adduser'], { queryParams: { _id: user._id, tntUserName:user.tntUserName, email: user.email, limitOfRequestsPerDay: user.limitOfRequestsPerDay, isSuperUser: user.isSuperUser, isLocked: user.isLocked } });
     }
 
     private _getData(filtr: IUserFilter) {
@@ -79,14 +65,6 @@ export class UserListComponent implements OnInit, OnDestroy {
                 showLockedOnly: this.showLockedOnly
             };
         return _userFilter;
-    }
-
-    _SetColums() {
-        this.cols = [
-            //{ field: 'email', header: 'Email' },
-            { field: 'limitOfRequestsPerDay', header: 'Limit zapytań' },
-            { field: 'numberOfRequestsPerDay', header: 'Liczba zapytań' },
-        ]
     }
 }
 

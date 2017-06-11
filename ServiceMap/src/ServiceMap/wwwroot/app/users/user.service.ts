@@ -12,6 +12,7 @@ import { IResult } from '../shared/common';
 @Injectable()
 export class UserService {
     private baseUrl = 'api/users';
+    private getUsersUrl = 'api/users/GetUsers';
 
     constructor(private http: Http) { }
 
@@ -20,14 +21,14 @@ export class UserService {
         searchParams.set('email', userFilter.email);
         searchParams.set('showLockedOnly', String(userFilter.showLockedOnly));
 
-        return this.http.get(this.baseUrl, { search: searchParams })
+        return this.http.get(this.getUsersUrl, { search: searchParams })
             .map(this._extractData)
             .do(data => console.log('getUsers' + JSON.stringify(data)))
             .catch(this._handleError);
     }
 
     getUser(user: IUser): Observable<IUser> {
-        if (user._id === "0") {
+        if (user._id === '0') {
             return Observable.of(this.initializeUser());
             // return Observable.create((observer: any) => {
             //     observer.next(this.initializeProduct());
@@ -113,7 +114,8 @@ export class UserService {
     initializeUser(): IUser {
         // Return an initialized object
         return {
-            _id: "0",
+            _id: '0',
+            tntUserName: null,
             email: null,
             password: null,
             limitOfRequestsPerDay: null,
