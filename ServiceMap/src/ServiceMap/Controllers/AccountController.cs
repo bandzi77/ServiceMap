@@ -146,11 +146,11 @@ namespace ServiceMap.Controllers
             if (ModelState.IsValid)
             {
                 AppUser user = await userManager.FindByEmailAsync(details.Email);
-                var accessFailedCount = user.AccessFailedCount;
-                var list = userManager.Users.ToAsyncEnumerable();
 
                 if (user != null)
                 {
+                    var accessFailedCount = user.AccessFailedCount;
+
                     await signInManager.SignOutAsync();
                     Microsoft.AspNetCore.Identity.SignInResult result =
                         await signInManager.PasswordSignInAsync(user, details.Password, false, true);
