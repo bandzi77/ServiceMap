@@ -45,14 +45,11 @@ body {
     border-color: #f87018 !important;
 }
 
-
-/* Linki */
-a{
-    color: #f06000;
+ /*Linki SM */ 
+a.sm-link{
+    color: #777 !important;
 }
 
-a:hover{
-    color:  #f87018;
+a.sm-link:hover{
+    color:  #333 !important;
 }
-
-
