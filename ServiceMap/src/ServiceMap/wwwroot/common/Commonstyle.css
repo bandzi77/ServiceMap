@@ -1,14 +1,14 @@
 ﻿/*Pasek nawigacyjny */
-.navbar-default{
+.navbar-default {
     background-color: white;
     border-bottom-color: #ff6600;
     background-image: none;
 }
 
 .navbar-fixed-bottom {
-    border-top-color:#ff6600;
-    padding-top :10px;
-    color:#333;
+    border-top-color: #ff6600;
+    padding-top: 10px;
+    color: #333;
 }
 
 /* Panel podstawowy*/
@@ -28,15 +28,14 @@
 
 .sm-text-dark-grey {
     /*color: #333;*/
-    font-size:medium;
+    font-size: medium;
     font-weight: bold;
-
 }
 
 .sm-text-dark-grey-footer {
     /*color: #777;*/
-    color:#333;
-    font-size:small;
+    color: #333;
+    font-size: small;
     font-weight: bold;
 }
 
@@ -61,51 +60,93 @@
         color: white;
     }
 
- /*Nadpisanie stylów bootsrapowowych*/
- .tooltip-inner {
-  background-color: white;
-      /*#337ab7;*/
-  color: black;
-  font-weight:normal;
-  border:1px solid black !important;
+/*Nadpisanie stylów bootsrapowowych*/
+.tooltip-inner {
+    background-color: white;
+    /*#337ab7;*/
+    color: black;
+    font-weight: normal;
+    border: 1px solid black !important;
 }
+
 .tooltip .tooltip-arrow {
-  border-bottom-color: white;
+    border-bottom-color: white;
 }
 
 /* Nadpisuje style primeng*/
-.ui-datatable .ui-datatable-thead>tr>th, .ui-datatable .ui-datatable-tfoot>tr>td, .ui-datatable .ui-datatable-data>tr>td {
-   /*border-style: 0px 0 !important;*/
+.ui-datatable .ui-datatable-thead > tr > th, .ui-datatable .ui-datatable-tfoot > tr > td, .ui-datatable .ui-datatable-data > tr > td {
+    /*border-style: 0px 0 !important;*/
     border-style: none !important;
     border-left: 1px solid #ccc !important;
 }
+
 .ui-multiselect .ui-multiselect-label {
-    font-size:smaller;
+    font-size: smaller;
 }
 
 .ui-datatable-scrollable-body {
-      overflow-y: scroll !important;
+    overflow-y: scroll !important;
 }
 
 /*Nadpisuje style wybierania kolumn*/
-/*Tło*/
+/*Tło wyboru kolumn w dropdown-list*/
 .ui-widget-header .ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-state-highlight {
-  background: slategrey !important;
+    background: slategrey !important;
 }
 
 /*Checkobxy*/
 .ui-chkbox-box.ui-state-active, .ui-radiobutton-box.ui-state-active {
-     border:  1px solid slategrey !important;
-     background: white !important;
-     color:#555555 !important;
+    border: 1px solid slategrey !important;
+    background: white !important;
+    color: #555555 !important;
 }
 
 .ui-widget {
-     font-family: Helvetica, Arial, sans-serif,"Roboto", "Trebuchet MS" !important; 
+    font-family: Helvetica, Arial, sans-serif,"Roboto", "Trebuchet MS" !important;
 }
 
 /*Wielkość czcionek*/
 li > div + label {
-font-weight: normal;
+    font-weight: normal;
 }
 
+
+
+
+/*Style dotyczące tabel*/
+th {
+    color: white !important; /* nadpisanie primeng*/
+    /*background-color: green !important; /*#293f50 #333f48 #0b77a7 #648880, #293f50  nadpisane primeng  */
+    background: #333f48 !important;
+    background: -webkit-linear-gradient(#333f48,#648880) !important; /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient( #333f48,#648880 ) !important; /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient( #333f48,#648880 ) !important; /* For Firefox 3.6 to 15 */
+    background: linear-gradient( #333f48,#648880) !important; /* Standard syntax */
+    vertical-align: text-top !important;
+}
+
+/*th:first-child {
+        border-radius: 8px 0 0 0;
+        border-left: 0px;
+    }
+
+    th:last-child {
+        border-radius: 0 8px 0 0;
+    }*/
+
+th {
+    white-space: nowrap;
+    height: 50px;
+}
+
+td, th {
+    border-left: 1px solid #ccc;
+}
+
+tr:last-child {
+    border-bottom: 1px solid #ccc;
+}
+
+td:last-child {
+    border-right: 1px solid #ccc !important;
+}

@@ -64,13 +64,13 @@
         <p-column *ngFor="let col of cols"
                   [field]="col.field"
                   [header]="col.header"
-                  [style]="col.field=='depotCode'?{'width':'75px'}:
+                  [style]="col.field=='depotCode'?{'width':'80px'}:
                 col.field=='town'?{'width':'350px'}:
                 (col.field=='fromPostcode'||col.field=='toPostcode')?{'width':'120px'}:
                 (col.field=='pickUpDomesticZgl'||col.field=='dateTimePickUpEksportSmZgl' ||
                 col.field=='diplomatNextDay' || col.field=='pickUpDomesticCzas' ||
                 col.field=='pickUpEksportSmCzas')?{'width':'180px'}:
-                (col.field=='eX9'||col.field=='eX10'||col.field=='eX12')?{'width':'80px'}:{'width':'120px'}"
+                (col.field=='eX9'||col.field=='eX10'||col.field=='eX12')?{'width':'80px'}:{'width':'100px'}"
                   [sortable]="col.field=='town'||col.field=='fromPostcode'||col.field=='depotCode'">
 
             <span *ngIf="col.field=='depotCode'">

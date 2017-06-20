@@ -6,47 +6,10 @@ div.panel-heading {
     font-size: x-large;
 }
 
-th {
-    color: white !important; /* nadpisanie primeng*/
-    background-color: slategrey !important; /* #333f48 #0b77a7  nadpisanie primeng*/
-    vertical-align: text-top !important;
-}
-
-    th:first-child {
-        border-radius: 8px 0 0 0;
-        border-left: 0px;
-    }
-
-    th:last-child {
-        border-radius: 0 8px 0 0;
-    }
-
-    th {
-     white-space: nowrap;  
-     height:50px;
-}
-
-td, th {
-    border-left: 1px solid #ccc;
-}
-
-tr:last-child {
-    border-bottom: 1px solid #ccc;
-}
-
-td:last-child {
-    border-right: 1px solid #ccc !important;
-}
-
-.sm-check-btn2 {
-    min-width: 200px;
-    text-align: left;
-}
 
 /*
    Pasek nawigacyjny
 */
-
 .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:focus, .navbar-default .navbar-nav > .active > a:hover {
     color: white;
     background-color: #f87018;
