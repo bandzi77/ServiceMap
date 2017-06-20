@@ -51,9 +51,15 @@
                  [sortFile]="town"
                  [rowHover]="true">
         <p-header>
-            <div style="text-align:left">
-                <p-multiSelect #multiselect [options]="columnOptions" [(ngModel)]="cols"></p-multiSelect>
-            </div>
+           
+                <div style="text-align:left">
+                    <p-multiSelect #multiselect [options]="columnOptions" [(ngModel)]="cols"></p-multiSelect>
+                    <span style="vertical-align:top; padding-left:20px;" *ngIf="requestsPerDay.limitOfRequestsPerDay!=null">
+                        Liczba zapytań w ciągu dnia: {{requestsPerDay.numberOfRequestsPerDay}} / {{requestsPerDay.limitOfRequestsPerDay}}
+                    </span>
+                </div>
+               
+           
         </p-header>
         <p-column *ngFor="let col of cols"
                   [field]="col.field"
@@ -63,7 +69,8 @@
                 (col.field=='fromPostcode'||col.field=='toPostcode')?{'width':'120px'}:
                 (col.field=='pickUpDomesticZgl'||col.field=='dateTimePickUpEksportSmZgl' ||
                 col.field=='diplomatNextDay' || col.field=='pickUpDomesticCzas' ||
-                col.field=='pickUpEksportSmCzas')?{'width':'180px'}:{'width':'120px'}"
+                col.field=='pickUpEksportSmCzas')?{'width':'180px'}:
+                (col.field=='eX9'||col.field=='eX10'||col.field=='eX12')?{'width':'80px'}:{'width':'120px'}"
                   [sortable]="col.field=='town'||col.field=='fromPostcode'||col.field=='depotCode'">
 
             <span *ngIf="col.field=='depotCode'">
@@ -103,7 +110,7 @@
 
             <span *ngIf="col.field=='eX9'">
                 <template pTemplate="header">
-                    <span>ID09 00<br>Express</span>
+                    <span>9<br>Express</span>
                 </template>
                 <template let-col let-car="rowData" pTemplate="body">
                     <span *ngIf="car[col.field]"><i class="fa fa-check-square-o fa-1x" aria-hidden="true"></i></span>
@@ -113,7 +120,7 @@
 
             <span *ngIf="col.field=='eX10'">
                 <template pTemplate="header">
-                    <span>ID10 00<br>Express</span>
+                    <span>10<br>Express</span>
                 </template>
                 <template let-col let-car="rowData" pTemplate="body">
                     <span *ngIf="car[col.field]"><i class="fa fa-check-square-o fa-1x" aria-hidden="true"></i></span>
@@ -123,7 +130,7 @@
 
             <span *ngIf="col.field=='eX12'">
                 <template pTemplate="header">
-                    <span>ID12 00<br>Express</span>
+                    <span>12<br>Express</span>
                 </template>
                 <template let-col let-car="rowData" pTemplate="body">
                     <span *ngIf="car[col.field]"><i class="fa fa-check-square-o fa-1x" aria-hidden="true"></i></span>

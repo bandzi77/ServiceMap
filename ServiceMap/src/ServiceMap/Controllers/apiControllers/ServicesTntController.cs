@@ -60,6 +60,7 @@ namespace ServiceMap.Controllers.apiControllers
                     {
                         serviceTnt = res,
                         paging = new { totalCount = 0, pageSize = page.PageSize },
+                        requestsPerDay= new { limitOfRequestsPerDay = currentUser.LimitOfRequestsPerDay, numberOfRequestsPerDay = currentUser.NumberOfRequestsPerDay },
                         result = new { success = false, message = ConstsData.ExceededNumberOfRequestsPerDay }
                     });
                 }
@@ -73,6 +74,7 @@ namespace ServiceMap.Controllers.apiControllers
             {
                 serviceTnt = res,
                 paging = new { totalCount = res.Select(x => x.TotalCount).FirstOrDefault(), pageSize = page.PageSize },
+                requestsPerDay = new { limitOfRequestsPerDay = currentUser.LimitOfRequestsPerDay, numberOfRequestsPerDay = currentUser.NumberOfRequestsPerDay },
                 result = new { success = true, message = "" }
             };
 
@@ -175,105 +177,105 @@ namespace ServiceMap.Controllers.apiControllers
         //    return result;
         //}
 
-        private List<ServiceTnt> getMockData()
-        {
-            var result = new List<ServiceTnt>()
-            {
-                new ServiceTnt()
-                {
-                     DepotCode = "GDN",
-                     Town =  "ABISYNIA",
-                     FromPostcode = "83-440",
-                     ToPostcode = "83-440",
-                     Sobota = false,
-                     EX9 = false,
-                     EX10 = false,
-                     EX12 =false,
-                     Priority = new TimeSpan(13,0,0),
-                     WieczorneDostarczenie = false,
-                     StandardDeliveryOd = new TimeSpan(13,0,0),
-                     StandardDeliveryDo =  new TimeSpan(16,0,0),
-                     PickUpDomesticZgl =   new TimeSpan(13,0,0),
-                     DateTimePickUpEksportSmZgl =  new TimeSpan(12,0,0),
-                     SamochodZwindaDostepnyWstandardzie = false,
-                     DiplomatNextDay =   new TimeSpan(12,0,0),
-                     SerwisPodmiejski = false,
-                     PickUpDomesticCzas = 2.5f,
-                     PickUpEksportSmCzas = 2,
-                     SerwisMiejski = null
-                },
+        //private List<ServiceTnt> getMockData()
+        //{
+        //    var result = new List<ServiceTnt>()
+        //    {
+        //        new ServiceTnt()
+        //        {
+        //             DepotCode = "GDN",
+        //             Town =  "ABISYNIA",
+        //             FromPostcode = "83-440",
+        //             ToPostcode = "83-440",
+        //             Sobota = false,
+        //             EX9 = false,
+        //             EX10 = false,
+        //             EX12 =false,
+        //             Priority = new TimeSpan(13,0,0),
+        //             WieczorneDostarczenie = false,
+        //             StandardDeliveryOd = new TimeSpan(13,0,0),
+        //             StandardDeliveryDo =  new TimeSpan(16,0,0),
+        //             PickUpDomesticZgl =   new TimeSpan(13,0,0),
+        //             DateTimePickUpEksportSmZgl =  new TimeSpan(12,0,0),
+        //             SamochodZwindaDostepnyWstandardzie = false,
+        //             DiplomatNextDay =   new TimeSpan(12,0,0),
+        //             SerwisPodmiejski = false,
+        //             PickUpDomesticCzas = 2.5f,
+        //             PickUpEksportSmCzas = 2,
+        //             SerwisMiejski = null
+        //        },
 
-                new ServiceTnt()
-                {
-                     DepotCode = "GDN",
-                     Town =  "Gdańsk",
-                     FromPostcode = "83-440",
-                     ToPostcode = "83-440",
-                     Sobota = false,
-                     EX9 = false,
-                     EX10 = false,
-                     EX12 =false,
-                     Priority = new TimeSpan(13,0,0),
-                     WieczorneDostarczenie = false,
-                     StandardDeliveryOd = new TimeSpan(13,0,0),
-                     StandardDeliveryDo =  new TimeSpan(16,0,0),
-                     PickUpDomesticZgl =   new TimeSpan(13,0,0),
-                     DateTimePickUpEksportSmZgl =  new TimeSpan(12,0,0),
-                     SamochodZwindaDostepnyWstandardzie = false,
-                     DiplomatNextDay =   new TimeSpan(12,0,0),
-                     SerwisPodmiejski = false,
-                     PickUpDomesticCzas = 2.5f,
-                     PickUpEksportSmCzas = 2,
-                     SerwisMiejski = null
-                },
-                new ServiceTnt()
-                {
-                     DepotCode = "KRA",
-                     Town =  "Kraków",
-                     FromPostcode = "83-440",
-                     ToPostcode = "83-440",
-                     Sobota = true,
-                     EX9 = false,
-                     EX10 = false,
-                     EX12 =true,
-                     Priority = new TimeSpan(13,0,0),
-                     WieczorneDostarczenie = false,
-                     StandardDeliveryOd = new TimeSpan(13,0,0),
-                     StandardDeliveryDo =  new TimeSpan(16,0,0),
-                     PickUpDomesticZgl =   new TimeSpan(13,0,0),
-                     DateTimePickUpEksportSmZgl =  new TimeSpan(12,0,0),
-                     SamochodZwindaDostepnyWstandardzie = false,
-                     DiplomatNextDay =   new TimeSpan(12,0,0),
-                     SerwisPodmiejski = false,
-                     PickUpDomesticCzas = 2.5f,
-                     PickUpEksportSmCzas = 2,
-                     SerwisMiejski = null
-                },
-                 new ServiceTnt()
-                {
-                     DepotCode = "WAW",
-                     Town =  "WARSZAWA",
-                     FromPostcode = "83-440",
-                     ToPostcode = "83-440",
-                     Sobota = false,
-                     EX9 = false,
-                     EX10 = false,
-                     EX12 =false,
-                     Priority = new TimeSpan(13,0,0),
-                     WieczorneDostarczenie = false,
-                     StandardDeliveryOd = new TimeSpan(13,0,0),
-                     StandardDeliveryDo =  new TimeSpan(16,0,0),
-                     PickUpDomesticZgl =   new TimeSpan(13,0,0),
-                     DateTimePickUpEksportSmZgl =  new TimeSpan(12,0,0),
-                     SamochodZwindaDostepnyWstandardzie = false,
-                     DiplomatNextDay =   new TimeSpan(12,0,0),
-                     SerwisPodmiejski = false,
-                     PickUpDomesticCzas = 2.5f,
-                     PickUpEksportSmCzas = 2,
-                     SerwisMiejski = null
-                }
-            };
-            return result;
-        }
+        //        new ServiceTnt()
+        //        {
+        //             DepotCode = "GDN",
+        //             Town =  "Gdańsk",
+        //             FromPostcode = "83-440",
+        //             ToPostcode = "83-440",
+        //             Sobota = false,
+        //             EX9 = false,
+        //             EX10 = false,
+        //             EX12 =false,
+        //             Priority = new TimeSpan(13,0,0),
+        //             WieczorneDostarczenie = false,
+        //             StandardDeliveryOd = new TimeSpan(13,0,0),
+        //             StandardDeliveryDo =  new TimeSpan(16,0,0),
+        //             PickUpDomesticZgl =   new TimeSpan(13,0,0),
+        //             DateTimePickUpEksportSmZgl =  new TimeSpan(12,0,0),
+        //             SamochodZwindaDostepnyWstandardzie = false,
+        //             DiplomatNextDay =   new TimeSpan(12,0,0),
+        //             SerwisPodmiejski = false,
+        //             PickUpDomesticCzas = 2.5f,
+        //             PickUpEksportSmCzas = 2,
+        //             SerwisMiejski = null
+        //        },
+        //        new ServiceTnt()
+        //        {
+        //             DepotCode = "KRA",
+        //             Town =  "Kraków",
+        //             FromPostcode = "83-440",
+        //             ToPostcode = "83-440",
+        //             Sobota = true,
+        //             EX9 = false,
+        //             EX10 = false,
+        //             EX12 =true,
+        //             Priority = new TimeSpan(13,0,0),
+        //             WieczorneDostarczenie = false,
+        //             StandardDeliveryOd = new TimeSpan(13,0,0),
+        //             StandardDeliveryDo =  new TimeSpan(16,0,0),
+        //             PickUpDomesticZgl =   new TimeSpan(13,0,0),
+        //             DateTimePickUpEksportSmZgl =  new TimeSpan(12,0,0),
+        //             SamochodZwindaDostepnyWstandardzie = false,
+        //             DiplomatNextDay =   new TimeSpan(12,0,0),
+        //             SerwisPodmiejski = false,
+        //             PickUpDomesticCzas = 2.5f,
+        //             PickUpEksportSmCzas = 2,
+        //             SerwisMiejski = null
+        //        },
+        //         new ServiceTnt()
+        //        {
+        //             DepotCode = "WAW",
+        //             Town =  "WARSZAWA",
+        //             FromPostcode = "83-440",
+        //             ToPostcode = "83-440",
+        //             Sobota = false,
+        //             EX9 = false,
+        //             EX10 = false,
+        //             EX12 =false,
+        //             Priority = new TimeSpan(13,0,0),
+        //             WieczorneDostarczenie = false,
+        //             StandardDeliveryOd = new TimeSpan(13,0,0),
+        //             StandardDeliveryDo =  new TimeSpan(16,0,0),
+        //             PickUpDomesticZgl =   new TimeSpan(13,0,0),
+        //             DateTimePickUpEksportSmZgl =  new TimeSpan(12,0,0),
+        //             SamochodZwindaDostepnyWstandardzie = false,
+        //             DiplomatNextDay =   new TimeSpan(12,0,0),
+        //             SerwisPodmiejski = false,
+        //             PickUpDomesticCzas = 2.5f,
+        //             PickUpEksportSmCzas = 2,
+        //             SerwisMiejski = null
+        //        }
+        //    };
+        //    return result;
+        //}
     }
 }

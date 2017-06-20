@@ -259,7 +259,7 @@ export class UserComponent implements OnInit, OnDestroy {
         if (res.success) {
             this.onBack();
         } else {
-            this.toastr.error(res.message, 'Błąd!');
+            this.toastr.error(res.message, 'Błąd!', { dismiss: 'click' });
         }
         // Reset the form to clear the flags
         // this.userForm.reset();
@@ -272,8 +272,7 @@ export class UserComponent implements OnInit, OnDestroy {
         if (res.success) {
             this.resetForm();
             if (user._id === "0") {
-                this.toastr.success(res.message, 'Success!');
-
+                this.toastr.success(res.message, 'Success!', { toastLife: 10000 });
             }
             else {
                 this.onBack();

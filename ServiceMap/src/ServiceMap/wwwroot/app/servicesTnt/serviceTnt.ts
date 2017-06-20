@@ -31,5 +31,11 @@ export interface IServiceFilter {
 export interface IServiceTntResult {
     serviceTnt: IServiceTnt[];
     paging: IPage;
+    requestsPerDay: IRequestsPerDay;
     result: IResult;
+}
+
+export interface IRequestsPerDay {
+    limitOfRequestsPerDay?: number;
+    numberOfRequestsPerDay?: number;
 }

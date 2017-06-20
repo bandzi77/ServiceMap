@@ -1,5 +1,5 @@
 ﻿import { Component, OnInit, ViewChild, ViewContainerRef  } from '@angular/core';
-import { IServiceTnt, IServiceFilter } from './serviceTnt';
+import { IServiceTnt, IServiceFilter, IRequestsPerDay } from './serviceTnt';
 import { IDepotDetails, IDepotDetailsFilter } from './depotDetails';
 import { IPage,IPageInfo } from '../pagination/page';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -29,6 +29,7 @@ export class ServiceTntListComponent implements OnInit {
     depotTnt: IDepotDetails[];
     paging: IPage;
     pageInfo: IPageInfo;
+    requestsPerDay: IRequestsPerDay;
     errorMessage: string;
     private serviceFilter: IServiceFilter;
     columnOptions: SelectItem[];
@@ -51,7 +52,7 @@ export class ServiceTntListComponent implements OnInit {
         let id = +this._route.snapshot.params['currentPage'];
         this.paging = this._getPage();
         this.pageInfo = this._getPageInfo();
-
+        this.requestsPerDay = this._getRequestsPerDay();
 
         this.cols = [
             { field: 'depotCode', header: 'Kod Depotu' },
@@ -103,12 +104,20 @@ export class ServiceTntListComponent implements OnInit {
         };
     }
 
+    private _getRequestsPerDay(): IRequestsPerDay {
+        return {
+            numberOfRequestsPerDay: null,
+            limitOfRequestsPerDay: null
+        };
+    }
+
     private _getData(filtr: IServiceFilter) {
 
         this.busyIndicator = this._serviceTntService.searchServicesTnt(filtr,this.pageInfo)
             .subscribe(result => {
                 this.servicesTnt = result.serviceTnt;
                 this.paging = result.paging;
+                this.requestsPerDay = result.requestsPerDay;
                 this.onGetComplete(result.result);
             },
             error => this.errorMessage = <any>error);
@@ -191,7 +200,7 @@ export class ServiceTntListComponent implements OnInit {
 
     private onGetComplete(res: IResult): void {
         if (!res.success) {
-            this.toastr.error(res.message, 'Błąd!');
+            this.toastr.error(res.message, 'Błąd!', { dismiss: 'click' });
         }
     }
 }
