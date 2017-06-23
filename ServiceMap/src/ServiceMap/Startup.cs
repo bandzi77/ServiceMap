@@ -57,13 +57,13 @@ namespace ServiceMap
 
                 // Cookie settings
                 opts.Cookies.ApplicationCookie.ExpireTimeSpan = TimeSpan.FromDays(1);
-                opts.Cookies.ApplicationCookie.CookieName = "MyTntCookie";
+                opts.Cookies.ApplicationCookie.CookieName = "MyTntSMCookie";
                 opts.Cookies.ApplicationCookie.CookieHttpOnly = true;
                 opts.Cookies.ApplicationCookie.SlidingExpiration = true;
 
                 opts.Cookies.ApplicationCookie.LoginPath = new PathString("/Account/Login");
                 opts.Cookies.ApplicationCookie.LogoutPath = new PathString("/Account/Logout");
-                opts.Cookies.ApplicationCookie.AccessDeniedPath = new PathString("/Account/AccessDenied");
+                opts.Cookies.ApplicationCookie.AccessDeniedPath = new PathString("/Account/Logout");//new PathString("/Account/AccessDenied");
                 opts.Cookies.ApplicationCookie.AutomaticAuthenticate = true;
                 opts.Cookies.ApplicationCookie.AutomaticChallenge = true;
                 opts.Cookies.ApplicationCookie.AuthenticationScheme = Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationDefaults.AuthenticationScheme;

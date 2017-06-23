@@ -6,13 +6,41 @@ div.panel-heading {
     font-size: x-large;
 }
 
-
 /*
    Pasek nawigacyjny
+
+    .ui-datatable .ui-datatable-thead>tr>th, .ui-datatable .ui-datatable-tfoot>tr>td, .ui-datatable .ui-datatable-data>tr>td
+
 */
-.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:focus, .navbar-default .navbar-nav > .active > a:hover {
+
+/* Pomarañczowe navbar oraz DropDown (Menu rozwijane) */
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:focus, .navbar-default .navbar-nav > .active > a:hover, 
+.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover,
+.dropdown-menu>li>a:focus, .dropdown-menu>li>a:hover
+{
     color: white;
-    background-color: #f87018;
+    background-color: #f87018 !important;
+}
+
+/* Pomarañczowy focus nad przyciskiem */
+.navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:hover
+{
+    color: #f87018;
+}
+
+/*Usuwa domyœlny kolor dla elemnentu w rozwijanym menu*/
+.dropdown-menu>li>a, .sm-dropdown-padding {
+ padding: 3px 10px !important;
+}
+
+/*Usuwa domyœlny kolor dla elemnentu w rozwijanym menu*/
+.dropdown-menu>li>a:focus, .dropdown-menu>li>a:hover{
+    background-image:none !important;
+}
+
+/*Rozwijane menu z taka sam¹ d³ugoœci¹ dla drop down i jego elementów*/
+.dropdown-menu {
+  width: 100%; 
 }
 
 .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .open > a {

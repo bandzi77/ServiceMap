@@ -103,7 +103,6 @@ namespace ServiceMap.Common
 
         private class ExtMimeMessage : MimeMessage
         {
-    
             public readonly string Host;
             public readonly int Port;
             public readonly string TntEmail;

@@ -135,28 +135,32 @@
                 <div class="form-group">
                     <div class="col-md-offset-7 col-md-4">
                         <span>
-                            <button class="btn btn-primary"
-                                    style="width:80px"
+                            <button class="btn btn-sm-green btn-nav-proc-sm"
                                     type="submit"
                                     [disabled]="!userForm.valid">
-                                Zapisz
+                                <i class="fa fa-check fa-1x" aria-hidden="true"></i> Zapisz
                             </button>
                         </span>
                         <span>
                             <!--[routerLink]="['/userlist']"-->
-                            <a class="btn btn-default"
-                               style="width:80px"
+                            <a class="btn btn-default btn-nav-proc-sm"
                                (click)="onBack()">
                                 Wróć
                             </a>
                         </span>
-                        <span>
+
+                        <span class="btn btn-sm-red btn-nav-proc-sm"
+                              (click)="deleteUser()">
+                            <i class="fa fa-trash-o fa-1x" aria-hidden="true"></i> Usuń
+                        </span>
+
+                        <!--<span>
                             <a class="btn btn-default"
                                style="width:80px"
                                (click)="deleteUser()">
                                 Usuń
                             </a>
-                        </span>
+                        </span>-->
                     </div>
                 </div>
             </fieldset>

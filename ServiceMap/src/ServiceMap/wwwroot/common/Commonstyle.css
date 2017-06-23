@@ -43,6 +43,10 @@
     color: #1cb3f4;
 }
 
+.btn-nav-proc-sm{
+    min-width: 100px;
+}
+
 .btn-sm-orange,
 .btn-sm-orange {
     background-color: #f06000;
@@ -53,12 +57,43 @@
     .btn-sm-orange:hover,
     .btn-sm-orange:focus,
     .btn-sm-orange:active,
-    .btn-sm-orange.active,
-    .btn-sm-orange:hover {
+    .btn-sm-orange.active {
         background-color: #f87018;
         border-color: #f87018;
         color: white;
     }
+
+.btn-sm-green {
+    background-color: #189A46;
+    border-color: #189A46;
+    color: #fff;
+}
+
+.btn-sm-green:hover,
+.btn-sm-green:focus,
+.btn-sm-green:active,
+.btn-sm-green.active {
+    background-color: #15843c;
+    border-color: #116e32;
+    color: #fff;
+}
+
+.btn-sm-red {
+    background-color: #DB2020;
+    border-color: #DB2020;
+    color: #fff;
+}
+
+    .btn-sm-red:hover,
+    .btn-sm-red:focus,
+    .btn-sm-red:active,
+    .btn-sm-red.active {
+        background-color: #c51d1d;
+        border-color: #af1919;
+        color: #fff;
+    }
+
+
 
 /*Nadpisanie stylów bootsrapowowych*/
 .tooltip-inner {
@@ -91,12 +126,12 @@
 /*Nadpisuje style wybierania kolumn*/
 /*Tło wyboru kolumn w dropdown-list*/
 .ui-widget-header .ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-state-highlight {
-    background: slategrey !important;
+    background: #186ba0 !important;
 }
 
-/*Checkobxy*/
+/*Checkobxy slategrey*/
 .ui-chkbox-box.ui-state-active, .ui-radiobutton-box.ui-state-active {
-    border: 1px solid slategrey !important;
+    border: 1px solid #186ba0 !important;
     background: white !important;
     color: #555555 !important;
 }
@@ -111,17 +146,16 @@ li > div + label {
 }
 
 
-
-
 /*Style dotyczące tabel*/
 th {
     color: white !important; /* nadpisanie primeng*/
     /*background-color: green !important; /*#293f50 #333f48 #0b77a7 #648880, #293f50  nadpisane primeng  */
-    background: #333f48 !important;
-    background: -webkit-linear-gradient(#333f48,#648880) !important; /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient( #333f48,#648880 ) !important; /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient( #333f48,#648880 ) !important; /* For Firefox 3.6 to 15 */
-    background: linear-gradient( #333f48,#648880) !important; /* Standard syntax */
+    /*background: #333f48 !important;
+    background: -webkit-linear-gradient(#333f48,#648880) !important;*/ /* For Safari 5.1 to 6.0 */
+    /*background: -o-linear-gradient( #333f48,#648880 ) !important;*/ /* For Opera 11.1 to 12.0 */
+    /*background: -moz-linear-gradient( #333f48,#648880 ) !important;*/ /* For Firefox 3.6 to 15 */
+    /*background: linear-gradient( #333f48,#648880) !important;*/ /* Standard syntax */
+    background-color: #186ba0 !important;
     vertical-align: text-top !important;
 }
 

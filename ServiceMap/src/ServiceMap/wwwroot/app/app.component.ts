@@ -15,7 +15,12 @@ import 'rxjs/add/observable/throw';
     styleUrls: ['/app.component.css']
 })
 export class AppComponent implements OnInit {
-    public isSuperUser: boolean;
+
+    currentUser: ICurrentUser = {
+        isSuperUser: false,
+        userEmail: null
+    };
+
     errorMsg: string;
 
     constructor(private _http: Http,
@@ -25,13 +30,12 @@ export class AppComponent implements OnInit {
     ngOnInit() {
         this.checkPermissions()
             .subscribe(
-            data =>
-                this.isSuperUser =
-                data === true,
+            result =>
+                this.currentUser = result,
             error => console.error(<any>error));
     }
 
-    private checkPermissions(): Observable<boolean> {
+    private checkPermissions(): Observable<ICurrentUser> {
         return this._http.get(apiUrl.getpermissions)
             .map(this._extractData)
             .do(this._logData)
@@ -59,4 +63,11 @@ export class AppComponent implements OnInit {
     private _logData(data: any) {
         console.log('All: ' + JSON.stringify(data));
     }
+
+    
+}
+
+interface ICurrentUser{
+    isSuperUser : boolean;
+    userEmail: string;
 }

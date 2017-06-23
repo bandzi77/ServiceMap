@@ -21,14 +21,17 @@ var AppComponent = (function () {
     function AppComponent(_http, location) {
         this._http = _http;
         this.location = location;
+        this.currentUser = {
+            isSuperUser: false,
+            userEmail: null
+        };
     }
     ;
     AppComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.checkPermissions()
-            .subscribe(function (data) {
-            return _this.isSuperUser =
-                data === true;
+            .subscribe(function (result) {
+            return _this.currentUser = result;
         }, function (error) { return console.error(error); });
     };
     AppComponent.prototype.checkPermissions = function () {
