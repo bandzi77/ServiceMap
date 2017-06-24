@@ -29,6 +29,9 @@ var AppComponent = (function () {
     ;
     AppComponent.prototype.ngOnInit = function () {
         var _this = this;
+        if (!/localhost/.test(document.location.host)) {
+            core_1.enableProdMode();
+        }
         this.busyIndicator = this.checkPermissions()
             .subscribe(function (result) {
             return _this.currentUser = result;

@@ -1,4 +1,13 @@
-﻿/*Pasek nawigacyjny */
+﻿/*Czcionka*/
+@font-face { font-family:'tnt300'; src:url('fonts/MuseoSans-300.otf') format('opentype'); }
+@font-face { font-family: 'tnt500';src:url('fonts/MuseoSans-500.otf') format('opentype'); }
+@font-face { font-family: 'tnt700';src:url('fonts/MuseoSans-700.otf') format('opentype'); }
+
+body {
+	font-family: tnt500;
+}
+
+/*Pasek nawigacyjny */
 .navbar-default {
     background-color: white;
     border-bottom-color: #ff6600;
@@ -47,7 +56,6 @@
     min-width: 100px;
 }
 
-.btn-sm-orange,
 .btn-sm-orange {
     background-color: #f06000;
     border-color: #f06000;
@@ -83,7 +91,6 @@
     border-color: #DB2020;
     color: #fff;
 }
-
     .btn-sm-red:hover,
     .btn-sm-red:focus,
     .btn-sm-red:active,
@@ -92,8 +99,6 @@
         border-color: #af1919;
         color: #fff;
     }
-
-
 
 /*Nadpisanie stylów bootsrapowowych*/
 .tooltip-inner {
@@ -137,14 +142,14 @@
 }
 
 .ui-widget {
-    font-family: Helvetica, Arial, sans-serif,"Roboto", "Trebuchet MS" !important;
+    font-family: tnt300 , Helvetica, Arial, sans-serif,"Roboto", "Trebuchet MS" !important;
 }
 
-/*Wielkość czcionek*/
+/*Wielkość czcionek w oknie wyboru kolumn*/
 li > div + label {
-    font-weight: normal;
+    font-weight: 300;
+    font-size: smaller;
 }
-
 
 /*Style dotyczące tabel*/
 th {
@@ -170,11 +175,14 @@ th {
 
 th {
     white-space: nowrap;
-    height: 50px;
 }
 
+tr{
+    height:10px !important;
+}
 td, th {
     border-left: 1px solid #ccc;
+    font-size: smaller;
 }
 
 tr:last-child {

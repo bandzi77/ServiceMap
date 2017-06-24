@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, enableProdMode } from '@angular/core';
 import { apiUrl } from './environments/environment';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
@@ -29,6 +29,10 @@ export class AppComponent implements OnInit {
     };
 
     ngOnInit() {
+        if (!/localhost/.test(document.location.host)) {
+            enableProdMode();
+        }
+
         this.busyIndicator = this.checkPermissions()
             .subscribe(
             result =>
