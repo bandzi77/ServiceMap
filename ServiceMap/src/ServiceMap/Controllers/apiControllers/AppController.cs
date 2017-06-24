@@ -15,6 +15,7 @@ namespace ServiceMap.Controllers.apiControllers
 {
     [Route("api/[controller]")]
     [Authorize]
+    [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
     public class AppController : Controller
     {
         IConfiguration configuration;

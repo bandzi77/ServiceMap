@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { apiUrl } from './environments/environment';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 import { Location } from '@angular/common';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
@@ -16,11 +17,11 @@ import 'rxjs/add/observable/throw';
 })
 export class AppComponent implements OnInit {
 
+    busyIndicator: Subscription;
     currentUser: ICurrentUser = {
-        isSuperUser: false,
+        isSuperUser: undefined,
         userEmail: null
     };
-
     errorMsg: string;
 
     constructor(private _http: Http,
@@ -28,7 +29,7 @@ export class AppComponent implements OnInit {
     };
 
     ngOnInit() {
-        this.checkPermissions()
+        this.busyIndicator = this.checkPermissions()
             .subscribe(
             result =>
                 this.currentUser = result,
@@ -63,11 +64,9 @@ export class AppComponent implements OnInit {
     private _logData(data: any) {
         console.log('All: ' + JSON.stringify(data));
     }
-
-    
 }
 
-interface ICurrentUser{
-    isSuperUser : boolean;
+interface ICurrentUser {
+    isSuperUser: boolean;
     userEmail: string;
 }

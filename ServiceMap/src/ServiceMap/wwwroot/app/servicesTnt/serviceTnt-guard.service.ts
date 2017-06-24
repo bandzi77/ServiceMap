@@ -5,12 +5,11 @@ import { Injectable } from '@angular/core';
 export class ServiceTntDetailGuard implements CanActivate {
 
     constructor(private _router: Router) {
-
     }
 
     canActivate(route: ActivatedRouteSnapshot): boolean {
         let id = +route.url[1].path;
-        if (isNaN(id) || id < 1){
+        if (isNaN(id) || id < 1) {
             alert('Niepoprawne id serwisu');
             this._router.navigate(['/servicesTnt']);
             return false;
@@ -18,3 +17,4 @@ export class ServiceTntDetailGuard implements CanActivate {
         return true;
     }
 }
+

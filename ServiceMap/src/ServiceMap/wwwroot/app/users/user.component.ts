@@ -30,6 +30,7 @@ import { IResult } from '../shared/common';
 })
 export class UserComponent implements OnInit, OnDestroy {
 
+    busyIndicator: Subscription;
     pageTitle: string = '';
     errorMessage: string;
     private _inputType = {
@@ -221,7 +222,8 @@ export class UserComponent implements OnInit, OnDestroy {
             this.resetForm()
         } else {
             if (confirm(`Czy chcesz usunąć użytkownika: ${this.user.email}?`)) {
-                this.userService.deleteUser(this.user._id)
+
+                this.busyIndicator = this.userService.deleteUser(this.user._id)
                     .subscribe(result => {
                         this.onDeleteComplete(result, this.user);
                     },
@@ -240,7 +242,7 @@ export class UserComponent implements OnInit, OnDestroy {
             // Copy the form values over the product object values
             let p = Object.assign({}, this.user, this.userForm.value);
 
-            this.userService.saveUser(p)
+            this.busyIndicator = this.userService.saveUser(p)
                 .subscribe(result => {
                     this.onSaveComplete(result, this.user);
                 },

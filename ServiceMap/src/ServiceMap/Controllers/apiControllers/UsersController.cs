@@ -47,6 +47,7 @@ namespace ServiceMap.Controllers.apiControllers
 
         // GET: api/values
         [HttpGet("GetUsers")]
+        [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
         public async Task<IActionResult> GetUsers(string email, bool showLockedOnly)
         {
             IQueryable<AppUser> _users = null;

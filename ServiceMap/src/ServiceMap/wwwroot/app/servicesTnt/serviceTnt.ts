@@ -15,7 +15,7 @@ export interface IServiceTnt {
     standardDeliveryOd: string;
     standardDeliveryDo: string;
     pickUpDomesticZgl: string;
-    dateTimePickUpEksportSmZgl: string
+    dateTimePickUpEksportSmZgl: string;
     samochodZwindaDostepnyWstandardzie?: boolean;
     diplomatNextDay: string;
     serwisMiejski?: boolean;

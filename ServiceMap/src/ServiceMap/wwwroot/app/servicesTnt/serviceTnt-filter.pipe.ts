@@ -1,4 +1,4 @@
-﻿import { PipeTransform, Pipe } from '@angular/core'
+﻿import { PipeTransform, Pipe } from '@angular/core';
 import { IServiceTnt } from './serviceTnt';
 
 @Pipe({
@@ -12,3 +12,4 @@ export class ServicesTntFilterPipe implements PipeTransform {
             serviceTnt.town.toLocaleLowerCase().indexOf(filterBy) !== -1) : value;
     }
 }
+

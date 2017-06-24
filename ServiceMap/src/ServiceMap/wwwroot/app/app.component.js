@@ -22,14 +22,14 @@ var AppComponent = (function () {
         this._http = _http;
         this.location = location;
         this.currentUser = {
-            isSuperUser: false,
+            isSuperUser: undefined,
             userEmail: null
         };
     }
     ;
     AppComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.checkPermissions()
+        this.busyIndicator = this.checkPermissions()
             .subscribe(function (result) {
             return _this.currentUser = result;
         }, function (error) { return console.error(error); });
