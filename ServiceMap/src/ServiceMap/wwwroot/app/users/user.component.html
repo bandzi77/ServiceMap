@@ -13,15 +13,15 @@
 
                     <div class="form-group" [ngClass]="{'has-error': userNameMessage}">
                         <label class="col-md-2 control-label"
-                               for="userNameId">Nazwa użytkownika</label>
+                               for="userNameId">Numer Klienta</label>
                         <div class="col-md-8">
                             <input autocomplete="off"
                                    class="form-control"
                                    id="userNameId"
                                    type="text"
-                                   placeholder="Nazwa użytkownika (wymagane)"
+                                   placeholder="Numer Klienta (wymagane)"
                                    formControlName="tntUserName"
-                                   maxlength="250" />
+                                   maxlength="9" />
 
                             <span class="help-block" *ngIf="userNameMessage">
                                 {{ userNameMessage }}
@@ -95,7 +95,7 @@
                                    type="text"
                                    placeholder="Limit zapytań w ciągu dnia (wymagane)"
                                    formControlName="limitOfRequestsPerDay"
-                                   maxlength="4" />
+                                   maxlength="3" />
                             <span class="help-block" *ngIf="limitPerDayMessage">
                                 {{ limitPerDayMessage }}
                             </span>

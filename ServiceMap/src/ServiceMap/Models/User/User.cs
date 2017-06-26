@@ -11,9 +11,12 @@ namespace ServiceMap.Models.User
     {
         [Required]
         public string _id { get; set; }
+
+        // Zmieniono nazwę użytkownika na numer - potrzebny refaktor w przyszłości
         [Required]
-        [MinLength(5)]
-        [MaxLength(250)]
+        [MinLength(9)]
+        [MaxLength(9)]
+        [RegularExpression(ConstsData.ClientNumberRegExp)]
         public string TntUserName { get; set; }
 
         [Required]

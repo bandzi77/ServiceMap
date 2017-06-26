@@ -8,9 +8,11 @@ namespace ServiceMap.Common
     public class ConstsData
     {
         // Resetowanie hasła
-        public static readonly string PasswordForNewUserSubject = "TNT - Konto SM";
+        public static readonly string PasswordForNewUserSubject = "Mapa Serwisowa TNT";
         public static readonly string PasswordForNewUserMsg = "<p>Drogi Użytkowniku!<br>  <p>Zostało założone dla Ciebie konto w systemie TNT.<br>   <p>Dane konta:</p><p>Hasło: ";
         public static readonly string PasswordForNewUserQueryLimit = "<br>Limit zapytań w ciągu dnia: ";
+        public static readonly string PasswordForNewUserLinkApp = @"<br><a href=""www.tnt.com/express/pl_pl/site/shipping-tools/mapa-serwisowa.html"">Link do aplikacji</a>";
+        public static readonly string PasswordForNewMessageFooter = "<p>Pozdrawiamy<br>Zespół TNT";
         public static readonly string ResetLinkPasswordSubject = "Reset hasła";
         public static readonly string ResetLinkPasswordMsg = "<p>Drogi Użytkowniku!<br>    <p>Poniżej znajdziesz link pozwalający na zresetowanie hasła w aplikacji Mapa Serwisowa:<br>";
         public static readonly string ResetLinkPasswordMsgLink1 = "<a href=\"";
@@ -27,6 +29,7 @@ namespace ServiceMap.Common
         public const string PasswordRegExpMsg = "Hasło nie spełnia wymagań";
         public const string PasswordConfirmRequiredMsg = "Potwierdzenie hasła jest wymagane";
         public const string PasswordConfirmRegExpMsg = "Potwierdzenie hasła nie spełnia wymagań";
+        public const string ClientNumberRegExp = "^[0-9]+$";
         public const string PasswordRegExp = "(?=.*\\d)(?=.*[a-zA-Z])(?=.+[_\\!\\@\\#\\$\\%\\^\\&\\*\\(\\)\\+\\-\\=])(?!.*\\s).{8,12}";
         public const string TokenValidationMsg = "Niepopawny link odzyskiwania hasła";
         public static readonly string DifferencesPasswordMsg = "Podane hasła są różne";
@@ -37,6 +40,8 @@ namespace ServiceMap.Common
         public static readonly string UserCreateAnotherError = "5. Wystąpił błąd podczas dodawania nowego użytkownika";
         public static readonly string UserCreateSuccess = "6. Użytkownik został dodany";
         public static readonly string UserCreateEmailError = "6.1. Konto zostało utworzone. Wystąpił błąd podczas wysłania emaila do użytkownika z danymi konta.";
+        public static readonly string UserCreateInvalidLimit = "6.2. Wystąpił błąd podczas dodawania nowego użytkownika";
+        public static readonly string UserCreateInvalidAdminEmail = "6.3. Wystąpił błąd podczas dodawania nowego użytkownika";
         public static readonly string UserAlreadyExists = "7. Podany adres email istnieje już w systemie";
         public static readonly string DeleteUserSuccess = "8. Użytkownik został usunięty z systemu";
         public static readonly string DeleteUserError = "9. Błąd podczas usuwania użytkownika z systemu";

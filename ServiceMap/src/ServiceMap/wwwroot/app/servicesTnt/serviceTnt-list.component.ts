@@ -75,9 +75,8 @@ export class ServiceTntListComponent implements OnInit {
              { field: 'dateTimePickUpEksportSmZgl', header: 'Zamówienie kuriera międzynarodowego do' },
              //{ field: 'samochodZwindaDostepnyWstandardzie', header: 'ISamochod z winda< br > dostepny w standardzie' },
              { field: 'diplomatNextDay', header: 'Najwcześniejsza dostawa przesyłki pozasystemowej' },
-
-             { field: 'serwisMiejski', header: 'Serwis podmiejski '},
-             { field: 'serwisPodmiejski', header: 'Serwis miejski' },
+             { field: 'serwisPodmiejski', header: 'Serwis Podmiejski' },
+             { field: 'serwisMiejski', header: 'Serwis Miejski '},
              { field: 'pickUpDomesticCzas', header: 'Minimalny czas na odbiór przesyłki drogowej' },
              { field: 'pickUpEksportSmCzas', header: 'Minimalny czas na odbiór przesyłki lotniczej' }
         ];

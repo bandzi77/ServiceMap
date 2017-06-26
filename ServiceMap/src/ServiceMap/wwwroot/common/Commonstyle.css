@@ -1,10 +1,21 @@
 ﻿/*Czcionka*/
-@font-face { font-family:'tnt300'; src:url('fonts/MuseoSans-300.otf') format('opentype'); }
-@font-face { font-family: 'tnt500';src:url('fonts/MuseoSans-500.otf') format('opentype'); }
-@font-face { font-family: 'tnt700';src:url('fonts/MuseoSans-700.otf') format('opentype'); }
+@font-face {
+    font-family: 'tnt300';
+    src: url('fonts/MuseoSans-300.otf') format('opentype');
+}
+
+@font-face {
+    font-family: 'tnt500';
+    src: url('fonts/MuseoSans-500.otf') format('opentype');
+}
+
+@font-face {
+    font-family: 'tnt700';
+    src: url('fonts/MuseoSans-700.otf') format('opentype');
+}
 
 body {
-	font-family: tnt500;
+    font-family: tnt500;
 }
 
 /*Pasek nawigacyjny */
@@ -52,7 +63,7 @@ body {
     color: #1cb3f4;
 }
 
-.btn-nav-proc-sm{
+.btn-nav-proc-sm {
     min-width: 100px;
 }
 
@@ -64,8 +75,7 @@ body {
 
     .btn-sm-orange:hover,
     .btn-sm-orange:focus,
-    .btn-sm-orange:active,
-    .btn-sm-orange.active {
+    .btn-sm-orange:active {
         background-color: #f87018;
         border-color: #f87018;
         color: white;
@@ -77,20 +87,21 @@ body {
     color: #fff;
 }
 
-.btn-sm-green:hover,
-.btn-sm-green:focus,
-.btn-sm-green:active,
-.btn-sm-green.active {
-    background-color: #15843c;
-    border-color: #116e32;
-    color: #fff;
-}
+    .btn-sm-green:hover,
+    .btn-sm-green:focus,
+    .btn-sm-green:active,
+    .btn-sm-green.active {
+        background-color: #15843c;
+        border-color: #116e32;
+        color: #fff;
+    }
 
 .btn-sm-red {
     background-color: #DB2020;
     border-color: #DB2020;
     color: #fff;
 }
+
     .btn-sm-red:hover,
     .btn-sm-red:focus,
     .btn-sm-red:active,
@@ -142,7 +153,7 @@ body {
 }
 
 .ui-widget {
-    font-family: tnt300 , Helvetica, Arial, sans-serif,"Roboto", "Trebuchet MS" !important;
+    font-family: tnt300, Helvetica, Arial, sans-serif,"Roboto", "Trebuchet MS" !important;
 }
 
 /*Wielkość czcionek w oknie wyboru kolumn*/
@@ -177,9 +188,16 @@ th {
     white-space: nowrap;
 }
 
-tr{
-    height:10px !important;
+tr {
+    height: 10px !important;
 }
+
+ tr.ui-widget-content:hover {
+        font-family:tnt700;
+        font-size: medium ;
+        font-weight: bold;
+    }
+
 td, th {
     border-left: 1px solid #ccc;
     font-size: smaller;

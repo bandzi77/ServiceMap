@@ -44,6 +44,7 @@ export class UserComponent implements OnInit, OnDestroy {
     emailMessage: string = '';
     passwordMessage: string = '';
     limitPerDayMessage: string = '';
+    private userNameRegEx: string ='^[0-9]+$'
     private sub: Subscription;
     private emailTntRegEx: string = '[a-zA-Z0-9._%+-]+@(TNT.COM|tnt.com)';
     private regExpEmail = new RegExp(this.emailTntRegEx);
@@ -56,9 +57,9 @@ export class UserComponent implements OnInit, OnDestroy {
 
 
     private userNameValidationMessages = {
-        required: 'Nazwa użytkownika jest wymagana.',
-        minlength: 'Nazwa musi składać się z co najmniej 5 znaków.',
-        maxlength: 'Nazwa nie może przekraczać 250 znaków.'
+        required: 'Numer Klienta jest wymagana.',
+        pattern: 'Dopuszczalne znaki to cyfry.',
+        minlength: 'Wymagana długość to 9 cyfr.'
     };
 
     private emailValidationMessages = {
@@ -76,7 +77,7 @@ export class UserComponent implements OnInit, OnDestroy {
 
     private limitOfRequestsPerDayMessage = {
         required: "Limit zapytań jest wymagany.",
-        range: "Wprowadź wartość z przedziału od 1 do 1000"
+        range: "Wprowadź wartość z przedziału od 1 do 500"
     };
 
 
@@ -323,8 +324,9 @@ export class UserComponent implements OnInit, OnDestroy {
     private _getUserNameValidators(): ValidatorFn {
         return Validators.compose([
             Validators.required,
-            Validators.minLength(5),
-            Validators.maxLength(250)]
+            Validators.pattern(this.userNameRegEx),    
+            Validators.minLength(9),
+            Validators.maxLength(9)]
         );
     }
 
@@ -356,7 +358,7 @@ export class UserComponent implements OnInit, OnDestroy {
     private _getLimitPerDayValidators(): ValidatorFn {
         return Validators.compose([
             Validators.required,
-            checkRange(1, 1000)]
+            checkRange(1, 500)]
         );
     }
 }

@@ -11,6 +11,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using ServiceMap.Common;
+using MimeKit;
+using System.IO;
+using MimeKit.Utils;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 //UserManager<AppUser> userMgr, RoleManager<IdentityRole> roleMgr 
@@ -92,6 +95,20 @@ namespace ServiceMap.Controllers.apiControllers
 
             if (ModelState.IsValid && user._id == "0" && user.Email.ToUpper() != superUser.ToUpper())
             {
+                // Do refaktoru przenieść w jedno miejsce dla tworzenie oraz aktualizacji danych o użytkowniku
+                if (!user.IsSuperUser && (user.LimitOfRequestsPerDay == null || user.LimitOfRequestsPerDay<1 ||  user.LimitOfRequestsPerDay > 500))
+                {
+                    result = new { success = false, message = ConstsData.UserCreateInvalidLimit };
+                    return Ok(result);
+                }
+
+                // Do refaktoru przenieść w jedno miejsce dla tworzenie oraz aktualizacji danych o użytkowniku
+                if (user.IsSuperUser && !user.Email.ToUpper().Trim().EndsWith("TNT.COM"))
+                {
+                    result = new { success = false, message = ConstsData.UserCreateInvalidAdminEmail };
+                    return Ok(result);
+                }
+
                 // Sprawdza czy taki użytkownik już istnieje
                 if (await userManager.FindByEmailAsync(user.Email.ToUpper()) != null)
                 {
@@ -120,8 +137,8 @@ namespace ServiceMap.Controllers.apiControllers
                 AppUser newUser = new AppUser
                 {
                     TntUserName = user.TntUserName.Trim(),
-                    UserName = user.Email.ToUpper(),
-                    Email = user.Email.ToUpper(),
+                    UserName = user.Email.Trim().ToUpper(),
+                    Email = user.Email.Trim().ToUpper(),
                     AccessFailedCount = 5,
                     LockoutEnd = user.IsLocked ? DateTimeOffset.MaxValue : (DateTimeOffset?)null,
                     LimitOfRequestsPerDay = user.LimitOfRequestsPerDay,
@@ -129,6 +146,7 @@ namespace ServiceMap.Controllers.apiControllers
                 };
 
                 resultIdent = await userManager.CreateAsync(newUser, user.Password);
+
 
                 if (!resultIdent.Succeeded)
                 {
@@ -168,7 +186,7 @@ namespace ServiceMap.Controllers.apiControllers
         }
 
 
-
+        // Wysyła dane konta dla nowego użytkownika
         private bool SendPasswordToUser(User newUser)
         {
             var fromEmail = currentUser.GetUser(User).Result.NormalizedEmail;
@@ -176,7 +194,10 @@ namespace ServiceMap.Controllers.apiControllers
             return emailService.SendEmail("TNT SM", null, newUser.Email,
                 ConstsData.PasswordForNewUserSubject,
                 ConstsData.PasswordForNewUserMsg + $"{newUser.Password}" +
-                ConstsData.PasswordForNewUserQueryLimit + $"{newUser.LimitOfRequestsPerDay}", "html");
+                ConstsData.PasswordForNewUserQueryLimit + $"{newUser.LimitOfRequestsPerDay}"+
+                ConstsData.PasswordForNewUserLinkApp +
+                ConstsData.PasswordForNewMessageFooter
+                , "html");
         }
 
         // PUT api/values/5
@@ -191,6 +212,18 @@ namespace ServiceMap.Controllers.apiControllers
                 ModelState.Remove("Password");
                 if (ModelState.IsValid && user._id != "0")
                 {
+                    if (!user.IsSuperUser && (user.LimitOfRequestsPerDay == null || user.LimitOfRequestsPerDay < 1 || user.LimitOfRequestsPerDay > 500))
+                    {
+                        result = new { success = false, message = ConstsData.UserCreateInvalidLimit };
+                        return Ok(result);
+                    }
+
+                    if (user.IsSuperUser && !user.Email.ToUpper().Trim().EndsWith("TNT.COM"))
+                    {
+                        result = new { success = false, message = ConstsData.UserCreateInvalidAdminEmail };
+                        return Ok(result);
+                    }
+
                     var userToUpdate = await userManager.FindByIdAsync(id);
                     if (userToUpdate != null)
                     {

@@ -49,17 +49,15 @@
                  [rowsPerPageOptions]="[15,25,50]"
                  [totalRecords]="paging.totalCount" (onLazyLoad)="loadPageLazy($event)"
                  [sortFile]="town"
-                 [rowHover]="true">
+                 [rowHover]="true"
+                 >
         <p-header>
-           
-                <div style="text-align:left">
-                    <p-multiSelect #multiselect [options]="columnOptions" [(ngModel)]="cols"></p-multiSelect>
-                    <span style="vertical-align:top; padding-left:20px;" *ngIf="requestsPerDay.limitOfRequestsPerDay!=null">
-                        Liczba zapytań w ciągu dnia: {{requestsPerDay.numberOfRequestsPerDay}} / {{requestsPerDay.limitOfRequestsPerDay}}
-                    </span>
-                </div>
-               
-           
+            <div style="text-align:left">
+                <p-multiSelect #multiselect [options]="columnOptions" [(ngModel)]="cols"></p-multiSelect>
+                <span style="vertical-align:top; padding-left:20px;" *ngIf="requestsPerDay.limitOfRequestsPerDay!=null">
+                    Liczba zapytań w ciągu dnia: {{requestsPerDay.numberOfRequestsPerDay}} / {{requestsPerDay.limitOfRequestsPerDay}}
+                </span>
+            </div>
         </p-header>
         <p-column *ngFor="let col of cols"
                   [field]="col.field"

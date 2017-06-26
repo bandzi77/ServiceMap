@@ -42,8 +42,9 @@ namespace ServiceMap
             options.UseSqlServer(Configuration["Data:ConnectionStrings:DbServiceMap"]));
             services.AddDbContext<AppIdentityDbContext>(options =>
             options.UseSqlServer(Configuration["Data:ConnectionStrings:DbServiceMapIndentity"]));
-        
-            services.AddIdentity<AppUser, IdentityRole>(opts =>
+            services.AddAntiforgery(o => o.SuppressXFrameOptionsHeader = true);
+    
+                services.AddIdentity<AppUser, IdentityRole>(opts =>
             {
                 opts.User.RequireUniqueEmail = true;
                 //opts.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyz";

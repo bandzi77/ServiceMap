@@ -23,7 +23,7 @@ namespace ServiceMap.Common
 #if !DEBUG
             try
             {
-                var mimeMsg = CreateEmailMessate(fromName, CcEmail, toEmail, subject, message, emailFormat);
+                var mimeMsg = CreateEmailMessage(fromName, CcEmail, toEmail, subject, message, emailFormat);
                 using (var client = new SmtpClient())
                 {
                     client.Connect(mimeMsg.Host, mimeMsg.Port, SecureSocketOptions.None);
@@ -54,7 +54,7 @@ namespace ServiceMap.Common
 #if RELEASE
             try
             {
-                var mimeMsg = CreateEmailMessate(fromName, CcEmail, toEmail, subject, message, emailFormat);
+                var mimeMsg = CreateEmailMessage(fromName, CcEmail, toEmail, subject, message, emailFormat);
                 using (var client = new SmtpClient())
                 {
                     //client.LocalDomain = "tnt.com";
@@ -77,7 +77,7 @@ namespace ServiceMap.Common
             return result;
         }
 
-        private ExtMimeMessage CreateEmailMessate(string fromName, string CcEmail, string toEmail, string subject, string message, string emailFormat)
+        private ExtMimeMessage CreateEmailMessage(string fromName, string CcEmail, string toEmail, string subject, string message, string emailFormat)
         {
             
             int port;
