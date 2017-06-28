@@ -14,32 +14,30 @@ div.panel-heading {
 */
 
 /* Pomarañczowe navbar oraz DropDown (Menu rozwijane) */
-.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:focus, .navbar-default .navbar-nav > .active > a:hover, 
-.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover,
-.dropdown-menu>li>a:focus, .dropdown-menu>li>a:hover
-{
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:focus, .navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:focus, .navbar-default .navbar-nav > .open > a:hover,
+.dropdown-menu > li > a:focus, .dropdown-menu > li > a:hover {
     color: white;
     background-color: #f87018 !important;
 }
 
 /* Pomarañczowy focus nad przyciskiem */
-.navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:hover
-{
+.navbar-default .navbar-nav > li > a:focus, .navbar-default .navbar-nav > li > a:hover {
     color: #f87018;
 }
 
 /*Usuwa domyœlny kolor dla elemnentu w rozwijanym menu*/
 /*.dropdown-menu>li>a, .sm-dropdown-padding {*/
- /*padding: 3px 15px !important;*/
- /*width:100%;*/
+/*padding: 3px 15px !important;*/
+/*width:100%;*/
 /*}*/
 
 .sm-dropdown-padding {
-   padding-left:20px;
+    padding-left: 20px;
 }
 /*Usuwa domyœlny kolor dla elemnentu w rozwijanym menu*/
-.dropdown-menu>li>a:focus, .dropdown-menu>li>a:hover{
-    background-image:none !important;
+.dropdown-menu > li > a:focus, .dropdown-menu > li > a:hover {
+    background-image: none !important;
 }
 
 /*Rozwijane menu z taka sam¹ d³ugoœci¹ dla drop down i jego elementów*/
@@ -55,7 +53,7 @@ div.panel-heading {
 }
 
 .btn-psz-blue {
-    background-color: #1cb3f4; 
+    background-color: #1cb3f4;
     border-color: #1cb3f4;
     color: #fff;
     height: 22px;
@@ -77,8 +75,8 @@ div.panel-heading {
 }
 
 
-.btn-sm-font-small{
-    font-size:small !important;
+.btn-sm-font-small {
+    font-size: small !important;
 }
 
 
@@ -97,6 +95,26 @@ div.panel-heading {
         color: #fff;
     }
 
+.fa-1-5x {
+    font-size: 1.5em !important;
+    vertical-align: middle;
+}
+
+.text-warning-sm {
+    color: #ff9900;
+}
+
+.text-success-sm {
+    color: #199a46;
+}
+
+.text-danger-sm {
+    color: #db2020;
+}
+
+.text-blue-sm {
+    color: #1468b2;
+}
 
 /*@media (max-height: 648px) {
   tbody {

@@ -6,24 +6,30 @@ using MailKit.Net.Smtp;
 using MimeKit;
 using MailKit.Security;
 using Microsoft.Extensions.Configuration;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
+using MimeKit.Utils;
+using static ServiceMap.Common.Enums;
 
 namespace ServiceMap.Common
 {
     public class EmailService : IEmailService
     {
         private IConfiguration configuration;
-        public EmailService(IConfiguration configuration)
+        private IHostingEnvironment env;
+        public EmailService(IConfiguration configuration, IHostingEnvironment env)
         {
             this.configuration = configuration;
+            this.env = env;
         }
-        public async Task<bool> SendEmailAsync(string fromName, string CcEmail, string toEmail, string subject, string message, string emailFormat)
+        public async Task<bool> SendEmailAsync(string fromName, string CcEmail, string toEmail, string subject, string message, EmailFormat emailFormat, bool addImgFooter)
         {
 
-            bool result = false;
+            bool result = true;
 #if !DEBUG
             try
             {
-                var mimeMsg = CreateEmailMessage(fromName, CcEmail, toEmail, subject, message, emailFormat);
+                var mimeMsg = CreateEmailMessage(fromName, CcEmail, toEmail, subject, message, emailFormat, addImgFooter);
                 using (var client = new SmtpClient())
                 {
                     client.Connect(mimeMsg.Host, mimeMsg.Port, SecureSocketOptions.None);
@@ -40,6 +46,7 @@ namespace ServiceMap.Common
             }
             catch
             {
+                result = false;
             }
 #endif
             return result;
@@ -47,14 +54,14 @@ namespace ServiceMap.Common
         }
 
 
-        public bool SendEmail(string fromName, string CcEmail, string toEmail, string subject, string message, string emailFormat)
+        public bool SendEmail(string fromName, string CcEmail, string toEmail, string subject, string message, EmailFormat emailFormat, bool addImgFooter)
         {
 
             bool result = true;
 #if RELEASE
             try
             {
-                var mimeMsg = CreateEmailMessage(fromName, CcEmail, toEmail, subject, message, emailFormat);
+                var mimeMsg = CreateEmailMessage(fromName, CcEmail, toEmail, subject, message, emailFormat, addImgFooter);
                 using (var client = new SmtpClient())
                 {
                     //client.LocalDomain = "tnt.com";
@@ -77,16 +84,16 @@ namespace ServiceMap.Common
             return result;
         }
 
-        private ExtMimeMessage CreateEmailMessage(string fromName, string CcEmail, string toEmail, string subject, string message, string emailFormat)
+        private ExtMimeMessage CreateEmailMessage(string fromName, string CcEmail, string toEmail, string subject, string message, EmailFormat emailFormat, bool addImgFooter)
         {
-            
+
             int port;
             int.TryParse(configuration["Data:SMTP:port"], out port);
 
             bool isSmtpRequredAuthentication;
             bool.TryParse(configuration["Data:SMTP:isSmtpRequredAuthentication"], out isSmtpRequredAuthentication);
 
-            var emailMessage = new ExtMimeMessage(configuration["Data:SMTP:host"], port, configuration["Data:SMTP:email"], configuration["Data:SMTP:password"],isSmtpRequredAuthentication);
+            var emailMessage = new ExtMimeMessage(configuration["Data:SMTP:host"], port, configuration["Data:SMTP:email"], configuration["Data:SMTP:password"], isSmtpRequredAuthentication);
 
             emailMessage.From.Add(new MailboxAddress(fromName, emailMessage.TntEmail));
             if (!String.IsNullOrWhiteSpace(CcEmail))
@@ -96,7 +103,8 @@ namespace ServiceMap.Common
 
             emailMessage.To.Add(new MailboxAddress("", toEmail));
             emailMessage.Subject = subject;
-            emailMessage.Body = String.IsNullOrWhiteSpace(emailFormat) ? new TextPart("plain") { Text = message } : new TextPart(emailFormat) { Text = message };
+
+            emailMessage.Body = getBodyMessage(emailFormat, message, addImgFooter);
 
             return emailMessage;
         }
@@ -119,5 +127,41 @@ namespace ServiceMap.Common
             }
         }
 
+
+        private MimeEntity getBodyMessage(EmailFormat emailFormat, string message, bool addImgFooter)
+        {
+            MimeEntity result;
+
+            switch (emailFormat)
+            {
+                case EmailFormat.html:
+                    string text = message;
+                    if (addImgFooter)
+                    {
+                        var footer = AddFotterWithImage();
+                        footer.HtmlBody = text + footer.HtmlBody;
+                        return result = footer.ToMessageBody();
+                    }
+                    return result = new TextPart(emailFormat.ToString()) { Text = text };
+
+                case EmailFormat.plain:
+                    result = new TextPart(EmailFormat.plain.ToString()) { Text = message };
+                    break;
+                default:
+                    throw new NotImplementedException("Not recognize format");
+            }
+
+            return result;
+        }
+
+        private BodyBuilder AddFotterWithImage()
+        {
+            string path = Path.Combine(env.WebRootPath, "app\\assets\\images\\logo.png");
+            var builder = new BodyBuilder();
+            var image = builder.LinkedResources.Add(path);
+            image.ContentId = MimeUtils.GenerateMessageId();
+            builder.HtmlBody = "<br><img src = \"cid:" + $"{image.ContentId}" + "\">";
+            return builder;
+        }
     }
 }

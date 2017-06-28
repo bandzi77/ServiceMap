@@ -14,6 +14,7 @@ using ServiceMap.Common;
 using MimeKit;
 using System.IO;
 using MimeKit.Utils;
+using static ServiceMap.Common.Enums;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 //UserManager<AppUser> userMgr, RoleManager<IdentityRole> roleMgr 
@@ -167,7 +168,7 @@ namespace ServiceMap.Controllers.apiControllers
                 // Zwraca wynik końcowy operacji
                 if (resultIdent.Succeeded)
                 {
-                    if (SendPasswordToUser(user))
+                    if (SendDataToNewUser(user))
                     {
                         result = new { success = true, message = ConstsData.UserCreateSuccess };
                     }
@@ -187,7 +188,7 @@ namespace ServiceMap.Controllers.apiControllers
 
 
         // Wysyła dane konta dla nowego użytkownika
-        private bool SendPasswordToUser(User newUser)
+        private bool SendDataToNewUser(User newUser)
         {
             var fromEmail = currentUser.GetUser(User).Result.NormalizedEmail;
 
@@ -195,9 +196,9 @@ namespace ServiceMap.Controllers.apiControllers
                 ConstsData.PasswordForNewUserSubject,
                 ConstsData.PasswordForNewUserMsg + $"{newUser.Password}" +
                 ConstsData.PasswordForNewUserQueryLimit + $"{newUser.LimitOfRequestsPerDay}"+
-                ConstsData.PasswordForNewUserLinkApp +
-                ConstsData.PasswordForNewMessageFooter
-                , "html");
+                ConstsData.PasswordForNewUserLinkApp+
+                ConstsData.PasswordForNewMessageFooter,
+                EmailFormat.html, true);
         }
 
         // PUT api/values/5

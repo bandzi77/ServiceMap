@@ -9,7 +9,7 @@ namespace ServiceMap.Common
     {
         // Resetowanie hasła
         public static readonly string PasswordForNewUserSubject = "Mapa Serwisowa TNT";
-        public static readonly string PasswordForNewUserMsg = "<p>Drogi Użytkowniku!<br>  <p>Zostało założone dla Ciebie konto w systemie TNT.<br>   <p>Dane konta:</p><p>Hasło: ";
+        public static readonly string PasswordForNewUserMsg = "<p>Drogi Użytkowniku!<br>  <p>Zostało założone dla Ciebie konto w aplikacji Mapa Serwisowa TNT.<br>   <p>Dane konta:</p><p>Hasło: ";
         public static readonly string PasswordForNewUserQueryLimit = "<br>Limit zapytań w ciągu dnia: ";
         public static readonly string PasswordForNewUserLinkApp = @"<br><a href=""www.tnt.com/express/pl_pl/site/shipping-tools/mapa-serwisowa.html"">Link do aplikacji</a>";
         public static readonly string PasswordForNewMessageFooter = "<p>Pozdrawiamy<br>Zespół TNT";
@@ -28,7 +28,7 @@ namespace ServiceMap.Common
         public const string PasswordRequiredMsg = "Hasło jest wymagane";
         public const string PasswordRegExpMsg = "Hasło nie spełnia wymagań";
         public const string PasswordConfirmRequiredMsg = "Potwierdzenie hasła jest wymagane";
-        public const string PasswordConfirmRegExpMsg = "Potwierdzenie hasła nie spełnia wymagań";
+        public const string PasswordConfirmRegExpMsg = "Potwierdzone hasło nie spełnia wymagań";
         public const string ClientNumberRegExp = "^[0-9]+$";
         public const string PasswordRegExp = "(?=.*\\d)(?=.*[a-zA-Z])(?=.+[_\\!\\@\\#\\$\\%\\^\\&\\*\\(\\)\\+\\-\\=])(?!.*\\s).{8,12}";
         public const string TokenValidationMsg = "Niepopawny link odzyskiwania hasła";

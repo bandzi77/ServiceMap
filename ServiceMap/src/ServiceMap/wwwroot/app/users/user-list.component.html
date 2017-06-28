@@ -69,23 +69,21 @@
         </template>
     </p-column>
 
-    <p-column field="isSuperUser" header="Uprawnienia administratora" [filter]="true" [style]="{'overflow':'visible','width':'210px'}" filterMatchMode="equals" [sortable]="true">
+    <p-column field="isSuperUser" header="Uprawnienia administratora" [filter]="true" [style]="{'overflow':'visible','width':'210px','text-align':'center'}" filterMatchMode="equals" [sortable]="true">
         <template pTemplate="filter" let-col>
             <p-dropdown [options]="checkSelector" appendTo="body" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
         </template>
         <template let-col let-user="rowData" pTemplate="body">
-            <span *ngIf="user[col.field]"><i class="fa fa-check-square-o fa-1x" aria-hidden="true"></i></span>
-            <span *ngIf="!user[col.field]"><i class="fa fa-square-o fa-1x" aria-hidden="true"></i></span>
+            <span *ngIf="user[col.field]"><i class="fa fa-check-circle fa-1-5x text-success-sm" aria-hidden="true"></i></span>
         </template>
     </p-column>
 
-    <p-column field="isLocked" header="Konto zablokowane" [filter]="true" [style]="{'overflow':'visible','width':'170px'}" filterMatchMode="equals" [sortable]="true">
+    <p-column field="isLocked" header="Konto zablokowane" [filter]="true" [style]="{'overflow':'visible','width':'170px','text-align':'center'}" filterMatchMode="equals" [sortable]="true">
         <template pTemplate="filter" let-col>
             <p-dropdown [options]="checkSelector" appendTo="body" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
         </template>
         <template let-col let-user="rowData" pTemplate="body">
-            <span *ngIf="user[col.field]"><i class="fa fa-check-square-o fa-1x" aria-hidden="true"></i></span>
-            <span *ngIf="!user[col.field]"><i class="fa fa-square-o fa-1x" aria-hidden="true"></i></span>
+            <span *ngIf="user[col.field]" ><i class="fa fa-exclamation-circle fa-1-5x text-danger-sm" aria-hidden="true"></i></span>
         </template>
     </p-column>
 

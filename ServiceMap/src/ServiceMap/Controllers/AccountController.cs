@@ -10,6 +10,7 @@ using ServiceMap.Models.apiModels;
 using ServiceMap.Common;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
+using static ServiceMap.Common.Enums;
 
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
@@ -119,7 +120,7 @@ namespace ServiceMap.Controllers
                 //   $"Please reset your password by clicking here: <a href='{callbackUrl}'>link</a>");
                 //   return View("ForgotPasswordConfirmation"); < a href = '{callbackUrl}' > link </ a >
 
-               await emailService.SendEmailAsync("No replay", null, email, ConstsData.ResetLinkPasswordSubject, ConstsData.ResetLinkPasswordMsg + ConstsData.ResetLinkPasswordMsgLink1 +$"{callbackUrl}" +ConstsData.ResetLinkPasswordMsgLink2, "html");
+               await emailService.SendEmailAsync("No replay", null, email, ConstsData.ResetLinkPasswordSubject, ConstsData.ResetLinkPasswordMsg + ConstsData.ResetLinkPasswordMsgLink1 +$"{callbackUrl}" +ConstsData.ResetLinkPasswordMsgLink2, EmailFormat.html, false);
             }
         }
 
@@ -167,7 +168,7 @@ namespace ServiceMap.Controllers
                             if (accessFailedCount > 0)
                             {
                                await emailService.SendEmailAsync("No replay", null, "pl.web.sm@tnt.com", 
-                                    ConstsData.AccountIsLockedSubject, String.Format(ConstsData.AccountIsLockedMessage, user.Email),"plain");
+                                    ConstsData.AccountIsLockedSubject, String.Format(ConstsData.AccountIsLockedMessage, user.Email),EmailFormat.plain,false);
                             }
                             return RedirectToAction("InfoPanel", "Account", new { message = "Twoje konto zostało zablokowane." });
                         }
