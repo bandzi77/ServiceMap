@@ -5,6 +5,7 @@ import { BusyModule, BusyConfig } from 'angular2-busy';
 import { ModalModule, PopoverModule, TooltipModule } from 'ng2-bootstrap';
 import { PageModule } from '../pagination/page.module';
 import { LgModalComponent } from './lgModal.component';
+import { ToastrService } from './toastr.service';
 import { ToastModule, ToastOptions } from 'ng2-toastr/ng2-toastr';
 import { CustomOption } from './toastr-custom-option';
 import { DataTableModule, SharedModule, MultiSelectModule, ToggleButtonModule, DropdownModule } from 'primeng/primeng';
@@ -27,7 +28,7 @@ import { DataTableModule, SharedModule, MultiSelectModule, ToggleButtonModule, D
         SharedModule,
         MultiSelectModule,
         ToggleButtonModule,
-        DropdownModule,
+        DropdownModule
     ],
     imports: [
         CommonModule,
@@ -44,12 +45,14 @@ import { DataTableModule, SharedModule, MultiSelectModule, ToggleButtonModule, D
         ToastModule.forRoot(),
         DropdownModule
     ],
-    providers: [
-        {
-            provide: ToastOptions,
-            useClass: CustomOption
-        }]
 
+    providers: [
+        ToastrService,
+        {
+            provide: { ToastOptions },
+            useClass: CustomOption,
+
+        }]
 })
 
 export class SmSharedModule {

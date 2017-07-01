@@ -7,10 +7,6 @@ import { ServicesTntFilterPipe } from './serviceTnt-filter.pipe';
 import { ServicesTntService } from './serviceTnt.service';
 import { SmSharedModule } from '../shared/shared.module';
 
-
-
-
-
 @NgModule({
     declarations: [
         ServiceTntListComponent,

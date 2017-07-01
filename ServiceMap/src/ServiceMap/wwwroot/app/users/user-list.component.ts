@@ -33,6 +33,15 @@ export class UserListComponent implements OnInit, OnDestroy {
         this.checkSelector.push({ label: 'Wszystkie', value: null });
         this.checkSelector.push({ label: 'Tak', value: 'true' });
         this.checkSelector.push({ label: 'Nie', value: 'false' });
+
+        this.sub = this._route.queryParams.subscribe(
+            params => {
+                this.email = params.hasOwnProperty('email') ? params['email'] : '';
+                this.showLockedOnly = params['showLockedOnly'] === "true";
+                if (params.hasOwnProperty('email')) {
+                    this.onSearchUsers();
+                }
+            });
     }
 
     ngOnDestroy(): void {

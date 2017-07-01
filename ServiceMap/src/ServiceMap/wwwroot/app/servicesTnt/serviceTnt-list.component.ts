@@ -1,15 +1,14 @@
-﻿import { Component, OnInit, ViewChild, ViewContainerRef  } from '@angular/core';
+﻿import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { IServiceTnt, IServiceFilter, IRequestsPerDay } from './serviceTnt';
 import { IDepotDetails, IDepotDetailsFilter } from './depotDetails';
-import { IPage,IPageInfo } from '../pagination/page';
+import { IPage, IPageInfo } from '../pagination/page';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ServicesTntService } from './serviceTnt.service';
 import { Subscription } from 'rxjs';
 import { LgModalComponent } from '../shared/lgModal.component';
-import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { IResult } from '../shared/common';
 import { LazyLoadEvent, SelectItem, MultiSelect, DataTable } from 'primeng/primeng'
-
+import { ToastrService,IToastrSm } from '../shared/toastr.service';
 
 @Component({
     templateUrl: 'app/servicesTnt/serviceTnt-list.component.html',
@@ -17,7 +16,7 @@ import { LazyLoadEvent, SelectItem, MultiSelect, DataTable } from 'primeng/prime
 })
 
 export class ServiceTntListComponent implements OnInit {
-   
+
     busyIndicator: Subscription;
     pageTitle: string = "Mapa Serwisowa";
     imageWidth: number = 50;
@@ -40,15 +39,11 @@ export class ServiceTntListComponent implements OnInit {
     //TODO -usunąć
     @ViewChild('multiselect') multi: MultiSelect;
     constructor(private _serviceTntService: ServicesTntService,
-                private _route: ActivatedRoute,
-                private toastr: ToastsManager,
-                vcr: ViewContainerRef)
-    {
-        this.toastr.setRootViewContainerRef(vcr);
-    }
+        private _route: ActivatedRoute,
+        private toastService: ToastrService) { }
 
     ngOnInit(): void {
-   
+
         let id = +this._route.snapshot.params['currentPage'];
         this.paging = this._getPage();
         this.pageInfo = this._getPageInfo();
@@ -56,7 +51,7 @@ export class ServiceTntListComponent implements OnInit {
 
         this.cols = [
             { field: 'depotCode', header: 'Kod Depotu' },
-            { field: 'town', header: 'Miasto'},
+            { field: 'town', header: 'Miasto' },
             { field: 'fromPostcode', header: 'Kod pocztowy od' },
             { field: 'toPostcode', header: 'Kod pocztowy do' },
 
@@ -66,19 +61,19 @@ export class ServiceTntListComponent implements OnInit {
             { field: 'eX12', header: '12 Express' },
 
 
-             { field: 'priority', header: 'Przesyłka priorytetowa' },
-             //{ field: 'wieczorneDostarczenie', header: 'Wieczorne dostarczenie' },
-             //{ field: 'standardDeliveryOd', header: 'Doręcznia < br > od' },
-             //{ field: 'standardDeliveryDo', header: 'Doręcznia < br >do' }
+            { field: 'priority', header: 'Przesyłka priorytetowa' },
+            //{ field: 'wieczorneDostarczenie', header: 'Wieczorne dostarczenie' },
+            //{ field: 'standardDeliveryOd', header: 'Doręcznia < br > od' },
+            //{ field: 'standardDeliveryDo', header: 'Doręcznia < br >do' }
 
-             { field: 'pickUpDomesticZgl', header: 'Zamówienia kuriera krajowego do<' },
-             { field: 'dateTimePickUpEksportSmZgl', header: 'Zamówienie kuriera międzynarodowego do' },
-             //{ field: 'samochodZwindaDostepnyWstandardzie', header: 'ISamochod z winda< br > dostepny w standardzie' },
-             { field: 'diplomatNextDay', header: 'Najwcześniejsza dostawa przesyłki pozasystemowej' },
-             { field: 'serwisPodmiejski', header: 'Serwis Podmiejski' },
-             { field: 'serwisMiejski', header: 'Serwis Miejski '},
-             { field: 'pickUpDomesticCzas', header: 'Minimalny czas na odbiór przesyłki drogowej' },
-             { field: 'pickUpEksportSmCzas', header: 'Minimalny czas na odbiór przesyłki lotniczej' }
+            { field: 'pickUpDomesticZgl', header: 'Zamówienia kuriera krajowego do<' },
+            { field: 'dateTimePickUpEksportSmZgl', header: 'Zamówienie kuriera międzynarodowego do' },
+            //{ field: 'samochodZwindaDostepnyWstandardzie', header: 'ISamochod z winda< br > dostepny w standardzie' },
+            { field: 'diplomatNextDay', header: 'Najwcześniejsza dostawa przesyłki pozasystemowej' },
+            { field: 'serwisPodmiejski', header: 'Serwis Podmiejski' },
+            { field: 'serwisMiejski', header: 'Serwis Miejski ' },
+            { field: 'pickUpDomesticCzas', header: 'Minimalny czas na odbiór przesyłki drogowej' },
+            { field: 'pickUpEksportSmCzas', header: 'Minimalny czas na odbiór przesyłki lotniczej' }
         ];
 
         this.columnOptions = [];
@@ -112,7 +107,7 @@ export class ServiceTntListComponent implements OnInit {
 
     private _getData(filtr: IServiceFilter) {
 
-        this.busyIndicator = this._serviceTntService.searchServicesTnt(filtr,this.pageInfo)
+        this.busyIndicator = this._serviceTntService.searchServicesTnt(filtr, this.pageInfo)
             .subscribe(result => {
                 this.servicesTnt = result.serviceTnt;
                 this.paging = result.paging;
@@ -179,27 +174,26 @@ export class ServiceTntListComponent implements OnInit {
         }
     }
 
-    _setOrderBy(sortField?: string, sortOrder?: number):string
-    {
+    _setOrderBy(sortField?: string, sortOrder?: number): string {
         let result = null;
-        if (sortField == undefined || sortField == null)
-        {
-            return result;
-        } 
-
-        result = sortField;
-
-        if (sortOrder == undefined || sortOrder == null)
-        {
+        if (sortField == undefined || sortField == null) {
             return result;
         }
 
-        return result = result +" "+ ((sortOrder === -1) ? 'desc' : 'asc');
+        result = sortField;
+
+        if (sortOrder == undefined || sortOrder == null) {
+            return result;
+        }
+
+        return result = result + " " + ((sortOrder === -1) ? 'desc' : 'asc');
     }
 
     private onGetComplete(res: IResult): void {
         if (!res.success) {
-            this.toastr.error(res.message, 'Błąd!', { dismiss: 'click' });
+            this.toastService.error(<IToastrSm>{
+                message: res.message
+            });
         }
     }
 }

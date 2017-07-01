@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { apiUrl } from './environments/environment';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { ToastrService } from './shared/toastr.service';
 import { Subscription } from 'rxjs/Subscription';
 import { Location } from '@angular/common';
 import 'rxjs/add/operator/map';
@@ -25,11 +27,15 @@ export class AppComponent implements OnInit {
     errorMsg: string;
 
     constructor(private _http: Http,
-        private location: Location) {
+        private location: Location,
+        private toastr: ToastsManager,
+        vcr: ViewContainerRef,
+        private toastService: ToastrService) {
+        this.toastr.setRootViewContainerRef(vcr);
     };
 
     ngOnInit() {
-           this.busyIndicator = this.checkPermissions()
+        this.busyIndicator = this.checkPermissions()
             .subscribe(
             result =>
                 this.currentUser = result,
@@ -70,3 +76,4 @@ interface ICurrentUser {
     isSuperUser: boolean;
     userEmail: string;
 }
+

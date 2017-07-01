@@ -3,7 +3,8 @@
     state,
     style,
     transition,
-    animate, Component, OnInit, OnDestroy,  ViewContainerRef} from '@angular/core';
+    animate, Component, OnInit, OnDestroy, ViewContainerRef
+} from '@angular/core';
 import { FormControl, FormBuilder, FormGroup, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IUser } from './user';
@@ -12,7 +13,7 @@ import 'rxjs/add/operator/debounceTime';
 import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
 import { Location } from '@angular/common';
-import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { ToastrService, IToastrSm } from '../shared/toastr.service';
 import { IResult } from '../shared/common';
 
 @Component({
@@ -44,7 +45,7 @@ export class UserComponent implements OnInit, OnDestroy {
     emailMessage: string = '';
     passwordMessage: string = '';
     limitPerDayMessage: string = '';
-    private userNameRegEx: string ='^[0-9]+$'
+    private userNameRegEx: string = '^[0-9]+$'
     private sub: Subscription;
     private emailTntRegEx: string = '[a-zA-Z0-9._%+-]+@(TNT.COM|tnt.com)';
     private regExpEmail = new RegExp(this.emailTntRegEx);
@@ -53,8 +54,7 @@ export class UserComponent implements OnInit, OnDestroy {
     patternEmailTnt: string = 'Niepoprawny adres email z domeny tnt.com.';
     patternEmail: string = 'Niepoprawny adres email.';
     result: IResult;
-    isDisabledCheckBoxTntAccount: boolean=false;
-
+    isDisabledCheckBoxTntAccount: boolean = false;
 
     private userNameValidationMessages = {
         required: 'Numer Klienta jest wymagana.',
@@ -82,14 +82,12 @@ export class UserComponent implements OnInit, OnDestroy {
 
 
     constructor(
-        public toastr: ToastsManager,
-        vcr: ViewContainerRef,
         private fb: FormBuilder,
         private route: ActivatedRoute,
         private router: Router,
         private userService: UserService,
-        private location: Location) {
-        this.toastr.setRootViewContainerRef(vcr);
+        private location: Location,
+        private toastService: ToastrService ) {
     }
 
     ngOnInit(): void {
@@ -112,7 +110,7 @@ export class UserComponent implements OnInit, OnDestroy {
         this.sub.unsubscribe();
     }
 
-    private _createReactiveUserForm():void {
+    private _createReactiveUserForm(): void {
         this.userForm = this.fb.group({
             _id: "0",
             tntUserName: [null, this._getUserNameValidators()],
@@ -260,9 +258,14 @@ export class UserComponent implements OnInit, OnDestroy {
 
     private onDeleteComplete(res: IResult, user: IUser): void {
         if (res.success) {
+            this.toastService.success(<IToastrSm>{
+                message: res.message
+            });
             this.onBack();
         } else {
-            this.toastr.error(res.message, 'Błąd!', { dismiss: 'click' });
+            this.toastService.error(<IToastrSm>{
+                message: res.message,
+            });
         }
         // Reset the form to clear the flags
         // this.userForm.reset();
@@ -273,16 +276,21 @@ export class UserComponent implements OnInit, OnDestroy {
 
     private onSaveComplete(res: IResult, user: IUser): void {
         if (res.success) {
+
             this.resetForm();
-            if (user._id === "0") {
-                this.toastr.success(res.message, 'Success!', { toastLife: 10000 });
+            this.toastService.success(<IToastrSm>{
+                message: res.message
+            });
+
+            if (user._id !== "0") {
+                this.router.navigate(['/userlist']);
+                //this.onBack();
             }
-            else {
-                this.onBack();
-                // this.userForm.markAsPristine();
-            }
+            // this.userForm.markAsPristine();
         } else {
-            this.toastr.error(res.message, 'Błąd!', { dismiss: 'click'});
+            this.toastService.error(<IToastrSm>{
+                message: res.message
+            });
         }
     }
 
@@ -296,8 +304,6 @@ export class UserComponent implements OnInit, OnDestroy {
     }
 
     private _setMessageForValidators() {
-
-        // userNameValidationMessage
 
         const userNameControl = this.userForm.get('tntUserName');
         userNameControl.valueChanges.debounceTime(0).subscribe(value =>
@@ -319,12 +325,10 @@ export class UserComponent implements OnInit, OnDestroy {
             .subscribe(value => this.setNotification(value));
     }
 
-   
-
     private _getUserNameValidators(): ValidatorFn {
         return Validators.compose([
             Validators.required,
-            Validators.pattern(this.userNameRegEx),    
+            Validators.pattern(this.userNameRegEx),
             Validators.minLength(9),
             Validators.maxLength(9)]
         );
@@ -377,22 +381,3 @@ function checkRange(min: number, max: number): ValidatorFn {
         return null;
     };
 }
-
-    //function ExRequired(c: FormControl) {
-    //    debugger;
-    //    if ((c.value || "").length == 0) {
-    //        return { 'required': true };
-    //    }
-
-    //    // jest ok gdy zwraca null
-    //    return null;
-    //}
-
-
-    //function checkRange(c: FormControl) {
-
-    //    if (c.value && c.value.length == 0) {
-    //        return null;
-    //    }
-    //    let result = (parseInt(c.value) > 0 && parseInt(c.value) <= 500 && !isNaN(c.value));
-    //    return result ? null : { 'range': true }

@@ -12,19 +12,24 @@ var core_1 = require("@angular/core");
 var environment_1 = require("./environments/environment");
 var http_1 = require("@angular/http");
 var Observable_1 = require("rxjs/Observable");
+var ng2_toastr_1 = require("ng2-toastr/ng2-toastr");
+var toastr_service_1 = require("./shared/toastr.service");
 var common_1 = require("@angular/common");
 require("rxjs/add/operator/map");
 require("rxjs/add/operator/do");
 require("rxjs/add/operator/catch");
 require("rxjs/add/observable/throw");
 var AppComponent = (function () {
-    function AppComponent(_http, location) {
+    function AppComponent(_http, location, toastr, vcr, toastService) {
         this._http = _http;
         this.location = location;
+        this.toastr = toastr;
+        this.toastService = toastService;
         this.currentUser = {
             isSuperUser: undefined,
             userEmail: null
         };
+        this.toastr.setRootViewContainerRef(vcr);
     }
     ;
     AppComponent.prototype.ngOnInit = function () {
@@ -69,7 +74,10 @@ AppComponent = __decorate([
         styleUrls: ['/app.component.css']
     }),
     __metadata("design:paramtypes", [http_1.Http,
-        common_1.Location])
+        common_1.Location,
+        ng2_toastr_1.ToastsManager,
+        core_1.ViewContainerRef,
+        toastr_service_1.ToastrService])
 ], AppComponent);
 exports.AppComponent = AppComponent;
 //# sourceMappingURL=app.component.js.map

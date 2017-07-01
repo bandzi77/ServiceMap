@@ -96,18 +96,11 @@ namespace ServiceMap.Controllers.apiControllers
 
             if (ModelState.IsValid && user._id == "0" && user.Email.ToUpper() != superUser.ToUpper())
             {
-                // Do refaktoru przenieść w jedno miejsce dla tworzenie oraz aktualizacji danych o użytkowniku
-                if (!user.IsSuperUser && (user.LimitOfRequestsPerDay == null || user.LimitOfRequestsPerDay<1 ||  user.LimitOfRequestsPerDay > 500))
-                {
-                    result = new { success = false, message = ConstsData.UserCreateInvalidLimit };
-                    return Ok(result);
-                }
+                var validationResult = BaseValidationOfUser(user);
 
-                // Do refaktoru przenieść w jedno miejsce dla tworzenie oraz aktualizacji danych o użytkowniku
-                if (user.IsSuperUser && !user.Email.ToUpper().Trim().EndsWith("TNT.COM"))
+                if (!validationResult.Success)
                 {
-                    result = new { success = false, message = ConstsData.UserCreateInvalidAdminEmail };
-                    return Ok(result);
+                    return Ok(validationResult);
                 }
 
                 // Sprawdza czy taki użytkownik już istnieje
@@ -148,7 +141,6 @@ namespace ServiceMap.Controllers.apiControllers
 
                 resultIdent = await userManager.CreateAsync(newUser, user.Password);
 
-
                 if (!resultIdent.Succeeded)
                 {
                     result = new { success = false, message = ConstsData.UserCreateIdentityError };
@@ -168,6 +160,7 @@ namespace ServiceMap.Controllers.apiControllers
                 // Zwraca wynik końcowy operacji
                 if (resultIdent.Succeeded)
                 {
+                    // Sprawdza czy email został wysłany do użytkownika po założeniu konta
                     if (SendDataToNewUser(user))
                     {
                         result = new { success = true, message = ConstsData.UserCreateSuccess };
@@ -213,18 +206,13 @@ namespace ServiceMap.Controllers.apiControllers
                 ModelState.Remove("Password");
                 if (ModelState.IsValid && user._id != "0")
                 {
-                    if (!user.IsSuperUser && (user.LimitOfRequestsPerDay == null || user.LimitOfRequestsPerDay < 1 || user.LimitOfRequestsPerDay > 500))
-                    {
-                        result = new { success = false, message = ConstsData.UserCreateInvalidLimit };
-                        return Ok(result);
-                    }
+                    var validationResult = BaseValidationOfUser(user);
 
-                    if (user.IsSuperUser && !user.Email.ToUpper().Trim().EndsWith("TNT.COM"))
+                    if (!validationResult.Success)
                     {
-                        result = new { success = false, message = ConstsData.UserCreateInvalidAdminEmail };
-                        return Ok(result);
+                        return Ok(validationResult);
                     }
-
+                    
                     var userToUpdate = await userManager.FindByIdAsync(id);
                     if (userToUpdate != null)
                     {
@@ -271,6 +259,25 @@ namespace ServiceMap.Controllers.apiControllers
             return Ok(result);
         }
 
+        private Result BaseValidationOfUser(User user)
+        {
+            var result = new Result { Success = true };
+            // Sprawdza, czy użytkownik spełnia warunek dot. limitów
+            if (!user.IsSuperUser && (user.LimitOfRequestsPerDay == null || user.LimitOfRequestsPerDay < 1 || user.LimitOfRequestsPerDay > 500))
+            {
+                result = new Result { Success = false, Message = ConstsData.UserCreateInvalidLimit };
+                return result;
+            }
+
+            // Sprawdza, czy użytkownik jako administrator posiada właściwą domenę.
+            if (user.IsSuperUser && !user.Email.ToUpper().Trim().EndsWith("TNT.COM"))
+            {
+                result = new Result { Success = false, Message = ConstsData.UserCreateInvalidAdminEmail };
+                return result;
+            }
+
+            return result;
+        }
 
         private async Task<Object> UserUpdateRole(AppUser appUser, User user)
         {
@@ -324,6 +331,11 @@ namespace ServiceMap.Controllers.apiControllers
             }
 
             return Ok(result);
+        }
+
+        private class Result {
+            public bool Success { get; set; }
+            public string Message { get; set; }
         }
     }
 }

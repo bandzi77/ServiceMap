@@ -27,7 +27,7 @@ AppModule = __decorate([
         imports: [
             platform_browser_1.BrowserModule,
             http_1.HttpModule,
-            // TODO - Do usuni�cia
+            // TODO - Do usunięcia
             forms_1.ReactiveFormsModule,
             router_1.RouterModule.forRoot([
                 //{ path: 'welcome', component: WelcomeComponent },
