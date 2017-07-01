@@ -283,8 +283,7 @@ export class UserComponent implements OnInit, OnDestroy {
             });
 
             if (user._id !== "0") {
-                this.router.navigate(['/userlist']);
-                //this.onBack();
+               this.onBack();
             }
             // this.userForm.markAsPristine();
         } else {

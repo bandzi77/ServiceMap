@@ -50,6 +50,7 @@ export class UserListComponent implements OnInit, OnDestroy {
 
     private onSearchUsers() {
         console.log('Wyszukiwanie użytkowników');
+        this.router.navigate(['/userlist'], { queryParams: { email: this.email, showLockedOnly: this.showLockedOnly } });
         let filtr = this._createUserFilter();
         this._getData(filtr);
     }
