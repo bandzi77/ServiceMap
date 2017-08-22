@@ -8,6 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var environment_1 = require("./environments/environment");
 var http_1 = require("@angular/http");
@@ -65,19 +66,19 @@ var AppComponent = (function () {
     AppComponent.prototype._logData = function (data) {
         console.log('All: ' + JSON.stringify(data));
     };
+    AppComponent = __decorate([
+        core_1.Component({
+            selector: 'sm-app',
+            templateUrl: 'app/app.component.html',
+            styleUrls: ['/app.component.css']
+        }),
+        __metadata("design:paramtypes", [http_1.Http,
+            common_1.Location,
+            ng2_toastr_1.ToastsManager,
+            core_1.ViewContainerRef,
+            toastr_service_1.ToastrService])
+    ], AppComponent);
     return AppComponent;
 }());
-AppComponent = __decorate([
-    core_1.Component({
-        selector: 'sm-app',
-        templateUrl: 'app/app.component.html',
-        styleUrls: ['/app.component.css']
-    }),
-    __metadata("design:paramtypes", [http_1.Http,
-        common_1.Location,
-        ng2_toastr_1.ToastsManager,
-        core_1.ViewContainerRef,
-        toastr_service_1.ToastrService])
-], AppComponent);
 exports.AppComponent = AppComponent;
 //# sourceMappingURL=app.component.js.map

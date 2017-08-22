@@ -1,6 +1,7 @@
 ﻿import { NgModule, Provider } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BusyModule, BusyConfig } from 'angular2-busy';
 import { ModalModule, PopoverModule, TooltipModule } from 'ng2-bootstrap';
 import { PageModule } from '../pagination/page.module';
@@ -32,6 +33,7 @@ import { DataTableModule, SharedModule, MultiSelectModule, ToggleButtonModule, D
     ],
     imports: [
         CommonModule,
+        BrowserAnimationsModule,
         BusyModule.forRoot(
             new BusyConfig({
                 backdrop: true,
