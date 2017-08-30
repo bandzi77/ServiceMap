@@ -2,14 +2,34 @@
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { BusyModule, BusyConfig } from 'angular2-busy';
+import { BusyModule, BusyConfig, BUSY_CONFIG_DEFAULTS } from 'angular2-busy/index';
 import { ModalModule, PopoverModule, TooltipModule } from 'ng2-bootstrap';
-import { PageModule } from '../pagination/page.module';
 import { LgModalComponent } from './lgModal.component';
 import { ToastrService } from './toastr.service';
 import { ToastModule, ToastOptions } from 'ng2-toastr/ng2-toastr';
 import { CustomOption } from './toastr-custom-option';
 import { DataTableModule, SharedModule, MultiSelectModule, ToggleButtonModule, DropdownModule } from 'primeng/primeng';
+
+//const busyConfig: BusyConfig = {
+//    message: BUSY_CONFIG_DEFAULTS.message,
+//    delay: 0,
+//    template: BUSY_CONFIG_DEFAULTS.template,
+//    minDuration: 0,
+//    backdrop: true,
+//    wrapperClass: BUSY_CONFIG_DEFAULTS.wrapperClass
+//};
+
+
+
+
+let options: BusyConfig = {
+    delay: 0,
+    minDuration: 0,
+    backdrop: true,
+    message: 'Proszę czekać...',
+    template: BUSY_CONFIG_DEFAULTS.template,
+    wrapperClass: BUSY_CONFIG_DEFAULTS.wrapperClass
+};
 
 @NgModule({
     declarations: [
@@ -21,7 +41,6 @@ import { DataTableModule, SharedModule, MultiSelectModule, ToggleButtonModule, D
         FormsModule,
         LgModalComponent,
         ModalModule,
-        PageModule,
         PopoverModule,
         TooltipModule,
         ToastModule,
@@ -34,13 +53,7 @@ import { DataTableModule, SharedModule, MultiSelectModule, ToggleButtonModule, D
     imports: [
         CommonModule,
         BrowserAnimationsModule,
-        BusyModule.forRoot(
-            new BusyConfig({
-                backdrop: true,
-                delay: 0,
-                minDuration: 0
-            })
-        ),
+        BusyModule.forRoot(<BusyConfig>options),
         ModalModule.forRoot(),
         PopoverModule.forRoot(),
         TooltipModule.forRoot(),
@@ -51,11 +64,12 @@ import { DataTableModule, SharedModule, MultiSelectModule, ToggleButtonModule, D
     providers: [
         ToastrService,
         {
-            provide: { ToastOptions },
+            provide: ToastOptions,
             useClass: CustomOption,
-
-        }]
+        },
+    ]
 })
 
 export class SmSharedModule {
 }
+

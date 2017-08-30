@@ -69,8 +69,8 @@ var AppComponent = (function () {
     AppComponent = __decorate([
         core_1.Component({
             selector: 'sm-app',
-            templateUrl: 'app/app.component.html',
-            styleUrls: ['/app.component.css']
+            templateUrl: './app.component.html',
+            styleUrls: ['./app.component.css']
         }),
         __metadata("design:paramtypes", [http_1.Http,
             common_1.Location,

@@ -40,7 +40,7 @@
         </div>
     </div>-->
     <!--[first]="pageInfo.current_page"-->
-
+    <!--[sortFile]="town"-->
 
     <p-dataTable #dataTable [value]="servicesTnt"
                  scrollable="true" scrollHeight="420px" scrollWidth="100%"
@@ -48,9 +48,7 @@
                  [paginator]="true" [pageLinks]="8"
                  [rowsPerPageOptions]="[15,25,50]"
                  [totalRecords]="paging.totalCount" (onLazyLoad)="loadPageLazy($event)"
-                 [sortFile]="town"
-                 [rowHover]="true"
-                 >
+                 [rowHover]="true">
         <p-header>
             <div style="text-align:left">
                 <p-multiSelect #multiselect [options]="columnOptions" [(ngModel)]="cols"></p-multiSelect>

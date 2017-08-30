@@ -1,6 +1,5 @@
 ﻿import { Injectable } from '@angular/core';
 import { IServiceFilter, IServiceTntResult } from './serviceTnt';
-import { IPageInfo } from '../pagination/page';
 import { IDepotDetailsFilter, IDepotDetailsResult } from './depotDetails';
 import { Http, Response, URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
@@ -8,6 +7,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
+﻿import { IPage, IPageInfo } from '../pagination/page';
 
 
 @Injectable()

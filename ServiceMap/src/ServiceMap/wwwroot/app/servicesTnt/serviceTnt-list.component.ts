@@ -1,18 +1,18 @@
 ﻿import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { IServiceTnt, IServiceFilter, IRequestsPerDay } from './serviceTnt';
 import { IDepotDetails, IDepotDetailsFilter } from './depotDetails';
-import { IPage, IPageInfo } from '../pagination/page';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ServicesTntService } from './serviceTnt.service';
 import { Subscription } from 'rxjs';
 import { LgModalComponent } from '../shared/lgModal.component';
 import { IResult } from '../shared/common';
 import { LazyLoadEvent, SelectItem, MultiSelect, DataTable } from 'primeng/primeng'
-import { ToastrService,IToastrSm } from '../shared/toastr.service';
+import { ToastrService, IToastrSm } from '../shared/toastr.service';
+import { IPage, IPageInfo } from '../pagination/page';
 
 @Component({
-    templateUrl: 'app/servicesTnt/serviceTnt-list.component.html',
-    styleUrls: ['app/servicesTnt/serviceTnt-list.component.css']
+    templateUrl: './serviceTnt-list.component.html',
+    styleUrls: ['./serviceTnt-list.component.css']
 })
 
 export class ServiceTntListComponent implements OnInit {
@@ -66,7 +66,7 @@ export class ServiceTntListComponent implements OnInit {
             //{ field: 'standardDeliveryOd', header: 'Doręcznia < br > od' },
             //{ field: 'standardDeliveryDo', header: 'Doręcznia < br >do' }
 
-            { field: 'pickUpDomesticZgl', header: 'Zamówienia kuriera krajowego do<' },
+            { field: 'pickUpDomesticZgl', header: 'Zamówienia kuriera krajowego do' },
             { field: 'dateTimePickUpEksportSmZgl', header: 'Zamówienie kuriera międzynarodowego do' },
             //{ field: 'samochodZwindaDostepnyWstandardzie', header: 'ISamochod z winda< br > dostepny w standardzie' },
             { field: 'diplomatNextDay', header: 'Najwcześniejsza dostawa przesyłki pozasystemowej' },

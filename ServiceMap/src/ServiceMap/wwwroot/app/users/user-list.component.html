@@ -1,5 +1,4 @@
-﻿<div [ngBusy]="{busy: busyIndicator}"></div>
-<div class="form-inline">
+﻿<div [ngBusy]="{busy: busyIndicator}" class="form-inline">
     <div class="panel panel-primary">
         <div class="panel-heading">
             <div class="form-group">
@@ -39,7 +38,6 @@
 <p-dataTable [value]="users"
              scrollable="true" scrollHeight="460px" scrollWidth="100%;"
              [paginator]="true" [pageLinks]="8" [rows]="15" [rowsPerPageOptions]="[15,25,50]"
-             [globalFilter]="gb"
              [rowHover]="true"
              #dt>
 

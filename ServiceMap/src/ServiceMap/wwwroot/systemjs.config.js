@@ -37,6 +37,7 @@
             'ts-metadata-helper': 'npm:angular2-busy/node_modules/ts-metadata-helper',
             'angular2-dynamic-component': 'npm:angular2-busy/node_modules/angular2-dynamic-component',
             'angular2-busy': 'npm:angular2-busy',
+            'ng2-toastr': 'npm:ng2-toastr',
             'core-js': 'npm:core-js'
   
 
@@ -46,7 +47,7 @@
         // packages tells the System loader how to load when no filename and/or no extension
         packages: {
             'app': {
-                main: './main.js',
+                main: './main-jit.js',
                 defaultExtension: 'js'
             },
             'rxjs': {
@@ -66,6 +67,9 @@
             },
             'angular2-busy': {
                 main: './index.js',
+                defaultExtension: 'js'
+            },
+            'ng2-toastr':{
                 defaultExtension: 'js'
             },
             'core-js': {

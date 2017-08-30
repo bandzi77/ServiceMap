@@ -6,17 +6,17 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SelectItem } from 'primeng/primeng'
 
 @Component({
-    templateUrl: 'app/users/user-list.component.html',
-    styleUrls: ['app/users/user-list.component.css']
+    templateUrl: './user-list.component.html',
+    styleUrls: ['./user-list.component.css']
 })
 
 export class UserListComponent implements OnInit, OnDestroy {
-    private busyIndicator: Subscription;
+    busyIndicator: Subscription;
     users: IUser[];
     private sub: Subscription;
     private tntUserName: string = '';
-    private email: string = '';
-    private showLockedOnly: boolean = false;
+    email: string = '';
+    showLockedOnly: boolean = false;
     errorMessage: string;
     columnOptions: SelectItem[];
     checkSelector: SelectItem[];
@@ -48,7 +48,7 @@ export class UserListComponent implements OnInit, OnDestroy {
         //this.sub.unsubscribe();
     }
 
-    private onSearchUsers() {
+    public onSearchUsers() {
         console.log('Wyszukiwanie użytkowników');
         this.router.navigate(['/userlist'], { queryParams: { email: this.email, showLockedOnly: this.showLockedOnly } });
         let filtr = this._createUserFilter();

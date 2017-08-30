@@ -64,7 +64,7 @@ namespace ServiceMap
 
                 opts.Cookies.ApplicationCookie.LoginPath = new PathString("/Account/Login");
                 opts.Cookies.ApplicationCookie.LogoutPath = new PathString("/Account/Logout");
-                opts.Cookies.ApplicationCookie.AccessDeniedPath = new PathString("/Account/Logout");//new PathString("/Account/AccessDenied");
+              //  opts.Cookies.ApplicationCookie.AccessDeniedPath = new PathString("/Account/Logout");//new PathString("/Account/AccessDenied");
                 opts.Cookies.ApplicationCookie.AutomaticAuthenticate = true;
                 opts.Cookies.ApplicationCookie.AutomaticChallenge = true;
                 opts.Cookies.ApplicationCookie.AuthenticationScheme = Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationDefaults.AuthenticationScheme;
@@ -153,6 +153,14 @@ namespace ServiceMap
                 name: "Error",
                 template: "Error",
                 defaults: new { controller = "Error", action = "Error" });
+
+                //routes.MapRoute(
+                //  name: "Logout",
+                // template: "{controller=Account}/{action=Logout}");
+
+              //  routes.MapRoute(
+              // name: "Login",
+              //template: "{controller=Account}/{action=Login}");
 
                 routes.MapRoute(
                   name: "infoPanel",
