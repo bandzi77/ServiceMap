@@ -149,14 +149,14 @@ namespace ServiceMap
 
             app.UseMvc(routes =>
             {
-                routes.MapRoute(
-                name: "Error",
-                template: "Error",
-                defaults: new { controller = "Error", action = "Error" });
+                //routes.MapRoute(
+                //name: "Error",
+                //template: "Error",
+                //defaults: new { controller = "Error", action = "Error" });
 
-                routes.MapRoute(
-                  name: "infoPanel",
-                  template: "{controller=Account}/{action=InfoPanel}/{message}");
+                //routes.MapRoute(
+                //  name: "infoPanel",
+                //  template: "{controller=Account}/{action=InfoPanel}/{message}");
 
                 routes.MapRoute(
                     name: "default",

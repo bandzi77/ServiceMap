@@ -66,7 +66,7 @@ export class ServiceTntListComponent implements OnInit {
             //{ field: 'standardDeliveryOd', header: 'Doręcznia < br > od' },
             //{ field: 'standardDeliveryDo', header: 'Doręcznia < br >do' }
 
-            { field: 'pickUpDomesticZgl', header: 'Zamówienia kuriera krajowego do<' },
+            { field: 'pickUpDomesticZgl', header: 'Zamówienia kuriera krajowego do' },
             { field: 'dateTimePickUpEksportSmZgl', header: 'Zamówienie kuriera międzynarodowego do' },
             //{ field: 'samochodZwindaDostepnyWstandardzie', header: 'ISamochod z winda< br > dostepny w standardzie' },
             { field: 'diplomatNextDay', header: 'Najwcześniejsza dostawa przesyłki pozasystemowej' },
