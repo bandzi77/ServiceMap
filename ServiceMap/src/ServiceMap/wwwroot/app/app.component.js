@@ -20,7 +20,7 @@ require("rxjs/add/operator/map");
 require("rxjs/add/operator/do");
 require("rxjs/add/operator/catch");
 require("rxjs/add/observable/throw");
-var AppComponent = (function () {
+var AppComponent = /** @class */ (function () {
     function AppComponent(_http, location, toastr, vcr, toastService) {
         this._http = _http;
         this.location = location;

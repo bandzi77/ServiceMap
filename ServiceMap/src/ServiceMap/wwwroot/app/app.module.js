@@ -16,7 +16,7 @@ var user_service_1 = require("./users/user.service");
 var forms_1 = require("@angular/forms");
 var serviceTnt_list_component_1 = require("./servicesTnt/serviceTnt-list.component");
 var user_module_1 = require("./users/user-module");
-var AppModule = (function () {
+var AppModule = /** @class */ (function () {
     function AppModule() {
     }
     AppModule = __decorate([
