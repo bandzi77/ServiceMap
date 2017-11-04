@@ -5,6 +5,7 @@ import { IServiceTnt } from './serviceTnt';
     name: 'productFilter'
 })
 
+//Filtr niewykorzystany
 export class ServicesTntFilterPipe implements PipeTransform {
     transform(value: IServiceTnt[], filterBy: string): IServiceTnt[] {
         filterBy = filterBy ? filterBy.toLocaleLowerCase() : null;

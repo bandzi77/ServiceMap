@@ -65,3 +65,5 @@ node_modules/
 /ServiceMap/src/ServiceMap/wwwroot/app/users/user-guard.service.js
 /ServiceMap/src/ServiceMap/wwwroot/app/users/user-list.component.js
 /ServiceMap/src/ServiceMap/wwwroot/app/users/user-module.js
+/ServiceMap/src/ServiceMap/appsettings.json
+/ServiceMap/src/ServiceMap/appsettings.production.json

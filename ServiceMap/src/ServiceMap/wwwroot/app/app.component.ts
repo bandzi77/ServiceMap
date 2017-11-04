@@ -39,7 +39,8 @@ export class AppComponent implements OnInit {
             .subscribe(
             result =>
                 this.currentUser = result,
-            error => console.error(<any>error));
+            error =>   null  // TODO dorobiæ obs³ugê  console.error(<any>error)            
+        );
     }
 
     private checkPermissions(): Observable<ICurrentUser> {
@@ -50,7 +51,7 @@ export class AppComponent implements OnInit {
     }
 
     private handleError(error: Response | any) {
-        // In a real world app, we might use a remote logging infrastructure
+        // TODO remote logging infrastructure
         let errMsg: string;
         if (error instanceof Response) {
             const body = error.json() || '';
@@ -59,7 +60,14 @@ export class AppComponent implements OnInit {
         } else {
             errMsg = error.message ? error.message : error.toString();
         }
-        return Observable.throw(errMsg);
+
+        if (/localhost/.test(document.location.host)) {
+            console.log(errMsg);
+            return Observable.throw(errMsg);
+        }
+        else {
+            return Observable.throw("Wyst¹pi³ b³¹d");
+        }
     }
 
     private _extractData(res: Response) {
@@ -68,7 +76,9 @@ export class AppComponent implements OnInit {
     }
 
     private _logData(data: any) {
-        console.log('All: ' + JSON.stringify(data));
+        if (/localhost/.test(document.location.host)) {
+            console.log('All: ' + JSON.stringify(data));
+        }
     }
 }
 

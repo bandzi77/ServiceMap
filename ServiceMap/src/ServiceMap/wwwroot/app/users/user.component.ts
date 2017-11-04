@@ -49,7 +49,7 @@ export class UserComponent implements OnInit, OnDestroy {
     private sub: Subscription;
     private emailTntRegEx: string = '[a-zA-Z0-9._%+-]+@(TNT.COM|tnt.com)';
     private regExpEmail = new RegExp(this.emailTntRegEx);
-    emailRegEx: string = '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.]+'; //'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+';
+    emailRegEx: string = '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+'; //'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+';
     passwordRegEx: string = '(?=.*\\d)(?=.*[a-zA-Z])(?=.+[_\\!\\@\\#\\$\\%\\^\\&\\*\\(\\)\\+\\-\\=])(?!.*\\s).{8,12}'
     patternEmailTnt: string = 'Niepoprawny adres email z domeny tnt.com.';
     patternEmail: string = 'Niepoprawny adres email.';
@@ -251,8 +251,10 @@ export class UserComponent implements OnInit, OnDestroy {
             // nic nie rób
         }
 
-        console.log(this.userForm);
-        console.log('Saved: ' + JSON.stringify(this.userForm.value));
+        if (/localhost/.test(document.location.host)) {
+            console.log(this.userForm);
+            console.log('Saved: ' + JSON.stringify(this.userForm.value));
+        }
     }
 
 

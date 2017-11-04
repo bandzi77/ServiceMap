@@ -4,7 +4,6 @@ import { RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { SmSharedModule } from './shared/shared.module';
-import { WelcomeComponent } from './home/welcome.component';
 import { ServiceTntModule } from './servicesTnt/serviceTnt.module';
 import { UserService } from './users/user.service';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -17,13 +16,8 @@ import { UserListComponent } from './users/user-list.component';
     imports: [
         BrowserModule,
         HttpModule,
-        // TODO - Do usuniecia
-
         ReactiveFormsModule,
         RouterModule.forRoot([
-            //{ path: 'welcome', component: WelcomeComponent },
-            //{ path: '', redirectTo: 'welcome', pathMatch: 'full' },
-            //{ path: '**', redirectTo: 'welcome', pathMatch: 'full' }
             { path: 'serviceTnt', component: ServiceTntListComponent },
             { path: '', redirectTo: 'serviceTnt', pathMatch: 'full' },
             { path: '**', redirectTo: 'serviceTnt', pathMatch: 'full' },      
@@ -33,8 +27,7 @@ import { UserListComponent } from './users/user-list.component';
         ServiceTntModule
     ],
     declarations: [
-        AppComponent,
-        WelcomeComponent
+        AppComponent
     ],
     providers:[UserService],
     bootstrap: [AppComponent]

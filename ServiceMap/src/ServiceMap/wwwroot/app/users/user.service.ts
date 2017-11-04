@@ -23,7 +23,11 @@ export class UserService {
 
         return this.http.get(this.getUsersUrl, { search: searchParams })
             .map(this._extractData)
-            .do(data => console.log('getUsers' + JSON.stringify(data)))
+            .do(data => {
+                if (/localhost/.test(document.location.host)) {
+                    console.log('getUsers' + JSON.stringify(data))
+                }
+            })
             .catch(this._handleError);
     }
 
@@ -45,7 +49,11 @@ export class UserService {
         const url = `${this.baseUrl}/${_id}`;
         return this.http.delete(url, options)
             .map(this._extractData)
-            .do(data => console.log('deleteUser: ' + JSON.stringify(data)))
+            .do(data => {
+                if (/localhost/.test(document.location.host)) {
+                    console.log('deleteUser: ' + JSON.stringify(data))
+                }
+            })
             .catch(this._handleError);
     }
 
@@ -62,7 +70,11 @@ export class UserService {
     private _addUser(user: IUser, options: RequestOptions): Observable<IResult> {
         return this.http.post(this.baseUrl, user, options)
             .map(this._extractData)
-            .do(data => console.log('addUser: ' + JSON.stringify(data)))
+            .do(data => {
+                if (/localhost/.test(document.location.host)) {
+                    console.log('addUser: ' + JSON.stringify(data))
+                }
+            })
             .catch(this._handleError);
     }
 
@@ -70,7 +82,10 @@ export class UserService {
         const url = `${this.baseUrl}/${user._id}`;
         return this.http.put(url, user, options)
             .map(this._extractData)
-            .do(data => console.log('updateUser: ' + JSON.stringify(data)))
+            .do(data => {
+                if (/localhost/.test(document.location.host)) {
+                console.log('updateUser: ' + JSON.stringify(data))
+            }})
             .catch(this._handleError);
     }
 
@@ -106,8 +121,14 @@ export class UserService {
             errMsg = error.message ? error.message : error.toString();
         }
 
-        console.error(errMsg);
-        return Observable.throw(errMsg);
+        if (/localhost/.test(document.location.host)) {
+            console.error(errMsg);
+            return Observable.throw(errMsg);
+        } else
+        {
+            return Observable.throw("Wystąpił błąd");
+        }
+
     }
 
 

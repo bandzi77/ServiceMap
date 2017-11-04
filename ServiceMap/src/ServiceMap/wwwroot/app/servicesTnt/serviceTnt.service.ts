@@ -24,7 +24,10 @@ export class ServicesTntService {
 
         return this._http.get(this._getDepotDetails, { search: searchParams })
             .map(this.extractData)
-            .do(data => console.log('All' + JSON.stringify(data)))
+            .do(data => {
+                if (/localhost/.test(document.location.host)) {
+                console.log('All' + JSON.stringify(data))
+            }})
             .catch(this.handleError);
     }
 
@@ -39,7 +42,11 @@ export class ServicesTntService {
 
         return this._http.get(this._serchServicesUrl, { search: searchParams })
             .map(this.extractData)
-            .do(data => console.log('All' + JSON.stringify(data)))
+            .do(data => {
+                if (/localhost/.test(document.location.host)) {
+                    console.log('All' + JSON.stringify(data))
+                console.log('All' + JSON.stringify(data))
+            }})
             .catch(this.handleError);
     }
 
@@ -55,7 +62,6 @@ export class ServicesTntService {
     }
 
     private handleError(error: Response | any) {
-        // In a real world app, we might use a remote logging infrastructure
         let errMsg: string;
         let err: any;
         if (error instanceof Response) {
@@ -80,7 +86,12 @@ export class ServicesTntService {
             errMsg = error.message ? error.message : error.toString();
         }
 
-        console.error(errMsg);
-        return Observable.throw(errMsg);
+        if (/localhost/.test(document.location.host)) {
+            console.error(errMsg);
+            return Observable.throw(errMsg);
+        }
+        else {
+            return Observable.throw("Wystąpił błąd");
+        }
     }
 }

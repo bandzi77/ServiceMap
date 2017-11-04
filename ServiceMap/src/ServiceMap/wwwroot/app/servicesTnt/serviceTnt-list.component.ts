@@ -36,7 +36,6 @@ export class ServiceTntListComponent implements OnInit {
     isInitWindow: boolean = false;
     @ViewChild('lgModal') lgModalRef: LgModalComponent;
     @ViewChild('dataTable') public dataTable: DataTable;
-    //TODO -usunąć
     @ViewChild('multiselect') multi: MultiSelect;
     constructor(private _serviceTntService: ServicesTntService,
         private _route: ActivatedRoute,
@@ -82,7 +81,7 @@ export class ServiceTntListComponent implements OnInit {
         }
     }
 
-    //TODO - usunąć
+    // TODO - zastąpić jednym obiektem stronicowania
     private _getPage(): IPage {
         return {
             totalCount: 0,
@@ -118,7 +117,6 @@ export class ServiceTntListComponent implements OnInit {
     }
 
     onSearchService() {
-        console.log('testowanie init');
         this.dataTable.rows;
         let filtr = this._createServiceFilter();
         this.pageInfo.current_page = 0;

@@ -4,7 +4,6 @@
             <ul class="nav navbar-nav navbar-left">
                 <li [routerLinkActive]="['active']"><a [routerLink]="['/serviceTnt']">Mapa Serwisowa</a></li>
                 <li [routerLinkActive]="['active']" *ngIf="currentUser.isSuperUser"><a [routerLink]="['/userlist']">Lista Użytkowników</a></li>
-                <!--<li *ngIf="isSuperusers"><a [routerLink]="['/welcome']">Konta Użytkowników[queryParams]="{ _id:0 }</a></li>-->
                 <li [routerLinkActive]="['active']" *ngIf="currentUser.isSuperUser"><a [routerLink]="['/adduser']" [queryParams]="{ _id:0 }">Dodaj Użytkownika</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -14,12 +13,10 @@
                     </a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="userMenu">
                         <li role="presentation">
-                            <!--<img alt="TNT" src="app/assets/images/logo.svg" style="width: 30px; height: 30px;" />-->
                             <a href="http://www.tnt.com/express/pl_pl/site/home.html" target="_blank">
                                 <i class="fa fa-home" aria-hidden="true"></i> Strona główna TNT
                             </a>
                         </li>
-                        <!--tooltip="Link do aplikacji Tereny Odległe" placement="bottom"-->
                         <li role="presentation">
                             <a href="http://e-tnt.pl/ooa/" target="_blank">
                                 <i class="fa fa-truck" aria-hidden="true"></i> Tereny Odległe

@@ -44,7 +44,7 @@ namespace ServiceMap.Common
                 }
                 result = true;
             }
-            catch
+            catch(Exception ex)
             {
                 result = false;
             }
@@ -76,8 +76,9 @@ namespace ServiceMap.Common
                     client.Disconnect(true);
                 }
             }
-            catch
+            catch(Exception ex)
             {
+                Console.Write(ex.Message);
                 result = false;
             }
 #endif
@@ -94,8 +95,17 @@ namespace ServiceMap.Common
             bool.TryParse(configuration["Data:SMTP:isSmtpRequredAuthentication"], out isSmtpRequredAuthentication);
 
             var emailMessage = new ExtMimeMessage(configuration["Data:SMTP:host"], port, configuration["Data:SMTP:email"], configuration["Data:SMTP:password"], isSmtpRequredAuthentication);
+            
+            // TODO -Do wyjaśnienia z Łukszem 
+            //if (fromName != ConstsData.NoReplay)
+            {
+                emailMessage.From.Add(new MailboxAddress(fromName, emailMessage.TntEmail));
+            }
+            //else
+            //{
+            //    emailMessage.From.Add(new MailboxAddress(fromName, ConstsData.NoReplayAddress));
+            //}
 
-            emailMessage.From.Add(new MailboxAddress(fromName, emailMessage.TntEmail));
             if (!String.IsNullOrWhiteSpace(CcEmail))
             {
                 emailMessage.Cc.Add(new MailboxAddress("", CcEmail));

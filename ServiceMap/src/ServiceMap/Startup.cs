@@ -47,7 +47,6 @@ namespace ServiceMap
                 services.AddIdentity<AppUser, IdentityRole>(opts =>
             {
                 opts.User.RequireUniqueEmail = true;
-                //opts.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyz";
                 opts.Password.RequiredLength = 8;
                 opts.Password.RequireNonAlphanumeric = true;
                 opts.Password.RequireLowercase = false;
@@ -106,7 +105,6 @@ namespace ServiceMap
                 //(opt=>opt.Cookies.ApplicationCookie.LoginPath="/")
                 .AddEntityFrameworkStores<AppIdentityDbContext>()
                 .AddDefaultTokenProviders();
-            //services.AddScoped<IAuthorizationService, AuthorizationService>();
             services.AddSingleton(Configuration);
             services.AddScoped<RoleManager<IdentityRole>>();
             services.AddScoped<UserManager<AppUser>>();
@@ -120,7 +118,7 @@ namespace ServiceMap
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            // Odwłuje się do appsettings.json -> Logging
+            // Odwołuje się do appsettings.json -> Logging
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
@@ -138,26 +136,10 @@ namespace ServiceMap
             app.UseStaticFiles();
             app.UseIdentity();
             AppIdentityDbContext.CreateAdminAccount(app.ApplicationServices, Configuration).Wait();
-            //app.UseCookieAuthentication(new CookieAuthenticationOptions()
-            //{
-            //    AuthenticationScheme = "MyCookieMiddlewareInstance",
-            //    LoginPath = new PathString("/Account/Login/"),
-            //    AccessDeniedPath = new PathString("/Account/Forbidden/"),
-            //    AutomaticAuthenticate = true,
-            //    AutomaticChallenge = true
-            //});
+      
 
             app.UseMvc(routes =>
             {
-                //routes.MapRoute(
-                //name: "Error",
-                //template: "Error",
-                //defaults: new { controller = "Error", action = "Error" });
-
-                //routes.MapRoute(
-                //  name: "infoPanel",
-                //  template: "{controller=Account}/{action=InfoPanel}/{message}");
-
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}");

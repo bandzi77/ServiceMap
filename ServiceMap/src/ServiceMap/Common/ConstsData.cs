@@ -14,6 +14,8 @@ namespace ServiceMap.Common
         public static readonly string PasswordForNewUserLinkApp = @"<br><a href=""www.tnt.com/express/pl_pl/site/shipping-tools/mapa-serwisowa.html"">Link do aplikacji</a>";
         public static readonly string PasswordForNewMessageFooter = "<p>Pozdrawiamy<br>Zespół TNT";
         public static readonly string ResetLinkPasswordSubject = "Reset hasła";
+        public static readonly string NoReply = "No reply";
+        public static readonly string NoReplyAddress = "noreply@tnt.com";
         public static readonly string ResetLinkPasswordMsg = "<p>Drogi Użytkowniku!<br>    <p>Poniżej znajdziesz link pozwalający na zresetowanie hasła w aplikacji Mapa Serwisowa:<br>";
         public static readonly string ResetLinkPasswordMsgLink1 = "<a href=\"";
         public static readonly string ResetLinkPasswordMsgLink2 = "\">Zresetuj hasło</a><br><br>";
@@ -24,7 +26,7 @@ namespace ServiceMap.Common
         public const string EmailValidationMsg = "Niepoprawny format adresu email";
         public const string EmailRequiredMsg = "Email jest wymagany";
         public const string EmailRegExpMsg = "Dopuszczalne znaki specjalne w email prefix: '.' '_' '%' '+' '-'";
-        public const string EmailRegExp = "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.]+";
+        public const string EmailRegExp = "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+";
         public const string PasswordRequiredMsg = "Hasło jest wymagane";
         public const string PasswordRegExpMsg = "Hasło nie spełnia wymagań";
         public const string PasswordConfirmRequiredMsg = "Potwierdzenie hasła jest wymagane";

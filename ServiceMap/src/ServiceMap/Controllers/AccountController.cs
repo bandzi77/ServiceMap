@@ -112,15 +112,9 @@ namespace ServiceMap.Controllers
             var user = await userManager.FindByEmailAsync(email.ToUpper());
             if (user != null)
             {
-                //var fromEmail = currentUser.GetUser(User).Result.NormalizedEmail;
                 var token = await userManager.GeneratePasswordResetTokenAsync(user);
                 var callbackUrl = Url.Action(nameof(ResetPassword), "Account", new { email = email.ToUpper(), token = token }, protocol: HttpContext.Request.Scheme);
-
-                //await _emailSender.SendEmailAsync(model.Email, "Reset Password",
-                //   $"Please reset your password by clicking here: <a href='{callbackUrl}'>link</a>");
-                //   return View("ForgotPasswordConfirmation"); < a href = '{callbackUrl}' > link </ a >
-
-               await emailService.SendEmailAsync("No replay", null, email, ConstsData.ResetLinkPasswordSubject, ConstsData.ResetLinkPasswordMsg + ConstsData.ResetLinkPasswordMsgLink1 +$"{callbackUrl}" +ConstsData.ResetLinkPasswordMsgLink2, EmailFormat.html, false);
+               await emailService.SendEmailAsync(ConstsData.NoReply, null, email, ConstsData.ResetLinkPasswordSubject, ConstsData.ResetLinkPasswordMsg + ConstsData.ResetLinkPasswordMsgLink1 +$"{callbackUrl}" +ConstsData.ResetLinkPasswordMsgLink2, EmailFormat.html, false);
             }
         }
 
@@ -167,7 +161,7 @@ namespace ServiceMap.Controllers
                             // Sprawdzenie, czy przed chwilą zostało zablokowane konto, jeśli tak wysyła maila na adres firmowy.
                             if (accessFailedCount > 0)
                             {
-                               await emailService.SendEmailAsync("No replay", null, "pl.web.sm@tnt.com", 
+                               await emailService.SendEmailAsync(ConstsData.NoReply, null, "pl.web.sm@tnt.com", 
                                     ConstsData.AccountIsLockedSubject, String.Format(ConstsData.AccountIsLockedMessage, user.Email),EmailFormat.plain,false);
                             }
                             return RedirectToAction("InfoPanel", "Account", new { message = "Twoje konto zostało zablokowane." });
@@ -188,84 +182,5 @@ namespace ServiceMap.Controllers
             await signInManager.SignOutAsync();
             return Unauthorized();
         }
-
-        // POST: /Account/ForgotPassword
-        //[HttpPost]
-        //[AllowAnonymous]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        var user = await _userManager.FindByEmailAsync(model.Email);
-        //        if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
-        //        {
-        //            // Don't reveal that the user does not exist or is not confirmed.
-        //            return View("ForgotPasswordConfirmation");
-        //        }
-
-        //        // Send an email with this link
-        //        var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-        //        var callbackUrl = Url.Action(nameof(ResetPassword), "Account",
-        //            new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
-        //        await _emailSender.SendEmailAsync(model.Email, "Reset Password",
-        //           $"Please reset your password by clicking here: <a href='{callbackUrl}'>link</a>");
-        //        return View("ForgotPasswordConfirmation");
-        //    }
-
-        //    // If we got this far, something failed, redisplay form
-        //    return View(model);
-        //}
-
-        //public async Task<IActionResult> Logout()
-        //{
-        //    await signInManager.SignOutAsync();
-        //    return RedirectToAction("Index", "Home");
-        //}
-
-
-        //[HttpPost]
-        //[Authorize]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Logout()
-        //{
-        //    await signInManager.SignOutAsync();
-        //    return RedirectToAction("Index", "Home");
-        //}
-
-        // POST: /Account/LogOff
-        //[HttpPost]
-        //public ActionResult LogOff()
-        //{
-        //    AuthenticationManager.SignOut();
-        //    return RedirectToAction("Index", "Home");
-        //}
-        //
-
-        //public virtual async Task<identityresult> LockUserAccount(string userId, int? forDays)
-        //{
-        //    var result = await this.SetLockoutEnabledAsync(userId, true);
-        //    if (result.Succeeded)
-        //    {
-        //        if (forDays.HasValue)
-        //        {
-        //            result = await SetLockoutEndDateAsync(userId, DateTimeOffset.UtcNow.AddDays(forDays.Value));
-        //        }
-        //        else
-        //        {
-        //            result = await SetLockoutEndDateAsync(userId, DateTimeOffset.MaxValue);
-        //        }
-        //    }
-        //    return result;
-        //}
-        //public virtual async Task<identityresult> UnlockUserAccount(string userId)
-        //{
-        //    var result = await this.SetLockoutEnabledAsync(userId, false);
-        //    if (result.Succeeded)
-        //    {
-        //        await ResetAccessFailedCountAsync(userId);
-        //    }
-        //    return result;
-        //}
     }
 }
